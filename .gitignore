@@ -1,3 +1,7 @@
 *.pyc
 __pycache__
 *.json
+
+# Ignore large data files
+data/CS
+data/cifar10
