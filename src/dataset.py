@@ -45,7 +45,7 @@ DATASETS = {
 
 SUBCLASSES = {
     "imagenet": {
-        n_cl: list(np.load("/private/home/asablayrolles/data/radioactive/imagenet_classes/%d.npy" % n_cl)) for n_cl in [10, 20, 50, 100, 200, 500]
+        n_cl: list(np.load("./cifar10_classes/%d.npy" % n_cl)) for n_cl in [10]
     }
 }
 
@@ -164,13 +164,13 @@ def get_data_loader(params, split, transform, shuffle, distributed_sampler, wate
     # Data
     if params.dataset in ["cifar10", "mini_imagenet"]:
         pass
-        # if split == "valid":
-        #     if data_path == "":
-        #         data = CIFAR10(root=DATASETS[params.dataset][split], transform=transform, return_index=return_index, overlay=overlay, blend_type=blend_type, alpha=alpha, overlay_class=overlay_class)
-        #     else:
-        #         data = CIFAR10(root=join(dirname(DATASETS[params.dataset][split]), data_path), transform=transform, return_index=return_index, overlay=overlay, blend_type=blend_type, alpha=alpha, overlay_class=overlay_class)
-        # else:
-        #     data = CIFAR10(root=join(DATASETS[params.dataset][split], data_path), transform=transform, return_index=return_index, overlay=overlay, blend_type=blend_type, alpha=alpha, overlay_class=overlay_class)
+        if split == "valid":
+            if data_path == "":
+                data = CIFAR10(root=DATASETS[params.dataset][split], transform=transform, return_index=return_index, overlay=overlay, blend_type=blend_type, alpha=alpha, overlay_class=overlay_class)
+            else:
+                data = CIFAR10(root=join(dirname(DATASETS[params.dataset][split]), data_path), transform=transform, return_index=return_index, overlay=overlay, blend_type=blend_type, alpha=alpha, overlay_class=overlay_class)
+        else:
+            data = CIFAR10(root=join(DATASETS[params.dataset][split], data_path), transform=transform, return_index=return_index, overlay=overlay, blend_type=blend_type, alpha=alpha, overlay_class=overlay_class)
     elif params.dataset in ["imagenet", "places205"]:
         vanilla_data = ImageFolder(root=DATASETS[params.dataset][split], transform=transform)
         if watermark_path != "":

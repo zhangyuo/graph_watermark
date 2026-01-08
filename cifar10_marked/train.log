@@ -1,0 +1,1221 @@
+INFO - 12/18/25 13:53:08 - 0:00:00 - ============ Initialized logger ============
+INFO - 12/18/25 13:53:08 - 0:00:00 - angle: None
+                                     carrier_id: 0
+                                     carrier_path: carriers.pth
+                                     command: python make_data_radioactive.py --carrier_id 0 --carrier_path 'carriers.pth' --data_augmentation random --epochs 10 --img_paths 'cifar10_images/0/0.png,cifar10_images/0/17.png' --lambda_ft_l2 '0.01' --lambda_l2_img '0.0005' --marking_network 'pretrained_resnet18.pth' --dump_path './cifar10_marked' --optimizer 'sgd,lr=1.0' --exp_id "cifar10_marked"
+                                     crop_size: 224
+                                     data_augmentation: random
+                                     debug: False
+                                     debug_slurm: False
+                                     debug_train: False
+                                     dump_path: ./cifar10_marked
+                                     epochs: 10
+                                     exp_id: cifar10_marked
+                                     exp_name: bypass
+                                     half_cone: True
+                                     img_list: None
+                                     img_paths: cifar10_images/0/0.png,cifar10_images/0/17.png
+                                     img_size: 256
+                                     lambda_ft_l2: 0.01
+                                     lambda_l2_img: 0.0005
+                                     marking_network: pretrained_resnet18.pth
+                                     optimizer: sgd,lr=1.0
+                                     radius: 10
+INFO - 12/18/25 13:53:08 - 0:00:00 - The experiment will be stored in ./cifar10_marked
+                                     
+INFO - 12/18/25 13:53:08 - 0:00:00 - Running command: python make_data_radioactive.py --carrier_id 0 --carrier_path 'carriers.pth' --data_augmentation random --epochs 10 --img_paths 'cifar10_images/0/0.png,cifar10_images/0/17.png' --lambda_ft_l2 '0.01' --lambda_l2_img '0.0005' --marking_network 'pretrained_resnet18.pth' --dump_path './cifar10_marked' --optimizer 'sgd,lr=1.0'
+
+INFO - 12/18/25 13:58:26 - 0:00:00 - ============ Initialized logger ============
+INFO - 12/18/25 13:58:26 - 0:00:00 - angle: None
+                                     carrier_id: 0
+                                     carrier_path: carriers.pth
+                                     command: python make_data_radioactive.py --carrier_id 0 --carrier_path 'carriers.pth' --data_augmentation random --epochs 10 --img_paths 'cifar10_images/0/0.png,cifar10_images/0/17.png' --lambda_ft_l2 '0.01' --lambda_l2_img '0.0005' --marking_network 'pretrained_resnet18.pth' --dump_path './cifar10_marked' --optimizer 'sgd,lr=1.0' --exp_id "cifar10_marked"
+                                     crop_size: 224
+                                     data_augmentation: random
+                                     debug: False
+                                     debug_slurm: False
+                                     debug_train: False
+                                     dump_path: ./cifar10_marked
+                                     epochs: 10
+                                     exp_id: cifar10_marked
+                                     exp_name: bypass
+                                     half_cone: True
+                                     img_list: None
+                                     img_paths: cifar10_images/0/0.png,cifar10_images/0/17.png
+                                     img_size: 256
+                                     lambda_ft_l2: 0.01
+                                     lambda_l2_img: 0.0005
+                                     marking_network: pretrained_resnet18.pth
+                                     optimizer: sgd,lr=1.0
+                                     radius: 10
+INFO - 12/18/25 13:58:26 - 0:00:00 - The experiment will be stored in ./cifar10_marked
+                                     
+INFO - 12/18/25 13:58:26 - 0:00:00 - Running command: python make_data_radioactive.py --carrier_id 0 --carrier_path 'carriers.pth' --data_augmentation random --epochs 10 --img_paths 'cifar10_images/0/0.png,cifar10_images/0/17.png' --lambda_ft_l2 '0.01' --lambda_l2_img '0.0005' --marking_network 'pretrained_resnet18.pth' --dump_path './cifar10_marked' --optimizer 'sgd,lr=1.0'
+
+INFO - 12/18/25 13:58:26 - 0:00:00 - Model: ResNet(
+                                       (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+                                       (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                       (relu): ReLU(inplace=True)
+                                       (maxpool): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+                                       (layer1): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (layer2): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (downsample): Sequential(
+                                             (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+                                             (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           )
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (layer3): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (downsample): Sequential(
+                                             (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+                                             (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           )
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (layer4): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (downsample): Sequential(
+                                             (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+                                             (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           )
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
+                                       (fc): Linear(in_features=512, out_features=1000, bias=True)
+                                     )
+INFO - 12/18/25 13:59:05 - 0:00:00 - ============ Initialized logger ============
+INFO - 12/18/25 13:59:05 - 0:00:00 - angle: None
+                                     carrier_id: 0
+                                     carrier_path: carriers.pth
+                                     command: python make_data_radioactive.py --carrier_id 0 --carrier_path 'carriers.pth' --data_augmentation random --epochs 10 --img_paths 'cifar10_images/0/0.png,cifar10_images/0/17.png' --lambda_ft_l2 '0.01' --lambda_l2_img '0.0005' --marking_network 'pretrained_resnet18.pth' --dump_path './cifar10_marked' --optimizer 'sgd,lr=1.0' --exp_id "cifar10_marked"
+                                     crop_size: 224
+                                     data_augmentation: random
+                                     debug: False
+                                     debug_slurm: False
+                                     debug_train: False
+                                     dump_path: ./cifar10_marked
+                                     epochs: 10
+                                     exp_id: cifar10_marked
+                                     exp_name: bypass
+                                     half_cone: True
+                                     img_list: None
+                                     img_paths: cifar10_images/0/0.png,cifar10_images/0/17.png
+                                     img_size: 256
+                                     lambda_ft_l2: 0.01
+                                     lambda_l2_img: 0.0005
+                                     marking_network: pretrained_resnet18.pth
+                                     optimizer: sgd,lr=1.0
+                                     radius: 10
+INFO - 12/18/25 13:59:05 - 0:00:00 - The experiment will be stored in ./cifar10_marked
+                                     
+INFO - 12/18/25 13:59:05 - 0:00:00 - Running command: python make_data_radioactive.py --carrier_id 0 --carrier_path 'carriers.pth' --data_augmentation random --epochs 10 --img_paths 'cifar10_images/0/0.png,cifar10_images/0/17.png' --lambda_ft_l2 '0.01' --lambda_l2_img '0.0005' --marking_network 'pretrained_resnet18.pth' --dump_path './cifar10_marked' --optimizer 'sgd,lr=1.0'
+
+INFO - 12/18/25 13:59:05 - 0:00:00 - Model: ResNet(
+                                       (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+                                       (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                       (relu): ReLU(inplace=True)
+                                       (maxpool): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+                                       (layer1): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (layer2): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (downsample): Sequential(
+                                             (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+                                             (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           )
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (layer3): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (downsample): Sequential(
+                                             (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+                                             (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           )
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (layer4): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (downsample): Sequential(
+                                             (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+                                             (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           )
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
+                                       (fc): Linear(in_features=512, out_features=10, bias=True)
+                                     )
+INFO - 12/18/25 14:04:55 - 0:00:00 - ============ Initialized logger ============
+INFO - 12/18/25 14:04:55 - 0:00:00 - angle: None
+                                     carrier_id: 0
+                                     carrier_path: carriers.pth
+                                     command: python make_data_radioactive.py --carrier_id 0 --carrier_path 'carriers.pth' --data_augmentation random --epochs 10 --img_paths 'cifar10_images/0/0.png,cifar10_images/0/17.png' --lambda_ft_l2 '0.01' --lambda_l2_img '0.0005' --marking_network 'pretrained_resnet18.pth' --dump_path './cifar10_marked' --optimizer 'sgd,lr=1.0' --exp_id "cifar10_marked"
+                                     crop_size: 224
+                                     data_augmentation: random
+                                     debug: False
+                                     debug_slurm: False
+                                     debug_train: False
+                                     dump_path: ./cifar10_marked
+                                     epochs: 10
+                                     exp_id: cifar10_marked
+                                     exp_name: bypass
+                                     half_cone: True
+                                     img_list: None
+                                     img_paths: cifar10_images/0/0.png,cifar10_images/0/17.png
+                                     img_size: 256
+                                     lambda_ft_l2: 0.01
+                                     lambda_l2_img: 0.0005
+                                     marking_network: pretrained_resnet18.pth
+                                     optimizer: sgd,lr=1.0
+                                     radius: 10
+INFO - 12/18/25 14:04:55 - 0:00:00 - The experiment will be stored in ./cifar10_marked
+                                     
+INFO - 12/18/25 14:04:55 - 0:00:00 - Running command: python make_data_radioactive.py --carrier_id 0 --carrier_path 'carriers.pth' --data_augmentation random --epochs 10 --img_paths 'cifar10_images/0/0.png,cifar10_images/0/17.png' --lambda_ft_l2 '0.01' --lambda_l2_img '0.0005' --marking_network 'pretrained_resnet18.pth' --dump_path './cifar10_marked' --optimizer 'sgd,lr=1.0'
+
+INFO - 12/18/25 14:04:55 - 0:00:00 - Model: ResNet(
+                                       (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+                                       (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                       (relu): ReLU(inplace=True)
+                                       (maxpool): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+                                       (layer1): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (layer2): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (downsample): Sequential(
+                                             (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+                                             (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           )
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (layer3): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (downsample): Sequential(
+                                             (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+                                             (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           )
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (layer4): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (downsample): Sequential(
+                                             (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+                                             (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           )
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
+                                       (fc): Linear(in_features=512, out_features=10, bias=True)
+                                     )
+INFO - 12/18/25 14:11:31 - 0:00:00 - ============ Initialized logger ============
+INFO - 12/18/25 14:11:31 - 0:00:00 - angle: None
+                                     carrier_id: 0
+                                     carrier_path: carriers.pth
+                                     command: python make_data_radioactive.py --carrier_id 0 --carrier_path 'carriers.pth' --data_augmentation random --epochs 10 --img_paths 'cifar10_images/0/0.png,cifar10_images/0/17.png' --lambda_ft_l2 '0.01' --lambda_l2_img '0.0005' --marking_network 'pretrained_resnet18.pth' --dump_path './cifar10_marked' --optimizer 'sgd,lr=1.0' --exp_id "cifar10_marked"
+                                     crop_size: 224
+                                     data_augmentation: random
+                                     debug: False
+                                     debug_slurm: False
+                                     debug_train: False
+                                     dump_path: ./cifar10_marked
+                                     epochs: 10
+                                     exp_id: cifar10_marked
+                                     exp_name: bypass
+                                     half_cone: True
+                                     img_list: None
+                                     img_paths: cifar10_images/0/0.png,cifar10_images/0/17.png
+                                     img_size: 256
+                                     lambda_ft_l2: 0.01
+                                     lambda_l2_img: 0.0005
+                                     marking_network: pretrained_resnet18.pth
+                                     optimizer: sgd,lr=1.0
+                                     radius: 10
+INFO - 12/18/25 14:11:31 - 0:00:00 - The experiment will be stored in ./cifar10_marked
+                                     
+INFO - 12/18/25 14:11:31 - 0:00:00 - Running command: python make_data_radioactive.py --carrier_id 0 --carrier_path 'carriers.pth' --data_augmentation random --epochs 10 --img_paths 'cifar10_images/0/0.png,cifar10_images/0/17.png' --lambda_ft_l2 '0.01' --lambda_l2_img '0.0005' --marking_network 'pretrained_resnet18.pth' --dump_path './cifar10_marked' --optimizer 'sgd,lr=1.0'
+
+INFO - 12/18/25 14:11:32 - 0:00:00 - Model: ResNet(
+                                       (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+                                       (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                       (relu): ReLU(inplace=True)
+                                       (maxpool): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+                                       (layer1): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (layer2): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (downsample): Sequential(
+                                             (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+                                             (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           )
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (layer3): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (downsample): Sequential(
+                                             (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+                                             (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           )
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (layer4): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (downsample): Sequential(
+                                             (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+                                             (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           )
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
+                                       (fc): Linear(in_features=512, out_features=10, bias=True)
+                                     )
+INFO - 12/18/25 14:14:06 - 0:00:00 - ============ Initialized logger ============
+INFO - 12/18/25 14:14:06 - 0:00:00 - angle: None
+                                     carrier_id: 0
+                                     carrier_path: carriers.pth
+                                     command: python make_data_radioactive.py --carrier_id 0 --carrier_path 'carriers.pth' --data_augmentation random --epochs 10 --img_paths 'cifar10_images/0/29.png,cifar10_images/0/77.png' --lambda_ft_l2 '0.01' --lambda_l2_img '0.0005' --marking_network 'pretrained_resnet18.pth' --dump_path './cifar10_marked' --optimizer 'sgd,lr=1.0' --exp_id "cifar10_marked"
+                                     crop_size: 224
+                                     data_augmentation: random
+                                     debug: False
+                                     debug_slurm: False
+                                     debug_train: False
+                                     dump_path: ./cifar10_marked
+                                     epochs: 10
+                                     exp_id: cifar10_marked
+                                     exp_name: bypass
+                                     half_cone: True
+                                     img_list: None
+                                     img_paths: cifar10_images/0/29.png,cifar10_images/0/77.png
+                                     img_size: 256
+                                     lambda_ft_l2: 0.01
+                                     lambda_l2_img: 0.0005
+                                     marking_network: pretrained_resnet18.pth
+                                     optimizer: sgd,lr=1.0
+                                     radius: 10
+INFO - 12/18/25 14:14:06 - 0:00:00 - The experiment will be stored in ./cifar10_marked
+                                     
+INFO - 12/18/25 14:14:06 - 0:00:00 - Running command: python make_data_radioactive.py --carrier_id 0 --carrier_path 'carriers.pth' --data_augmentation random --epochs 10 --img_paths 'cifar10_images/0/29.png,cifar10_images/0/77.png' --lambda_ft_l2 '0.01' --lambda_l2_img '0.0005' --marking_network 'pretrained_resnet18.pth' --dump_path './cifar10_marked' --optimizer 'sgd,lr=1.0'
+
+INFO - 12/18/25 14:14:06 - 0:00:00 - Model: ResNet(
+                                       (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+                                       (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                       (relu): ReLU(inplace=True)
+                                       (maxpool): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+                                       (layer1): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (layer2): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (downsample): Sequential(
+                                             (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+                                             (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           )
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (layer3): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (downsample): Sequential(
+                                             (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+                                             (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           )
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (layer4): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (downsample): Sequential(
+                                             (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+                                             (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           )
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
+                                       (fc): Linear(in_features=512, out_features=10, bias=True)
+                                     )
+DEBUG - 12/18/25 14:14:06 - 0:00:00 - STREAM b'IHDR' 16 13
+DEBUG - 12/18/25 14:14:06 - 0:00:00 - STREAM b'IDAT' 41 2006
+DEBUG - 12/18/25 14:14:06 - 0:00:00 - STREAM b'IHDR' 16 13
+DEBUG - 12/18/25 14:14:06 - 0:00:00 - STREAM b'IDAT' 41 2124
+INFO - 12/18/25 14:16:26 - 0:00:00 - ============ Initialized logger ============
+INFO - 12/18/25 14:16:26 - 0:00:00 - angle: None
+                                     carrier_id: 0
+                                     carrier_path: carriers.pth
+                                     command: python make_data_radioactive.py --carrier_id 0 --carrier_path 'carriers.pth' --data_augmentation random --epochs 10 --img_paths 'cifar10_images/0/29.png,cifar10_images/0/77.png' --lambda_ft_l2 '0.01' --lambda_l2_img '0.0005' --marking_network 'pretrained_resnet18.pth' --dump_path './cifar10_marked' --optimizer 'sgd,lr=1.0' --exp_id "cifar10_marked"
+                                     crop_size: 224
+                                     data_augmentation: random
+                                     debug: False
+                                     debug_slurm: False
+                                     debug_train: False
+                                     dump_path: ./cifar10_marked
+                                     epochs: 10
+                                     exp_id: cifar10_marked
+                                     exp_name: bypass
+                                     half_cone: True
+                                     img_list: None
+                                     img_paths: cifar10_images/0/29.png,cifar10_images/0/77.png
+                                     img_size: 256
+                                     lambda_ft_l2: 0.01
+                                     lambda_l2_img: 0.0005
+                                     marking_network: pretrained_resnet18.pth
+                                     optimizer: sgd,lr=1.0
+                                     radius: 10
+INFO - 12/18/25 14:16:26 - 0:00:00 - The experiment will be stored in ./cifar10_marked
+                                     
+INFO - 12/18/25 14:16:26 - 0:00:00 - Running command: python make_data_radioactive.py --carrier_id 0 --carrier_path 'carriers.pth' --data_augmentation random --epochs 10 --img_paths 'cifar10_images/0/29.png,cifar10_images/0/77.png' --lambda_ft_l2 '0.01' --lambda_l2_img '0.0005' --marking_network 'pretrained_resnet18.pth' --dump_path './cifar10_marked' --optimizer 'sgd,lr=1.0'
+
+INFO - 12/18/25 14:16:26 - 0:00:00 - Model: ResNet(
+                                       (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+                                       (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                       (relu): ReLU(inplace=True)
+                                       (maxpool): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+                                       (layer1): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (layer2): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (downsample): Sequential(
+                                             (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+                                             (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           )
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (layer3): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (downsample): Sequential(
+                                             (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+                                             (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           )
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (layer4): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (downsample): Sequential(
+                                             (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+                                             (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           )
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
+                                       (fc): Linear(in_features=512, out_features=10, bias=True)
+                                     )
+DEBUG - 12/18/25 14:16:27 - 0:00:00 - STREAM b'IHDR' 16 13
+DEBUG - 12/18/25 14:16:27 - 0:00:00 - STREAM b'IDAT' 41 2006
+DEBUG - 12/18/25 14:16:27 - 0:00:00 - STREAM b'IHDR' 16 13
+DEBUG - 12/18/25 14:16:27 - 0:00:00 - STREAM b'IDAT' 41 2124
+INFO - 12/18/25 14:16:27 - 0:00:00 - Schedule of sgd,lr=1.0: None
+INFO - 12/18/25 14:16:27 - 0:00:01 - __log__:{"keyword": "iteration", "loss": 1.0708261728286743, "loss_ft": 0.8909723162651062, "loss_norm": 0.0, "loss_ft_l2": 0.17985385656356812}
+INFO - 12/18/25 14:16:27 - 0:00:01 - __log__:{"keyword": "iteration", "loss": 0.349763959646225, "loss_ft": -0.008003875613212585, "loss_norm": 0.013490734621882439, "loss_ft_l2": 0.34427711367607117}
+INFO - 12/18/25 14:16:27 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -0.2027149200439453, "loss_ft": -0.4903455674648285, "loss_norm": 0.017816860228776932, "loss_ft_l2": 0.26981377601623535}
+INFO - 12/18/25 14:16:27 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -1.0161176919937134, "loss_ft": -1.344266414642334, "loss_norm": 0.022534115239977837, "loss_ft_l2": 0.30561456084251404}
+INFO - 12/18/25 14:16:27 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -0.12795332074165344, "loss_ft": -0.4835464358329773, "loss_norm": 0.025978300720453262, "loss_ft_l2": 0.3296148180961609}
+INFO - 12/18/25 14:16:27 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -2.1274352073669434, "loss_ft": -2.426752805709839, "loss_norm": 0.02738136053085327, "loss_ft_l2": 0.2719362676143646}
+INFO - 12/18/25 14:16:27 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -1.2892414331436157, "loss_ft": -1.641770362854004, "loss_norm": 0.030305445194244385, "loss_ft_l2": 0.32222357392311096}
+INFO - 12/18/25 14:16:27 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -1.636521339416504, "loss_ft": -2.001208782196045, "loss_norm": 0.031154455617070198, "loss_ft_l2": 0.3335328698158264}
+INFO - 12/18/25 14:16:27 - 0:00:01 - __log__:{"keyword": "iteration", "loss": 0.06897121667861938, "loss_ft": -0.290345698595047, "loss_norm": 0.03323041647672653, "loss_ft_l2": 0.32608649134635925}
+INFO - 12/18/25 14:16:27 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -2.5442147254943848, "loss_ft": -2.9006733894348145, "loss_norm": 0.03425029665231705, "loss_ft_l2": 0.322208434343338}
+INFO - 12/18/25 14:16:27 - 0:00:01 - __log__:{"keyword": "final", "psnr": 32.526318931364344, "ft_direction": 2.6553640365600586, "ft_norm": 15.25709342956543, "rho": -1, "R": -477.8992614746094}
+INFO - 01/06/26 15:19:50 - 0:00:00 - ============ Initialized logger ============
+INFO - 01/06/26 15:19:50 - 0:00:00 - angle: None
+                                     carrier_id: 0
+                                     carrier_path: carriers.pth
+                                     command: python make_data_radioactive.py --carrier_id 0 --carrier_path 'carriers.pth' --data_augmentation random --epochs 10 --img_paths 'cifar10_images/0/29.png,cifar10_images/0/77.png' --lambda_ft_l2 '0.01' --lambda_l2_img '0.0005' --marking_network 'pretrained_resnet18.pth' --dump_path './cifar10_marked' --optimizer 'sgd,lr=1.0' --exp_id "cifar10_marked"
+                                     crop_size: 224
+                                     data_augmentation: random
+                                     debug: False
+                                     debug_slurm: False
+                                     debug_train: False
+                                     dump_path: ./cifar10_marked
+                                     epochs: 10
+                                     exp_id: cifar10_marked
+                                     exp_name: bypass
+                                     half_cone: True
+                                     img_list: None
+                                     img_paths: cifar10_images/0/29.png,cifar10_images/0/77.png
+                                     img_size: 256
+                                     lambda_ft_l2: 0.01
+                                     lambda_l2_img: 0.0005
+                                     marking_network: pretrained_resnet18.pth
+                                     optimizer: sgd,lr=1.0
+                                     radius: 10
+INFO - 01/06/26 15:19:50 - 0:00:00 - The experiment will be stored in ./cifar10_marked
+                                     
+INFO - 01/06/26 15:19:50 - 0:00:00 - Running command: python make_data_radioactive.py --carrier_id 0 --carrier_path 'carriers.pth' --data_augmentation random --epochs 10 --img_paths 'cifar10_images/0/29.png,cifar10_images/0/77.png' --lambda_ft_l2 '0.01' --lambda_l2_img '0.0005' --marking_network 'pretrained_resnet18.pth' --dump_path './cifar10_marked' --optimizer 'sgd,lr=1.0'
+
+INFO - 01/06/26 15:19:51 - 0:00:01 - Model: ResNet(
+                                       (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+                                       (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                       (relu): ReLU(inplace=True)
+                                       (maxpool): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+                                       (layer1): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (layer2): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (downsample): Sequential(
+                                             (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+                                             (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           )
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (layer3): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (downsample): Sequential(
+                                             (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+                                             (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           )
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (layer4): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (downsample): Sequential(
+                                             (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+                                             (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           )
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
+                                       (fc): Linear(in_features=512, out_features=10, bias=True)
+                                     )
+DEBUG - 01/06/26 15:19:52 - 0:00:02 - STREAM b'IHDR' 16 13
+DEBUG - 01/06/26 15:19:52 - 0:00:02 - STREAM b'IDAT' 41 2006
+DEBUG - 01/06/26 15:19:52 - 0:00:02 - STREAM b'IHDR' 16 13
+DEBUG - 01/06/26 15:19:52 - 0:00:02 - STREAM b'IDAT' 41 2124
+INFO - 01/06/26 15:19:52 - 0:00:02 - Schedule of sgd,lr=1.0: None
+INFO - 01/06/26 15:20:00 - 0:00:10 - __log__:{"keyword": "iteration", "loss": 0.4530578851699829, "loss_ft": 0.23361465334892273, "loss_norm": 0.0, "loss_ft_l2": 0.21944324672222137}
+INFO - 01/06/26 15:20:00 - 0:00:10 - __log__:{"keyword": "iteration", "loss": -0.7939077615737915, "loss_ft": -1.0956783294677734, "loss_norm": 0.00979302916675806, "loss_ft_l2": 0.29197749495506287}
+INFO - 01/06/26 15:20:00 - 0:00:10 - __log__:{"keyword": "iteration", "loss": -0.717896044254303, "loss_ft": -1.1115671396255493, "loss_norm": 0.017037533223628998, "loss_ft_l2": 0.37663358449935913}
+INFO - 01/06/26 15:20:00 - 0:00:10 - __log__:{"keyword": "iteration", "loss": -1.316481113433838, "loss_ft": -1.687345266342163, "loss_norm": 0.018730074167251587, "loss_ft_l2": 0.35213416814804077}
+INFO - 01/06/26 15:20:00 - 0:00:10 - __log__:{"keyword": "iteration", "loss": -0.4152863025665283, "loss_ft": -0.8012969493865967, "loss_norm": 0.02189401537179947, "loss_ft_l2": 0.3641166090965271}
+INFO - 01/06/26 15:20:00 - 0:00:10 - __log__:{"keyword": "iteration", "loss": -1.5703328847885132, "loss_ft": -1.9134867191314697, "loss_norm": 0.02204512059688568, "loss_ft_l2": 0.32110869884490967}
+INFO - 01/06/26 15:20:00 - 0:00:10 - __log__:{"keyword": "iteration", "loss": -1.3969385623931885, "loss_ft": -1.7640373706817627, "loss_norm": 0.025677554309368134, "loss_ft_l2": 0.3414212763309479}
+INFO - 01/06/26 15:20:00 - 0:00:10 - __log__:{"keyword": "iteration", "loss": -0.18329116702079773, "loss_ft": -0.5916493535041809, "loss_norm": 0.027581222355365753, "loss_ft_l2": 0.380776971578598}
+INFO - 01/06/26 15:20:00 - 0:00:10 - __log__:{"keyword": "iteration", "loss": -3.791944980621338, "loss_ft": -4.130084037780762, "loss_norm": 0.0274981539696455, "loss_ft_l2": 0.31064075231552124}
+INFO - 01/06/26 15:20:00 - 0:00:10 - __log__:{"keyword": "iteration", "loss": -3.115649461746216, "loss_ft": -3.4533746242523193, "loss_norm": 0.029506729915738106, "loss_ft_l2": 0.3082185387611389}
+INFO - 01/06/26 15:20:01 - 0:00:10 - __log__:{"keyword": "final", "psnr": 33.01646461465292, "ft_direction": 2.2966108322143555, "ft_norm": 15.220193862915039, "rho": -1, "R": -468.9132995605469}
+INFO - 01/06/26 15:21:35 - 0:00:00 - ============ Initialized logger ============
+INFO - 01/06/26 15:21:35 - 0:00:00 - angle: None
+                                     carrier_id: 0
+                                     carrier_path: carriers.pth
+                                     command: python mark_embed.py --carrier_id 0 --carrier_path 'carriers.pth' --data_augmentation random --epochs 10 --img_paths 'cifar10_images/0/29.png,cifar10_images/0/77.png' --lambda_ft_l2 '0.01' --lambda_l2_img '0.0005' --marking_network 'pretrained_resnet18.pth' --dump_path './cifar10_marked' --optimizer 'sgd,lr=1.0' --exp_id "cifar10_marked"
+                                     crop_size: 224
+                                     data_augmentation: random
+                                     debug: False
+                                     debug_slurm: False
+                                     debug_train: False
+                                     dump_path: ./cifar10_marked
+                                     epochs: 10
+                                     exp_id: cifar10_marked
+                                     exp_name: bypass
+                                     half_cone: True
+                                     img_list: None
+                                     img_paths: cifar10_images/0/29.png,cifar10_images/0/77.png
+                                     img_size: 256
+                                     lambda_ft_l2: 0.01
+                                     lambda_l2_img: 0.0005
+                                     marking_network: pretrained_resnet18.pth
+                                     optimizer: sgd,lr=1.0
+                                     radius: 10
+INFO - 01/06/26 15:21:35 - 0:00:00 - The experiment will be stored in ./cifar10_marked
+                                     
+INFO - 01/06/26 15:21:35 - 0:00:00 - Running command: python mark_embed.py --carrier_id 0 --carrier_path 'carriers.pth' --data_augmentation random --epochs 10 --img_paths 'cifar10_images/0/29.png,cifar10_images/0/77.png' --lambda_ft_l2 '0.01' --lambda_l2_img '0.0005' --marking_network 'pretrained_resnet18.pth' --dump_path './cifar10_marked' --optimizer 'sgd,lr=1.0'
+
+INFO - 01/06/26 15:21:35 - 0:00:00 - Model: ResNet(
+                                       (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+                                       (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                       (relu): ReLU(inplace=True)
+                                       (maxpool): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+                                       (layer1): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (layer2): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (downsample): Sequential(
+                                             (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+                                             (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           )
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (layer3): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (downsample): Sequential(
+                                             (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+                                             (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           )
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (layer4): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (downsample): Sequential(
+                                             (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+                                             (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           )
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
+                                       (fc): Linear(in_features=512, out_features=10, bias=True)
+                                     )
+DEBUG - 01/06/26 15:21:35 - 0:00:00 - STREAM b'IHDR' 16 13
+DEBUG - 01/06/26 15:21:35 - 0:00:00 - STREAM b'IDAT' 41 2006
+DEBUG - 01/06/26 15:21:35 - 0:00:00 - STREAM b'IHDR' 16 13
+DEBUG - 01/06/26 15:21:35 - 0:00:00 - STREAM b'IDAT' 41 2124
+INFO - 01/06/26 15:21:35 - 0:00:00 - Schedule of sgd,lr=1.0: None
+INFO - 01/06/26 15:21:35 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -0.12376213073730469, "loss_ft": -0.4031696319580078, "loss_norm": 0.0, "loss_ft_l2": 0.2794075012207031}
+INFO - 01/06/26 15:21:35 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -0.16886472702026367, "loss_ft": -0.48155665397644043, "loss_norm": 0.009324515238404274, "loss_ft_l2": 0.30336740612983704}
+INFO - 01/06/26 15:21:35 - 0:00:01 - __log__:{"keyword": "iteration", "loss": 1.0960841178894043, "loss_ft": 0.6562060117721558, "loss_norm": 0.01440492644906044, "loss_ft_l2": 0.42547309398651123}
+INFO - 01/06/26 15:21:35 - 0:00:01 - __log__:{"keyword": "iteration", "loss": 0.0354481041431427, "loss_ft": -0.267419695854187, "loss_norm": 0.01620788685977459, "loss_ft_l2": 0.28665992617607117}
+INFO - 01/06/26 15:21:35 - 0:00:01 - __log__:{"keyword": "iteration", "loss": 0.2372300773859024, "loss_ft": -0.18226313591003418, "loss_norm": 0.02253330871462822, "loss_ft_l2": 0.39695990085601807}
+INFO - 01/06/26 15:21:35 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -0.23426005244255066, "loss_ft": -0.618388295173645, "loss_norm": 0.024524720385670662, "loss_ft_l2": 0.35960349440574646}
+INFO - 01/06/26 15:21:35 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -2.1850292682647705, "loss_ft": -2.4986584186553955, "loss_norm": 0.026320602744817734, "loss_ft_l2": 0.28730839490890503}
+INFO - 01/06/26 15:21:35 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -1.88429856300354, "loss_ft": -2.199085235595703, "loss_norm": 0.027962330728769302, "loss_ft_l2": 0.2868242859840393}
+INFO - 01/06/26 15:21:35 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -1.628713846206665, "loss_ft": -1.998145580291748, "loss_norm": 0.030026648193597794, "loss_ft_l2": 0.3394050598144531}
+INFO - 01/06/26 15:21:35 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -0.7863336801528931, "loss_ft": -1.175673484802246, "loss_norm": 0.030850211158394814, "loss_ft_l2": 0.35848966240882874}
+INFO - 01/06/26 15:21:35 - 0:00:01 - __log__:{"keyword": "final", "psnr": 32.99380590894155, "ft_direction": 1.988230586051941, "ft_norm": 14.433481216430664, "rho": -1, "R": -418.216064453125}
+INFO - 01/07/26 10:48:45 - 0:00:00 - ============ Initialized logger ============
+INFO - 01/07/26 10:48:45 - 0:00:00 - angle: None
+                                     carrier_id: 0
+                                     carrier_path: carriers.pth
+                                     command: python mark_embed.py --carrier_id 0 --carrier_path 'carriers.pth' --data_augmentation random --epochs 10 --img_paths 'cifar10_images/0/29.png,cifar10_images/0/77.png' --lambda_ft_l2 '0.01' --lambda_l2_img '0.0005' --marking_network 'pretrained_resnet18.pth' --dump_path './cifar10_marked' --optimizer 'sgd,lr=1.0' --exp_id "cifar10_marked"
+                                     crop_size: 224
+                                     data_augmentation: random
+                                     debug: False
+                                     debug_slurm: False
+                                     debug_train: False
+                                     dump_path: ./cifar10_marked
+                                     epochs: 10
+                                     exp_id: cifar10_marked
+                                     exp_name: bypass
+                                     half_cone: True
+                                     img_list: None
+                                     img_paths: cifar10_images/0/29.png,cifar10_images/0/77.png
+                                     img_size: 256
+                                     lambda_ft_l2: 0.01
+                                     lambda_l2_img: 0.0005
+                                     marking_network: pretrained_resnet18.pth
+                                     optimizer: sgd,lr=1.0
+                                     radius: 10
+INFO - 01/07/26 10:48:45 - 0:00:00 - The experiment will be stored in ./cifar10_marked
+                                     
+INFO - 01/07/26 10:48:45 - 0:00:00 - Running command: python mark_embed.py --carrier_id 0 --carrier_path 'carriers.pth' --data_augmentation random --epochs 10 --img_paths 'cifar10_images/0/29.png,cifar10_images/0/77.png' --lambda_ft_l2 '0.01' --lambda_l2_img '0.0005' --marking_network 'pretrained_resnet18.pth' --dump_path './cifar10_marked' --optimizer 'sgd,lr=1.0'
+
+INFO - 01/07/26 11:32:34 - 0:43:44 - Model: ResNet(
+                                       (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+                                       (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                       (relu): ReLU(inplace=True)
+                                       (maxpool): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+                                       (layer1): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (layer2): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (downsample): Sequential(
+                                             (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+                                             (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           )
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (layer3): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (downsample): Sequential(
+                                             (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+                                             (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           )
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (layer4): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (downsample): Sequential(
+                                             (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+                                             (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           )
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
+                                       (fc): Linear(in_features=512, out_features=10, bias=True)
+                                     )
+DEBUG - 01/07/26 11:48:15 - 0:59:30 - STREAM b'IHDR' 16 13
+DEBUG - 01/07/26 11:48:15 - 0:59:30 - STREAM b'IDAT' 41 2006
+DEBUG - 01/07/26 11:48:57 - 1:00:12 - STREAM b'IHDR' 16 13
+DEBUG - 01/07/26 11:48:57 - 1:00:12 - STREAM b'IDAT' 41 2124
+INFO - 01/07/26 12:07:26 - 1:18:41 - Schedule of sgd,lr=1.0: None
+INFO - 01/07/26 12:07:37 - 1:18:52 - __log__:{"keyword": "iteration", "loss": 0.3168649673461914, "loss_ft": -0.018631935119628906, "loss_norm": 0.0, "loss_ft_l2": 0.3354969024658203}
+INFO - 01/07/26 12:07:37 - 1:18:52 - __log__:{"keyword": "iteration", "loss": 0.027766942977905273, "loss_ft": -0.39021098613739014, "loss_norm": 0.007155475206673145, "loss_ft_l2": 0.41082245111465454}
+INFO - 01/07/26 12:07:37 - 1:18:52 - __log__:{"keyword": "iteration", "loss": 0.30127090215682983, "loss_ft": -0.022168517112731934, "loss_norm": 0.010232336819171906, "loss_ft_l2": 0.31320708990097046}
+INFO - 01/07/26 12:07:37 - 1:18:52 - __log__:{"keyword": "iteration", "loss": -0.4136403501033783, "loss_ft": -0.8154846429824829, "loss_norm": 0.014870631508529186, "loss_ft_l2": 0.38697364926338196}
+INFO - 01/07/26 12:07:37 - 1:18:52 - __log__:{"keyword": "iteration", "loss": -1.458147406578064, "loss_ft": -1.8624464273452759, "loss_norm": 0.01717563346028328, "loss_ft_l2": 0.38712331652641296}
+INFO - 01/07/26 12:07:37 - 1:18:52 - __log__:{"keyword": "iteration", "loss": -0.7085698843002319, "loss_ft": -0.9389683604240417, "loss_norm": 0.01931161805987358, "loss_ft_l2": 0.21108688414096832}
+INFO - 01/07/26 12:07:37 - 1:18:52 - __log__:{"keyword": "iteration", "loss": -2.892582893371582, "loss_ft": -3.194977045059204, "loss_norm": 0.024168793112039566, "loss_ft_l2": 0.27822554111480713}
+INFO - 01/07/26 12:07:37 - 1:18:52 - __log__:{"keyword": "iteration", "loss": -0.991359531879425, "loss_ft": -1.3837167024612427, "loss_norm": 0.027859006077051163, "loss_ft_l2": 0.36449819803237915}
+INFO - 01/07/26 12:07:37 - 1:18:52 - __log__:{"keyword": "iteration", "loss": -2.5722012519836426, "loss_ft": -2.8942484855651855, "loss_norm": 0.029209643602371216, "loss_ft_l2": 0.29283758997917175}
+INFO - 01/07/26 12:07:37 - 1:18:52 - __log__:{"keyword": "iteration", "loss": -1.6933932304382324, "loss_ft": -2.1050760746002197, "loss_norm": 0.030429385602474213, "loss_ft_l2": 0.3812534213066101}
+INFO - 01/07/26 12:07:37 - 1:18:52 - __log__:{"keyword": "final", "psnr": 33.05389156320028, "ft_direction": 2.300325393676758, "ft_norm": 14.466468811035156, "rho": -1, "R": -420.5584716796875}
+INFO - 01/07/26 12:09:53 - 0:00:00 - ============ Initialized logger ============
+INFO - 01/07/26 12:09:53 - 0:00:00 - angle: None
+                                     carrier_id: 0
+                                     carrier_path: carriers.pth
+                                     command: python mark_embed.py --carrier_id 0 --carrier_path 'carriers.pth' --data_augmentation random --epochs 10 --img_paths 'cifar10_images/0/29.png,cifar10_images/0/77.png' --lambda_ft_l2 '0.01' --lambda_l2_img '0.0005' --marking_network 'pretrained_resnet18.pth' --dump_path './cifar10_marked' --optimizer 'sgd,lr=1.0' --exp_id "cifar10_marked"
+                                     crop_size: 224
+                                     data_augmentation: random
+                                     debug: False
+                                     debug_slurm: False
+                                     debug_train: False
+                                     dump_path: ./cifar10_marked
+                                     epochs: 10
+                                     exp_id: cifar10_marked
+                                     exp_name: bypass
+                                     half_cone: True
+                                     img_list: None
+                                     img_paths: cifar10_images/0/29.png,cifar10_images/0/77.png
+                                     img_size: 256
+                                     lambda_ft_l2: 0.01
+                                     lambda_l2_img: 0.0005
+                                     marking_network: pretrained_resnet18.pth
+                                     optimizer: sgd,lr=1.0
+                                     radius: 10
+INFO - 01/07/26 12:09:53 - 0:00:00 - The experiment will be stored in ./cifar10_marked
+                                     
+INFO - 01/07/26 12:09:53 - 0:00:00 - Running command: python mark_embed.py --carrier_id 0 --carrier_path 'carriers.pth' --data_augmentation random --epochs 10 --img_paths 'cifar10_images/0/29.png,cifar10_images/0/77.png' --lambda_ft_l2 '0.01' --lambda_l2_img '0.0005' --marking_network 'pretrained_resnet18.pth' --dump_path './cifar10_marked' --optimizer 'sgd,lr=1.0'
+
+INFO - 01/07/26 12:10:00 - 0:00:07 - Model: ResNet(
+                                       (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+                                       (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                       (relu): ReLU(inplace=True)
+                                       (maxpool): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+                                       (layer1): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (layer2): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (downsample): Sequential(
+                                             (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+                                             (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           )
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (layer3): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (downsample): Sequential(
+                                             (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+                                             (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           )
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (layer4): Sequential(
+                                         (0): BasicBlock(
+                                           (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (downsample): Sequential(
+                                             (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+                                             (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           )
+                                         )
+                                         (1): BasicBlock(
+                                           (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                           (relu): ReLU(inplace=True)
+                                           (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                                           (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                                         )
+                                       )
+                                       (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
+                                       (fc): Linear(in_features=512, out_features=10, bias=True)
+                                     )
+DEBUG - 01/07/26 12:10:00 - 0:00:07 - STREAM b'IHDR' 16 13
+DEBUG - 01/07/26 12:10:00 - 0:00:07 - STREAM b'IDAT' 41 2006
+DEBUG - 01/07/26 12:10:00 - 0:00:07 - STREAM b'IHDR' 16 13
+DEBUG - 01/07/26 12:10:00 - 0:00:07 - STREAM b'IDAT' 41 2124
+INFO - 01/07/26 12:16:56 - 0:07:01 - Schedule of sgd,lr=1.0: None
+INFO - 01/07/26 12:42:55 - 0:33:00 - __log__:{"keyword": "iteration", "loss": -0.7459368705749512, "loss_ft": -0.9499750733375549, "loss_norm": 0.0, "loss_ft_l2": 0.20403820276260376}
+INFO - 01/07/26 12:49:38 - 0:39:45 - __log__:{"keyword": "iteration", "loss": -0.3540421426296234, "loss_ft": -0.6782321929931641, "loss_norm": 0.012810735031962395, "loss_ft_l2": 0.3113793432712555}
+INFO - 01/07/26 12:49:38 - 0:39:45 - __log__:{"keyword": "iteration", "loss": -1.540642261505127, "loss_ft": -1.8736023902893066, "loss_norm": 0.015929190441966057, "loss_ft_l2": 0.3170308470726013}
+INFO - 01/07/26 12:49:38 - 0:39:45 - __log__:{"keyword": "iteration", "loss": -0.37048986554145813, "loss_ft": -0.6645864248275757, "loss_norm": 0.019131693989038467, "loss_ft_l2": 0.274964839220047}
+INFO - 01/07/26 12:49:38 - 0:39:45 - __log__:{"keyword": "iteration", "loss": -0.5430179834365845, "loss_ft": -0.9290995001792908, "loss_norm": 0.02226368337869644, "loss_ft_l2": 0.36381784081459045}
+INFO - 01/07/26 12:49:38 - 0:39:45 - __log__:{"keyword": "iteration", "loss": -2.201988458633423, "loss_ft": -2.4863686561584473, "loss_norm": 0.02488679252564907, "loss_ft_l2": 0.25949329137802124}
+INFO - 01/07/26 12:49:38 - 0:39:45 - __log__:{"keyword": "iteration", "loss": -3.6760811805725098, "loss_ft": -4.010416507720947, "loss_norm": 0.027109406888484955, "loss_ft_l2": 0.30722588300704956}
+INFO - 01/07/26 12:49:38 - 0:39:45 - __log__:{"keyword": "iteration", "loss": -4.298068523406982, "loss_ft": -4.649529457092285, "loss_norm": 0.02809717319905758, "loss_ft_l2": 0.3233637809753418}
+INFO - 01/07/26 12:49:38 - 0:39:45 - __log__:{"keyword": "iteration", "loss": -0.26605144143104553, "loss_ft": -0.628282904624939, "loss_norm": 0.03033285215497017, "loss_ft_l2": 0.33189859986305237}
+INFO - 01/07/26 12:49:38 - 0:39:45 - __log__:{"keyword": "iteration", "loss": -3.0644378662109375, "loss_ft": -3.4050257205963135, "loss_norm": 0.032008592039346695, "loss_ft_l2": 0.30857914686203003}
+INFO - 01/07/26 12:53:32 - 0:43:37 - __log__:{"keyword": "final", "psnr": 32.77513613679342, "ft_direction": 2.3268566131591797, "ft_norm": 13.51157283782959, "rho": -1, "R": -369.73455810546875}

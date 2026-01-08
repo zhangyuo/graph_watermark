@@ -1,0 +1,785 @@
+INFO - 01/07/26 15:25:36 - 0:00:00 - ============ Initialized logger ============
+INFO - 01/07/26 15:25:36 - 0:00:00 - carrier_path: ./data/carriers.pth
+                                     command: python mark_embed.py --carrier_path './data/carriers.pth' --epochs 10 --node_list '1,5,9,11' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0' --exp_id "mark_save"
+                                     dump_path: ./mark_save
+                                     epochs: 10
+                                     exp_id: mark_save
+                                     exp_name: bypass
+                                     lambda_ft_l2: 0.01
+                                     lambda_graph_l2: 0.0005
+                                     marking_network: ./model_save/gcn_model_dim512_layer2_seed42.pth
+                                     node_list: 1,5,9,11
+                                     optimizer: sgd,lr=1.0
+                                     perturb_amplitude: 1
+INFO - 01/07/26 15:25:36 - 0:00:00 - The experiment will be stored in ./mark_save
+                                     
+INFO - 01/07/26 15:25:36 - 0:00:00 - Running command: python mark_embed.py --carrier_path './data/carriers.pth' --epochs 10 --node_list '1,5,9,11' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0'
+
+INFO - 01/07/26 15:28:41 - 0:00:00 - ============ Initialized logger ============
+INFO - 01/07/26 15:28:41 - 0:00:00 - carrier_path: ./data/carriers.pth
+                                     command: python mark_embed.py --carrier_path './data/carriers.pth' --epochs 10 --node_list '1,5,9,11' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0' --exp_id "mark_save"
+                                     dump_path: ./mark_save
+                                     epochs: 10
+                                     exp_id: mark_save
+                                     exp_name: bypass
+                                     lambda_ft_l2: 0.01
+                                     lambda_graph_l2: 0.0005
+                                     marking_network: ./model_save/gcn_model_dim512_layer2_seed42.pth
+                                     node_list: 1,5,9,11
+                                     optimizer: sgd,lr=1.0
+                                     perturb_amplitude: 1
+INFO - 01/07/26 15:28:41 - 0:00:00 - The experiment will be stored in ./mark_save
+                                     
+INFO - 01/07/26 15:28:41 - 0:00:00 - Running command: python mark_embed.py --carrier_path './data/carriers.pth' --epochs 10 --node_list '1,5,9,11' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0'
+
+INFO - 01/07/26 15:55:07 - 0:00:00 - ============ Initialized logger ============
+INFO - 01/07/26 15:55:07 - 0:00:00 - carrier_path: ./data/carriers.pth
+                                     command: python mark_embed.py --carrier_path './data/carriers.pth' --epochs 10 --node_list '1,5,9,11' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0' --embedding_file './data/blogcatalog_data.pt' --exp_id "mark_save"
+                                     dropout: 0.5
+                                     dump_path: ./mark_save
+                                     embedding_file: ./data/blogcatalog_data.pt
+                                     epochs: 10
+                                     exp_id: mark_save
+                                     exp_name: bypass
+                                     hidden_dim: 512
+                                     lambda_ft_l2: 0.01
+                                     lambda_graph_l2: 0.0005
+                                     marking_network: ./model_save/gcn_model_dim512_layer2_seed42.pth
+                                     node_list: 1,5,9,11
+                                     num_layers: 2
+                                     optimizer: sgd,lr=1.0
+                                     perturb_amplitude: 1
+INFO - 01/07/26 15:55:07 - 0:00:00 - The experiment will be stored in ./mark_save
+                                     
+INFO - 01/07/26 15:55:07 - 0:00:00 - Running command: python mark_embed.py --carrier_path './data/carriers.pth' --epochs 10 --node_list '1,5,9,11' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0' --embedding_file './data/blogcatalog_data.pt'
+
+INFO - 01/07/26 15:55:49 - 0:00:00 - ============ Initialized logger ============
+INFO - 01/07/26 15:55:49 - 0:00:00 - carrier_path: ./data/carriers.pth
+                                     command: python mark_embed.py --carrier_path './data/carriers.pth' --epochs 10 --node_list '1,5,9,11' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0' --embedding_file './data/blogcatalog_data.pt' --exp_id "mark_save"
+                                     dropout: 0.5
+                                     dump_path: ./mark_save
+                                     embedding_file: ./data/blogcatalog_data.pt
+                                     epochs: 10
+                                     exp_id: mark_save
+                                     exp_name: bypass
+                                     hidden_dim: 512
+                                     lambda_ft_l2: 0.01
+                                     lambda_graph_l2: 0.0005
+                                     marking_network: ./model_save/gcn_model_dim512_layer2_seed42.pth
+                                     node_list: 1,5,9,11
+                                     num_layers: 2
+                                     optimizer: sgd,lr=1.0
+                                     perturb_amplitude: 1
+INFO - 01/07/26 15:55:49 - 0:00:00 - The experiment will be stored in ./mark_save
+                                     
+INFO - 01/07/26 15:55:49 - 0:00:00 - Running command: python mark_embed.py --carrier_path './data/carriers.pth' --epochs 10 --node_list '1,5,9,11' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0' --embedding_file './data/blogcatalog_data.pt'
+
+INFO - 01/07/26 15:56:30 - 0:00:00 - ============ Initialized logger ============
+INFO - 01/07/26 15:56:30 - 0:00:00 - carrier_path: ./data/carriers.pth
+                                     command: python mark_embed.py --carrier_path './data/carriers.pth' --epochs 10 --node_list '1,5,9,11' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0' --embedding_file './data/blogcatalog_data.pt' --exp_id "mark_save"
+                                     dropout: 0.5
+                                     dump_path: ./mark_save
+                                     embedding_file: ./data/blogcatalog_data.pt
+                                     epochs: 10
+                                     exp_id: mark_save
+                                     exp_name: bypass
+                                     hidden_dim: 512
+                                     lambda_ft_l2: 0.01
+                                     lambda_graph_l2: 0.0005
+                                     marking_network: ./model_save/gcn_model_dim512_layer2_seed42.pth
+                                     node_list: 1,5,9,11
+                                     num_layers: 2
+                                     optimizer: sgd,lr=1.0
+                                     perturb_amplitude: 1
+INFO - 01/07/26 15:56:30 - 0:00:00 - The experiment will be stored in ./mark_save
+                                     
+INFO - 01/07/26 15:56:30 - 0:00:00 - Running command: python mark_embed.py --carrier_path './data/carriers.pth' --epochs 10 --node_list '1,5,9,11' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0' --embedding_file './data/blogcatalog_data.pt'
+
+INFO - 01/07/26 16:22:19 - 0:00:00 - ============ Initialized logger ============
+INFO - 01/07/26 16:22:19 - 0:00:00 - carrier_path: ./data/carriers.pth
+                                     command: python mark_embed.py --carrier_path './data/carriers.pth' --epochs 10 --node_list '1,5,9,11' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0' --embedding_file './data/blogcatalog_data.pt' --exp_id "mark_save"
+                                     dropout: 0.5
+                                     dump_path: ./mark_save
+                                     embedding_file: ./data/blogcatalog_data.pt
+                                     epochs: 10
+                                     exp_id: mark_save
+                                     exp_name: bypass
+                                     hidden_dim: 512
+                                     lambda_ft_l2: 0.01
+                                     lambda_graph_l2: 0.0005
+                                     marking_network: ./model_save/gcn_model_dim512_layer2_seed42.pth
+                                     node_list: 1,5,9,11
+                                     num_layers: 2
+                                     optimizer: sgd,lr=1.0
+                                     perturb_amplitude: 1
+INFO - 01/07/26 16:22:19 - 0:00:00 - The experiment will be stored in ./mark_save
+                                     
+INFO - 01/07/26 16:22:19 - 0:00:00 - Running command: python mark_embed.py --carrier_path './data/carriers.pth' --epochs 10 --node_list '1,5,9,11' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0' --embedding_file './data/blogcatalog_data.pt'
+
+INFO - 01/07/26 16:24:40 - 0:00:00 - ============ Initialized logger ============
+INFO - 01/07/26 16:24:40 - 0:00:00 - carrier_path: ./mark_save/carriers.pth
+                                     command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,9,11' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0' --embedding_file './data/blogcatalog_data.pt' --exp_id "mark_save"
+                                     dropout: 0.5
+                                     dump_path: ./mark_save
+                                     embedding_file: ./data/blogcatalog_data.pt
+                                     epochs: 10
+                                     exp_id: mark_save
+                                     exp_name: bypass
+                                     hidden_dim: 512
+                                     lambda_ft_l2: 0.01
+                                     lambda_graph_l2: 0.0005
+                                     marking_network: ./model_save/gcn_model_dim512_layer2_seed42.pth
+                                     node_list: 1,5,9,11
+                                     num_layers: 2
+                                     optimizer: sgd,lr=1.0
+                                     perturb_amplitude: 1
+INFO - 01/07/26 16:24:40 - 0:00:00 - The experiment will be stored in ./mark_save
+                                     
+INFO - 01/07/26 16:24:40 - 0:00:00 - Running command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,9,11' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0' --embedding_file './data/blogcatalog_data.pt'
+
+INFO - 01/07/26 16:48:30 - 0:00:00 - ============ Initialized logger ============
+INFO - 01/07/26 16:48:30 - 0:00:00 - carrier_path: ./mark_save/carriers.pth
+                                     command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,9,11' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0' --embedding_file './data/blogcatalog_data.pt' --exp_id "mark_save"
+                                     dropout: 0.5
+                                     dump_path: ./mark_save
+                                     embedding_file: ./data/blogcatalog_data.pt
+                                     epochs: 10
+                                     exp_id: mark_save
+                                     exp_name: bypass
+                                     hidden_dim: 512
+                                     lambda_ft_l2: 0.01
+                                     lambda_graph_l2: 0.0005
+                                     marking_network: ./model_save/gcn_model_dim512_layer2_seed42.pth
+                                     node_list: 1,5,9,11
+                                     num_layers: 2
+                                     optimizer: sgd,lr=1.0
+                                     perturb_amplitude: 1
+INFO - 01/07/26 16:48:30 - 0:00:00 - The experiment will be stored in ./mark_save
+                                     
+INFO - 01/07/26 16:48:30 - 0:00:00 - Running command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,9,11' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0' --embedding_file './data/blogcatalog_data.pt'
+
+INFO - 01/08/26 14:38:48 - 0:00:00 - ============ Initialized logger ============
+INFO - 01/08/26 14:38:48 - 0:00:00 - carrier_path: ./mark_save/carriers.pth
+                                     command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,9,11' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0' --embedding_file './data/blogcatalog_data.pt' --exp_id "mark_save"
+                                     dropout: 0.5
+                                     dump_path: ./mark_save
+                                     embedding_file: ./data/blogcatalog_data.pt
+                                     epochs: 10
+                                     exp_id: mark_save
+                                     exp_name: bypass
+                                     hidden_dim: 512
+                                     lambda_ft_l2: 0.01
+                                     lambda_graph_l2: 0.0005
+                                     marking_network: ./model_save/gcn_model_dim512_layer2_seed42.pth
+                                     node_list: 1,5,9,11
+                                     num_layers: 2
+                                     optimizer: sgd,lr=1.0
+                                     perturb_amplitude: 1
+INFO - 01/08/26 14:38:48 - 0:00:00 - The experiment will be stored in ./mark_save
+                                     
+INFO - 01/08/26 14:38:48 - 0:00:00 - Running command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,9,11' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0' --embedding_file './data/blogcatalog_data.pt'
+
+INFO - 01/08/26 14:41:44 - 0:00:00 - ============ Initialized logger ============
+INFO - 01/08/26 14:41:44 - 0:00:00 - carrier_path: ./mark_save/carriers.pth
+                                     command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,9,11' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0' --embedding_file './data/blogcatalog_data.pt' --exp_id "mark_save"
+                                     dropout: 0.5
+                                     dump_path: ./mark_save
+                                     embedding_file: ./data/blogcatalog_data.pt
+                                     epochs: 10
+                                     exp_id: mark_save
+                                     exp_name: bypass
+                                     hidden_dim: 512
+                                     lambda_ft_l2: 0.01
+                                     lambda_graph_l2: 0.0005
+                                     marking_network: ./model_save/gcn_benign_model_dim512_layer2_seed42.pth
+                                     node_list: 1,5,9,11
+                                     num_layers: 2
+                                     optimizer: sgd,lr=1.0
+                                     perturb_amplitude: 1
+INFO - 01/08/26 14:41:44 - 0:00:00 - The experiment will be stored in ./mark_save
+                                     
+INFO - 01/08/26 14:41:44 - 0:00:00 - Running command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,9,11' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0' --embedding_file './data/blogcatalog_data.pt'
+
+INFO - 01/08/26 15:04:34 - 0:22:50 - Schedule of sgd,lr=1.0: None
+INFO - 01/08/26 15:05:49 - 0:00:00 - ============ Initialized logger ============
+INFO - 01/08/26 15:05:49 - 0:00:00 - carrier_path: ./mark_save/carriers.pth
+                                     command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '5,35,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0' --embedding_file './data/blogcatalog_data.pt' --exp_id "mark_save"
+                                     dropout: 0.5
+                                     dump_path: ./mark_save
+                                     embedding_file: ./data/blogcatalog_data.pt
+                                     epochs: 10
+                                     exp_id: mark_save
+                                     exp_name: bypass
+                                     hidden_dim: 512
+                                     lambda_ft_l2: 0.01
+                                     lambda_graph_l2: 0.0005
+                                     marking_network: ./model_save/gcn_benign_model_dim512_layer2_seed42.pth
+                                     node_list: 5,35,39,60
+                                     num_layers: 2
+                                     optimizer: sgd,lr=1.0
+                                     perturb_amplitude: 1
+INFO - 01/08/26 15:05:49 - 0:00:00 - The experiment will be stored in ./mark_save
+                                     
+INFO - 01/08/26 15:05:49 - 0:00:00 - Running command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '5,35,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0' --embedding_file './data/blogcatalog_data.pt'
+
+INFO - 01/08/26 15:07:39 - 0:01:51 - Schedule of sgd,lr=1.0: None
+INFO - 01/08/26 15:15:17 - 0:00:00 - ============ Initialized logger ============
+INFO - 01/08/26 15:15:17 - 0:00:00 - carrier_path: ./mark_save/carriers.pth
+                                     command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0' --embedding_file './data/blogcatalog_data.pt' --exp_id "mark_save"
+                                     dropout: 0.5
+                                     dump_path: ./mark_save
+                                     embedding_file: ./data/blogcatalog_data.pt
+                                     epochs: 10
+                                     exp_id: mark_save
+                                     exp_name: bypass
+                                     hidden_dim: 512
+                                     lambda_ft_l2: 0.01
+                                     lambda_graph_l2: 0.0005
+                                     marking_network: ./model_save/gcn_benign_model_dim512_layer2_seed42.pth
+                                     node_list: 1,5,39,60
+                                     num_layers: 2
+                                     optimizer: sgd,lr=1.0
+                                     perturb_amplitude: 1
+INFO - 01/08/26 15:15:17 - 0:00:00 - The experiment will be stored in ./mark_save
+                                     
+INFO - 01/08/26 15:15:17 - 0:00:00 - Running command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0' --embedding_file './data/blogcatalog_data.pt'
+
+INFO - 01/08/26 15:15:27 - 0:00:09 - Schedule of sgd,lr=1.0: None
+INFO - 01/08/26 15:17:13 - 0:01:55 - __log__:{"keyword": "iteration", "loss": 0.0, "loss_ft": -0.0, "loss_norm": 0.0, "loss_ft_l2": 0.0}
+INFO - 01/08/26 15:19:04 - 0:03:47 - __log__:{"keyword": "iteration", "loss": 0.0, "loss_ft": -0.0, "loss_norm": 0.0, "loss_ft_l2": 0.0}
+INFO - 01/08/26 15:31:46 - 0:00:00 - ============ Initialized logger ============
+INFO - 01/08/26 15:31:46 - 0:00:00 - carrier_path: ./mark_save/carriers.pth
+                                     command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0' --embedding_file './data/blogcatalog_data.pt' --exp_id "mark_save"
+                                     dropout: 0.5
+                                     dump_path: ./mark_save
+                                     embedding_file: ./data/blogcatalog_data.pt
+                                     epochs: 10
+                                     exp_id: mark_save
+                                     exp_name: bypass
+                                     hidden_dim: 512
+                                     lambda_ft_l2: 0.01
+                                     lambda_graph_l2: 0.0005
+                                     marking_network: ./model_save/gcn_benign_model_dim512_layer2_seed42.pth
+                                     node_list: 1,5,39,60
+                                     num_layers: 2
+                                     optimizer: sgd,lr=1.0
+                                     perturb_amplitude: 1
+INFO - 01/08/26 15:31:46 - 0:00:00 - The experiment will be stored in ./mark_save
+                                     
+INFO - 01/08/26 15:31:46 - 0:00:00 - Running command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0' --embedding_file './data/blogcatalog_data.pt'
+
+INFO - 01/08/26 15:31:46 - 0:00:00 - Schedule of sgd,lr=1.0: None
+INFO - 01/08/26 15:31:46 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.0, "loss_ft": -0.0, "loss_norm": 0.0, "loss_ft_l2": 0.0}
+INFO - 01/08/26 15:31:46 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.0, "loss_ft": -0.0, "loss_norm": 0.0, "loss_ft_l2": 0.0}
+INFO - 01/08/26 15:37:58 - 0:00:00 - ============ Initialized logger ============
+INFO - 01/08/26 15:37:58 - 0:00:00 - carrier_path: ./mark_save/carriers.pth
+                                     command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0' --embedding_file './data/blogcatalog_data.pt' --exp_id "mark_save"
+                                     dropout: 0.5
+                                     dump_path: ./mark_save
+                                     embedding_file: ./data/blogcatalog_data.pt
+                                     epochs: 10
+                                     exp_id: mark_save
+                                     exp_name: bypass
+                                     hidden_dim: 512
+                                     lambda_ft_l2: 0.01
+                                     lambda_graph_l2: 0.0005
+                                     marking_network: ./model_save/gcn_benign_model_dim512_layer2_seed42.pth
+                                     node_list: 1,5,39,60
+                                     num_layers: 2
+                                     optimizer: sgd,lr=1.0
+                                     perturb_amplitude: 1
+INFO - 01/08/26 15:37:58 - 0:00:00 - The experiment will be stored in ./mark_save
+                                     
+INFO - 01/08/26 15:37:58 - 0:00:00 - Running command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0' --embedding_file './data/blogcatalog_data.pt'
+
+INFO - 01/08/26 15:37:58 - 0:00:00 - Schedule of sgd,lr=1.0: None
+INFO - 01/08/26 15:37:58 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.0, "loss_ft": -0.0, "loss_norm": 0.0, "loss_ft_l2": 0.0}
+INFO - 01/08/26 15:37:58 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.0, "loss_ft": -0.0, "loss_norm": 0.0, "loss_ft_l2": 0.0}
+INFO - 01/08/26 15:37:58 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.0, "loss_ft": -0.0, "loss_norm": 0.0, "loss_ft_l2": 0.0}
+INFO - 01/08/26 15:37:58 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.0, "loss_ft": -0.0, "loss_norm": 0.0, "loss_ft_l2": 0.0}
+INFO - 01/08/26 15:37:58 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.0, "loss_ft": -0.0, "loss_norm": 0.0, "loss_ft_l2": 0.0}
+INFO - 01/08/26 15:37:58 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.0, "loss_ft": -0.0, "loss_norm": 0.0, "loss_ft_l2": 0.0}
+INFO - 01/08/26 15:37:58 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.0, "loss_ft": -0.0, "loss_norm": 0.0, "loss_ft_l2": 0.0}
+INFO - 01/08/26 15:37:58 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.0, "loss_ft": -0.0, "loss_norm": 0.0, "loss_ft_l2": 0.0}
+INFO - 01/08/26 15:37:58 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.0, "loss_ft": -0.0, "loss_norm": 0.0, "loss_ft_l2": 0.0}
+INFO - 01/08/26 15:37:58 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.0, "loss_ft": -0.0, "loss_norm": 0.0, "loss_ft_l2": 0.0}
+INFO - 01/08/26 15:37:58 - 0:00:01 - __log__:{"keyword": "final", "ft_direction": 0.0, "ft_norm": 0.0, "max_feat_change": 0.0}
+INFO - 01/08/26 15:41:27 - 0:00:00 - ============ Initialized logger ============
+INFO - 01/08/26 15:41:27 - 0:00:00 - carrier_path: ./mark_save/carriers.pth
+                                     command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0' --embedding_file './data/blogcatalog_data.pt' --exp_id "mark_save"
+                                     dropout: 0.5
+                                     dump_path: ./mark_save
+                                     embedding_file: ./data/blogcatalog_data.pt
+                                     epochs: 10
+                                     exp_id: mark_save
+                                     exp_name: bypass
+                                     hidden_dim: 512
+                                     lambda_ft_l2: 0.01
+                                     lambda_graph_l2: 0.0005
+                                     marking_network: ./model_save/gcn_benign_model_dim512_layer2_seed42.pth
+                                     node_list: 1,5,39,60
+                                     num_layers: 2
+                                     optimizer: sgd,lr=1.0
+                                     perturb_amplitude: 1
+INFO - 01/08/26 15:41:27 - 0:00:00 - The experiment will be stored in ./mark_save
+                                     
+INFO - 01/08/26 15:41:27 - 0:00:00 - Running command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0' --embedding_file './data/blogcatalog_data.pt'
+
+INFO - 01/08/26 15:41:28 - 0:00:01 - Schedule of sgd,lr=1.0: None
+INFO - 01/08/26 15:41:29 - 0:00:02 - __log__:{"keyword": "iteration", "loss": 0.26241129636764526, "loss_ft": 0.17510706186294556, "loss_norm": 0.0, "loss_ft_l2": 0.08730421960353851}
+INFO - 01/08/26 15:41:29 - 0:00:02 - __log__:{"keyword": "iteration", "loss": 0.3172457218170166, "loss_ft": 0.22836628556251526, "loss_norm": 0.0, "loss_ft_l2": 0.08887945115566254}
+INFO - 01/08/26 15:41:29 - 0:00:02 - __log__:{"keyword": "iteration", "loss": 0.2454870641231537, "loss_ft": 0.16283704340457916, "loss_norm": 0.0, "loss_ft_l2": 0.08265001326799393}
+INFO - 01/08/26 15:41:29 - 0:00:02 - __log__:{"keyword": "iteration", "loss": -0.4013892710208893, "loss_ft": -0.49510082602500916, "loss_norm": 0.0, "loss_ft_l2": 0.09371154755353928}
+INFO - 01/08/26 15:41:29 - 0:00:02 - __log__:{"keyword": "iteration", "loss": -0.10361208766698837, "loss_ft": -0.1925741732120514, "loss_norm": 0.0, "loss_ft_l2": 0.08896208554506302}
+INFO - 01/08/26 15:41:29 - 0:00:02 - __log__:{"keyword": "iteration", "loss": -0.07785395532846451, "loss_ft": -0.16620759665966034, "loss_norm": 0.0, "loss_ft_l2": 0.08835364133119583}
+INFO - 01/08/26 15:41:29 - 0:00:02 - __log__:{"keyword": "iteration", "loss": -0.028256773948669434, "loss_ft": -0.11999857425689697, "loss_norm": 0.0, "loss_ft_l2": 0.09174180030822754}
+INFO - 01/08/26 15:41:29 - 0:00:02 - __log__:{"keyword": "iteration", "loss": 0.3431560695171356, "loss_ft": 0.2565312385559082, "loss_norm": 0.0, "loss_ft_l2": 0.08662483096122742}
+INFO - 01/08/26 15:41:29 - 0:00:02 - __log__:{"keyword": "iteration", "loss": 0.2097366601228714, "loss_ft": 0.11927996575832367, "loss_norm": 0.0, "loss_ft_l2": 0.09045669436454773}
+INFO - 01/08/26 15:41:29 - 0:00:02 - __log__:{"keyword": "iteration", "loss": 0.17430230975151062, "loss_ft": 0.08455677330493927, "loss_norm": 0.0, "loss_ft_l2": 0.08974553644657135}
+INFO - 01/08/26 15:41:29 - 0:00:02 - __log__:{"keyword": "final", "ft_direction": -0.0094740716740489, "ft_norm": 2.22037672996521, "max_feat_change": 0.0}
+INFO - 01/08/26 15:52:19 - 0:00:00 - ============ Initialized logger ============
+INFO - 01/08/26 15:52:19 - 0:00:00 - carrier_path: ./mark_save/carriers.pth
+                                     command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0' --embedding_file './data/blogcatalog_data.pt' --exp_id "mark_save"
+                                     dropout: 0.5
+                                     dump_path: ./mark_save
+                                     embedding_file: ./data/blogcatalog_data.pt
+                                     epochs: 10
+                                     exp_id: mark_save
+                                     exp_name: bypass
+                                     hidden_dim: 512
+                                     lambda_ft_l2: 0.01
+                                     lambda_graph_l2: 0.0005
+                                     marking_network: ./model_save/gcn_benign_model_dim512_layer2_seed42.pth
+                                     node_list: 1,5,39,60
+                                     num_layers: 2
+                                     optimizer: sgd,lr=1.0
+                                     perturb_amplitude: 1
+INFO - 01/08/26 15:52:19 - 0:00:00 - The experiment will be stored in ./mark_save
+                                     
+INFO - 01/08/26 15:52:19 - 0:00:00 - Running command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0' --embedding_file './data/blogcatalog_data.pt'
+
+INFO - 01/08/26 15:52:19 - 0:00:00 - Schedule of sgd,lr=1.0: None
+INFO - 01/08/26 15:52:19 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -0.255292683839798, "loss_ft": -0.34580034017562866, "loss_norm": 0.0, "loss_ft_l2": 0.09050765633583069}
+INFO - 01/08/26 15:52:19 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -0.19360294938087463, "loss_ft": -0.283000111579895, "loss_norm": 0.0, "loss_ft_l2": 0.08939716219902039}
+INFO - 01/08/26 15:52:19 - 0:00:01 - __log__:{"keyword": "iteration", "loss": 0.090028777718544, "loss_ft": 0.00070200115442276, "loss_norm": 0.0, "loss_ft_l2": 0.08932677656412125}
+INFO - 01/08/26 15:52:19 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -0.09077417105436325, "loss_ft": -0.1739509552717209, "loss_norm": 0.0, "loss_ft_l2": 0.08317678421735764}
+INFO - 01/08/26 15:52:19 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -0.26039525866508484, "loss_ft": -0.3529920279979706, "loss_norm": 0.0, "loss_ft_l2": 0.09259677678346634}
+INFO - 01/08/26 15:52:19 - 0:00:01 - __log__:{"keyword": "iteration", "loss": 0.05454912781715393, "loss_ft": -0.03876017779111862, "loss_norm": 0.0, "loss_ft_l2": 0.09330930560827255}
+INFO - 01/08/26 15:52:19 - 0:00:01 - __log__:{"keyword": "iteration", "loss": 0.5179445147514343, "loss_ft": 0.4297173321247101, "loss_norm": 0.0, "loss_ft_l2": 0.08822719007730484}
+INFO - 01/08/26 15:52:19 - 0:00:01 - __log__:{"keyword": "iteration", "loss": 0.2713160812854767, "loss_ft": 0.1879315972328186, "loss_norm": 0.0, "loss_ft_l2": 0.08338449150323868}
+INFO - 01/08/26 15:52:19 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -0.2398311048746109, "loss_ft": -0.3314206004142761, "loss_norm": 0.0, "loss_ft_l2": 0.09158949553966522}
+INFO - 01/08/26 15:52:19 - 0:00:01 - __log__:{"keyword": "iteration", "loss": 0.11441375315189362, "loss_ft": 0.025219116359949112, "loss_norm": 0.0, "loss_ft_l2": 0.0891946330666542}
+INFO - 01/08/26 15:52:19 - 0:00:01 - __log__:{"keyword": "final", "ft_direction": -0.02630404755473137, "ft_norm": 2.258574962615967, "max_feat_change": 0.0}
+INFO - 01/08/26 15:55:58 - 0:00:00 - ============ Initialized logger ============
+INFO - 01/08/26 15:55:58 - 0:00:00 - carrier_path: ./mark_save/carriers.pth
+                                     command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0' --embedding_file './data/blogcatalog_data.pt' --exp_id "mark_save"
+                                     dropout: 0.5
+                                     dump_path: ./mark_save
+                                     embedding_file: ./data/blogcatalog_data.pt
+                                     epochs: 10
+                                     exp_id: mark_save
+                                     exp_name: bypass
+                                     hidden_dim: 512
+                                     lambda_ft_l2: 0.01
+                                     lambda_graph_l2: 0.0005
+                                     marking_network: ./model_save/gcn_benign_model_dim512_layer2_seed42.pth
+                                     node_list: 1,5,39,60
+                                     num_layers: 2
+                                     optimizer: sgd,lr=1.0
+                                     perturb_amplitude: 1
+INFO - 01/08/26 15:55:58 - 0:00:00 - The experiment will be stored in ./mark_save
+                                     
+INFO - 01/08/26 15:55:58 - 0:00:00 - Running command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=1.0' --embedding_file './data/blogcatalog_data.pt'
+
+INFO - 01/08/26 15:55:58 - 0:00:00 - Schedule of sgd,lr=1.0: None
+INFO - 01/08/26 15:55:58 - 0:00:01 - __log__:{"keyword": "iteration", "loss": 0.005338221788406372, "loss_ft": -0.08025841414928436, "loss_norm": 0.0, "loss_ft_l2": 0.08559663593769073}
+INFO - 01/08/26 15:55:58 - 0:00:01 - __log__:{"keyword": "iteration", "loss": 0.0936460942029953, "loss_ft": 0.00831940770149231, "loss_norm": 0.0, "loss_ft_l2": 0.08532668650150299}
+INFO - 01/08/26 15:55:58 - 0:00:01 - __log__:{"keyword": "iteration", "loss": 0.23336894810199738, "loss_ft": 0.14482882618904114, "loss_norm": 0.0, "loss_ft_l2": 0.08854012191295624}
+INFO - 01/08/26 15:55:58 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -0.11873463541269302, "loss_ft": -0.20319437980651855, "loss_norm": 0.0, "loss_ft_l2": 0.08445974439382553}
+INFO - 01/08/26 15:55:58 - 0:00:01 - __log__:{"keyword": "iteration", "loss": 0.2004457414150238, "loss_ft": 0.11049991846084595, "loss_norm": 0.0, "loss_ft_l2": 0.08994582295417786}
+INFO - 01/08/26 15:55:58 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -0.023186080157756805, "loss_ft": -0.11310772597789764, "loss_norm": 0.0, "loss_ft_l2": 0.08992164582014084}
+INFO - 01/08/26 15:55:58 - 0:00:01 - __log__:{"keyword": "iteration", "loss": 0.16135507822036743, "loss_ft": 0.06829239428043365, "loss_norm": 0.0, "loss_ft_l2": 0.09306268393993378}
+INFO - 01/08/26 15:55:58 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -0.10904920846223831, "loss_ft": -0.20084606111049652, "loss_norm": 0.0, "loss_ft_l2": 0.09179685264825821}
+INFO - 01/08/26 15:55:58 - 0:00:01 - __log__:{"keyword": "iteration", "loss": 0.04650850594043732, "loss_ft": -0.04051758348941803, "loss_norm": 0.0, "loss_ft_l2": 0.08702608942985535}
+INFO - 01/08/26 15:55:58 - 0:00:01 - __log__:{"keyword": "iteration", "loss": 0.16378681361675262, "loss_ft": 0.07187393307685852, "loss_norm": 0.0, "loss_ft_l2": 0.0919128805398941}
+INFO - 01/08/26 15:55:58 - 0:00:01 - __log__:{"keyword": "final", "ft_direction": 0.028403345495462418, "ft_norm": 2.1388301849365234, "max_feat_change": 0.0}
+INFO - 01/08/26 15:57:08 - 0:00:00 - ============ Initialized logger ============
+INFO - 01/08/26 15:57:08 - 0:00:00 - carrier_path: ./mark_save/carriers.pth
+                                     command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=0.01' --embedding_file './data/blogcatalog_data.pt' --exp_id "mark_save"
+                                     dropout: 0.5
+                                     dump_path: ./mark_save
+                                     embedding_file: ./data/blogcatalog_data.pt
+                                     epochs: 10
+                                     exp_id: mark_save
+                                     exp_name: bypass
+                                     hidden_dim: 512
+                                     lambda_ft_l2: 0.01
+                                     lambda_graph_l2: 0.0005
+                                     marking_network: ./model_save/gcn_benign_model_dim512_layer2_seed42.pth
+                                     node_list: 1,5,39,60
+                                     num_layers: 2
+                                     optimizer: sgd,lr=0.01
+                                     perturb_amplitude: 1
+INFO - 01/08/26 15:57:08 - 0:00:00 - The experiment will be stored in ./mark_save
+                                     
+INFO - 01/08/26 15:57:08 - 0:00:00 - Running command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=0.01' --embedding_file './data/blogcatalog_data.pt'
+
+INFO - 01/08/26 15:57:08 - 0:00:00 - Schedule of sgd,lr=0.01: None
+INFO - 01/08/26 15:57:08 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.06646162271499634, "loss_ft": -0.02749362587928772, "loss_norm": 0.0, "loss_ft_l2": 0.09395524859428406}
+INFO - 01/08/26 15:57:08 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.07904089242219925, "loss_ft": -0.017817094922065735, "loss_norm": 0.0, "loss_ft_l2": 0.09685798734426498}
+INFO - 01/08/26 15:57:08 - 0:00:00 - __log__:{"keyword": "iteration", "loss": -0.04247809201478958, "loss_ft": -0.12965862452983856, "loss_norm": 0.0, "loss_ft_l2": 0.08718053251504898}
+INFO - 01/08/26 15:57:08 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.2377556562423706, "loss_ft": 0.1468939632177353, "loss_norm": 0.0, "loss_ft_l2": 0.09086170047521591}
+INFO - 01/08/26 15:57:08 - 0:00:00 - __log__:{"keyword": "iteration", "loss": -0.36146438121795654, "loss_ft": -0.4505919814109802, "loss_norm": 0.0, "loss_ft_l2": 0.08912759274244308}
+INFO - 01/08/26 15:57:08 - 0:00:00 - __log__:{"keyword": "iteration", "loss": -0.24283850193023682, "loss_ft": -0.3329662084579468, "loss_norm": 0.0, "loss_ft_l2": 0.09012770652770996}
+INFO - 01/08/26 15:57:08 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.19320601224899292, "loss_ft": 0.10797026008367538, "loss_norm": 0.0, "loss_ft_l2": 0.08523574471473694}
+INFO - 01/08/26 15:57:08 - 0:00:01 - __log__:{"keyword": "iteration", "loss": 0.20070268213748932, "loss_ft": 0.11391113698482513, "loss_norm": 0.0, "loss_ft_l2": 0.08679154515266418}
+INFO - 01/08/26 15:57:08 - 0:00:01 - __log__:{"keyword": "iteration", "loss": 0.2547638416290283, "loss_ft": 0.1645047813653946, "loss_norm": 0.0, "loss_ft_l2": 0.09025906026363373}
+INFO - 01/08/26 15:57:08 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -0.13387948274612427, "loss_ft": -0.22407463192939758, "loss_norm": 0.0, "loss_ft_l2": 0.09019514173269272}
+INFO - 01/08/26 15:57:08 - 0:00:01 - __log__:{"keyword": "final", "ft_direction": 0.039524421095848083, "ft_norm": 2.1587793827056885, "max_feat_change": 0.0}
+INFO - 01/08/26 16:06:54 - 0:00:00 - ============ Initialized logger ============
+INFO - 01/08/26 16:06:54 - 0:00:00 - carrier_path: ./mark_save/carriers.pth
+                                     command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=0.01' --embedding_file './data/blogcatalog_data.pt' --exp_id "mark_save"
+                                     dropout: 0.5
+                                     dump_path: ./mark_save
+                                     embedding_file: ./data/blogcatalog_data.pt
+                                     epochs: 10
+                                     exp_id: mark_save
+                                     exp_name: bypass
+                                     hidden_dim: 512
+                                     lambda_ft_l2: 0.01
+                                     lambda_graph_l2: 0.0005
+                                     marking_network: ./model_save/gcn_benign_model_dim512_layer2_seed42.pth
+                                     node_list: 1,5,39,60
+                                     num_layers: 2
+                                     optimizer: sgd,lr=0.01
+                                     perturb_amplitude: 1
+INFO - 01/08/26 16:06:54 - 0:00:00 - The experiment will be stored in ./mark_save
+                                     
+INFO - 01/08/26 16:06:54 - 0:00:00 - Running command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=0.01' --embedding_file './data/blogcatalog_data.pt'
+
+INFO - 01/08/26 16:06:55 - 0:00:00 - Schedule of sgd,lr=0.01: None
+INFO - 01/08/26 16:06:55 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -0.05340396612882614, "loss_ft": -0.1410178691148758, "loss_norm": 0.0, "loss_ft_l2": 0.08761390298604965}
+INFO - 01/08/26 16:06:55 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -0.12067873030900955, "loss_ft": -0.21354307234287262, "loss_norm": 0.0, "loss_ft_l2": 0.09286434203386307}
+INFO - 01/08/26 16:06:55 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -0.08980783075094223, "loss_ft": -0.1840260624885559, "loss_norm": 0.0, "loss_ft_l2": 0.09421823173761368}
+INFO - 01/08/26 16:06:55 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -0.18181954324245453, "loss_ft": -0.2717073857784271, "loss_norm": 0.0, "loss_ft_l2": 0.0898878425359726}
+INFO - 01/08/26 16:06:55 - 0:00:01 - __log__:{"keyword": "iteration", "loss": 0.1750165820121765, "loss_ft": 0.0791373997926712, "loss_norm": 0.0, "loss_ft_l2": 0.09587917476892471}
+INFO - 01/08/26 16:06:55 - 0:00:01 - __log__:{"keyword": "iteration", "loss": 0.03747359663248062, "loss_ft": -0.054958559572696686, "loss_norm": 0.0, "loss_ft_l2": 0.09243215620517731}
+INFO - 01/08/26 16:06:55 - 0:00:01 - __log__:{"keyword": "iteration", "loss": 0.17144325375556946, "loss_ft": 0.07758037745952606, "loss_norm": 0.0, "loss_ft_l2": 0.09386288374662399}
+INFO - 01/08/26 16:06:55 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -0.24874819815158844, "loss_ft": -0.34174248576164246, "loss_norm": 0.0, "loss_ft_l2": 0.09299428761005402}
+INFO - 01/08/26 16:06:55 - 0:00:01 - __log__:{"keyword": "iteration", "loss": 0.1473761796951294, "loss_ft": 0.057862915098667145, "loss_norm": 0.0, "loss_ft_l2": 0.08951326459646225}
+INFO - 01/08/26 16:06:55 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -0.14285549521446228, "loss_ft": -0.23110631108283997, "loss_norm": 0.0, "loss_ft_l2": 0.08825080841779709}
+INFO - 01/08/26 16:06:55 - 0:00:01 - __log__:{"keyword": "final", "ft_direction": -0.05798240005970001, "ft_norm": 2.230526924133301, "max_feat_change": 0.0}
+INFO - 01/08/26 16:19:13 - 0:00:00 - ============ Initialized logger ============
+INFO - 01/08/26 16:19:13 - 0:00:00 - carrier_path: ./mark_save/carriers.pth
+                                     command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=0.01' --embedding_file './data/blogcatalog_data.pt' --exp_id "mark_save"
+                                     dropout: 0.5
+                                     dump_path: ./mark_save
+                                     embedding_file: ./data/blogcatalog_data.pt
+                                     epochs: 10
+                                     exp_id: mark_save
+                                     exp_name: bypass
+                                     hidden_dim: 512
+                                     lambda_ft_l2: 0.01
+                                     lambda_graph_l2: 0.0005
+                                     marking_network: ./model_save/gcn_benign_model_dim512_layer2_seed42.pth
+                                     node_list: 1,5,39,60
+                                     num_layers: 2
+                                     optimizer: sgd,lr=0.01
+                                     perturb_amplitude: 1
+INFO - 01/08/26 16:19:13 - 0:00:00 - The experiment will be stored in ./mark_save
+                                     
+INFO - 01/08/26 16:19:13 - 0:00:00 - Running command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=0.01' --embedding_file './data/blogcatalog_data.pt'
+
+INFO - 01/08/26 16:19:13 - 0:00:00 - Schedule of sgd,lr=0.01: None
+INFO - 01/08/26 16:19:14 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.013896763324737549, "loss_ft": -0.0708499327301979, "loss_norm": 0.0, "loss_ft_l2": 0.08474669605493546}
+INFO - 01/08/26 16:19:14 - 0:00:00 - __log__:{"keyword": "iteration", "loss": -0.06687197834253311, "loss_ft": -0.16114464402198792, "loss_norm": 0.0, "loss_ft_l2": 0.0942726656794548}
+INFO - 01/08/26 16:19:14 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.06144930422306061, "loss_ft": -0.025268524885177612, "loss_norm": 0.0, "loss_ft_l2": 0.08671782910823822}
+INFO - 01/08/26 16:19:14 - 0:00:00 - __log__:{"keyword": "iteration", "loss": -0.1515801101922989, "loss_ft": -0.2402125895023346, "loss_norm": 0.0, "loss_ft_l2": 0.0886324793100357}
+INFO - 01/08/26 16:19:14 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.4320809543132782, "loss_ft": 0.34095263481140137, "loss_norm": 0.0, "loss_ft_l2": 0.09112831950187683}
+INFO - 01/08/26 16:19:14 - 0:00:00 - __log__:{"keyword": "iteration", "loss": -0.016728900372982025, "loss_ft": -0.10272007435560226, "loss_norm": 0.0, "loss_ft_l2": 0.08599117398262024}
+INFO - 01/08/26 16:19:14 - 0:00:00 - __log__:{"keyword": "iteration", "loss": -0.019526638090610504, "loss_ft": -0.1046164333820343, "loss_norm": 0.0, "loss_ft_l2": 0.0850897952914238}
+INFO - 01/08/26 16:19:14 - 0:00:00 - __log__:{"keyword": "iteration", "loss": -0.13354122638702393, "loss_ft": -0.21847853064537048, "loss_norm": 0.0, "loss_ft_l2": 0.08493731170892715}
+INFO - 01/08/26 16:19:14 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.031906768679618835, "loss_ft": -0.054929062724113464, "loss_norm": 0.0, "loss_ft_l2": 0.0868358314037323}
+INFO - 01/08/26 16:19:14 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.29991745948791504, "loss_ft": 0.21131080389022827, "loss_norm": 0.0, "loss_ft_l2": 0.08860664069652557}
+INFO - 01/08/26 16:19:14 - 0:00:00 - __log__:{"keyword": "final", "ft_direction": -0.08352795988321304, "ft_norm": 2.312843084335327, "max_feat_change": 0.0}
+INFO - 01/08/26 16:26:29 - 0:00:00 - ============ Initialized logger ============
+INFO - 01/08/26 16:26:29 - 0:00:00 - carrier_path: ./mark_save/carriers.pth
+                                     command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=0.01' --embedding_file './data/blogcatalog_data.pt' --exp_id "mark_save"
+                                     dropout: 0.5
+                                     dump_path: ./mark_save
+                                     embedding_file: ./data/blogcatalog_data.pt
+                                     epochs: 10
+                                     exp_id: mark_save
+                                     exp_name: bypass
+                                     hidden_dim: 512
+                                     lambda_ft_l2: 0.01
+                                     lambda_graph_l2: 0.0005
+                                     marking_network: ./model_save/gcn_benign_model_dim512_layer2_seed42.pth
+                                     node_list: 1,5,39,60
+                                     num_layers: 2
+                                     optimizer: sgd,lr=0.01
+                                     perturb_amplitude: 1
+INFO - 01/08/26 16:26:29 - 0:00:00 - The experiment will be stored in ./mark_save
+                                     
+INFO - 01/08/26 16:26:29 - 0:00:00 - Running command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=0.01' --embedding_file './data/blogcatalog_data.pt'
+
+INFO - 01/08/26 16:26:29 - 0:00:00 - Schedule of sgd,lr=0.01: None
+INFO - 01/08/26 16:26:29 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.18277975916862488, "loss_ft": 0.09773716330528259, "loss_norm": 0.0, "loss_ft_l2": 0.08504258841276169}
+INFO - 01/08/26 16:26:29 - 0:00:00 - __log__:{"keyword": "iteration", "loss": -0.0462234765291214, "loss_ft": -0.12869399785995483, "loss_norm": 0.0, "loss_ft_l2": 0.08247052133083344}
+INFO - 01/08/26 16:26:29 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.1735786348581314, "loss_ft": 0.08375684916973114, "loss_norm": 0.0, "loss_ft_l2": 0.08982178568840027}
+INFO - 01/08/26 16:26:29 - 0:00:00 - __log__:{"keyword": "iteration", "loss": -0.19614973664283752, "loss_ft": -0.2860514223575592, "loss_norm": 0.0, "loss_ft_l2": 0.08990168571472168}
+INFO - 01/08/26 16:26:29 - 0:00:00 - __log__:{"keyword": "iteration", "loss": -0.02393239736557007, "loss_ft": -0.11341787874698639, "loss_norm": 0.0, "loss_ft_l2": 0.08948548138141632}
+INFO - 01/08/26 16:26:29 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.13984963297843933, "loss_ft": 0.05188845843076706, "loss_norm": 0.0, "loss_ft_l2": 0.08796116709709167}
+INFO - 01/08/26 16:26:29 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.28845953941345215, "loss_ft": 0.1989147961139679, "loss_norm": 0.0, "loss_ft_l2": 0.08954475075006485}
+INFO - 01/08/26 16:26:29 - 0:00:00 - __log__:{"keyword": "iteration", "loss": -0.0633133128285408, "loss_ft": -0.15442752838134766, "loss_norm": 0.0, "loss_ft_l2": 0.09111421555280685}
+INFO - 01/08/26 16:26:29 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.17534379661083221, "loss_ft": 0.08088646829128265, "loss_norm": 0.0, "loss_ft_l2": 0.09445732831954956}
+INFO - 01/08/26 16:26:29 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.24011704325675964, "loss_ft": 0.14947637915611267, "loss_norm": 0.0, "loss_ft_l2": 0.09064066410064697}
+INFO - 01/08/26 16:26:29 - 0:00:00 - __log__:{"keyword": "final", "ft_direction": 0.012020820751786232, "ft_norm": 2.170891046524048, "max_feat_change": 0.0}
+INFO - 01/08/26 16:32:03 - 0:00:00 - ============ Initialized logger ============
+INFO - 01/08/26 16:32:03 - 0:00:00 - carrier_path: ./mark_save/carriers.pth
+                                     command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=0.01' --embedding_file './data/blogcatalog_data.pt' --exp_id "mark_save"
+                                     dropout: 0.5
+                                     dump_path: ./mark_save
+                                     embedding_file: ./data/blogcatalog_data.pt
+                                     epochs: 10
+                                     exp_id: mark_save
+                                     exp_name: bypass
+                                     hidden_dim: 512
+                                     lambda_ft_l2: 0.01
+                                     lambda_graph_l2: 0.0005
+                                     marking_network: ./model_save/gcn_benign_model_dim512_layer2_seed42.pth
+                                     node_list: 1,5,39,60
+                                     num_layers: 2
+                                     optimizer: sgd,lr=0.01
+                                     perturb_amplitude: 1
+INFO - 01/08/26 16:32:03 - 0:00:00 - The experiment will be stored in ./mark_save
+                                     
+INFO - 01/08/26 16:32:03 - 0:00:00 - Running command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=0.01' --embedding_file './data/blogcatalog_data.pt'
+
+INFO - 01/08/26 16:32:04 - 0:00:01 - Schedule of sgd,lr=0.01: None
+INFO - 01/08/26 16:32:04 - 0:00:01 - __log__:{"keyword": "iteration", "loss": 0.10807257890701294, "loss_ft": 0.021306216716766357, "loss_norm": 0.0, "loss_ft_l2": 0.08676636219024658}
+INFO - 01/08/26 16:32:04 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -0.04534833878278732, "loss_ft": -0.13583239912986755, "loss_norm": 0.0, "loss_ft_l2": 0.09048406034708023}
+INFO - 01/08/26 16:32:04 - 0:00:01 - __log__:{"keyword": "iteration", "loss": 0.036567822098731995, "loss_ft": -0.04990548640489578, "loss_norm": 0.0, "loss_ft_l2": 0.08647330850362778}
+INFO - 01/08/26 16:32:04 - 0:00:01 - __log__:{"keyword": "iteration", "loss": 0.44657570123672485, "loss_ft": 0.3617827296257019, "loss_norm": 0.0, "loss_ft_l2": 0.08479295670986176}
+INFO - 01/08/26 16:32:04 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -0.045657023787498474, "loss_ft": -0.13037757575511932, "loss_norm": 0.0, "loss_ft_l2": 0.08472055196762085}
+INFO - 01/08/26 16:32:04 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -0.36504969000816345, "loss_ft": -0.45541220903396606, "loss_norm": 0.0, "loss_ft_l2": 0.09036252647638321}
+INFO - 01/08/26 16:32:04 - 0:00:01 - __log__:{"keyword": "iteration", "loss": 0.055340226739645004, "loss_ft": -0.03162140026688576, "loss_norm": 0.0, "loss_ft_l2": 0.08696162700653076}
+INFO - 01/08/26 16:32:04 - 0:00:01 - __log__:{"keyword": "iteration", "loss": 0.04398573189973831, "loss_ft": -0.04456385225057602, "loss_norm": 0.0, "loss_ft_l2": 0.08854958415031433}
+INFO - 01/08/26 16:32:04 - 0:00:01 - __log__:{"keyword": "iteration", "loss": 0.07639463990926743, "loss_ft": -0.017608284950256348, "loss_norm": 0.0, "loss_ft_l2": 0.09400292485952377}
+INFO - 01/08/26 16:32:04 - 0:00:01 - __log__:{"keyword": "iteration", "loss": 0.4383721649646759, "loss_ft": 0.3458540141582489, "loss_norm": 0.0, "loss_ft_l2": 0.0925181582570076}
+INFO - 01/08/26 16:42:00 - 0:00:00 - ============ Initialized logger ============
+INFO - 01/08/26 16:42:00 - 0:00:00 - carrier_path: ./mark_save/carriers.pth
+                                     command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=0.01' --embedding_file './data/blogcatalog_data.pt' --exp_id "mark_save"
+                                     dropout: 0.5
+                                     dump_path: ./mark_save
+                                     embedding_file: ./data/blogcatalog_data.pt
+                                     epochs: 10
+                                     exp_id: mark_save
+                                     exp_name: bypass
+                                     hidden_dim: 512
+                                     lambda_ft_l2: 0.01
+                                     lambda_graph_l2: 0.0005
+                                     marking_network: ./model_save/gcn_benign_model_dim512_layer2_seed42.pth
+                                     node_list: 1,5,39,60
+                                     num_layers: 2
+                                     optimizer: sgd,lr=0.01
+                                     perturb_amplitude: 1
+INFO - 01/08/26 16:42:00 - 0:00:00 - The experiment will be stored in ./mark_save
+                                     
+INFO - 01/08/26 16:42:00 - 0:00:00 - Running command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=0.01' --embedding_file './data/blogcatalog_data.pt'
+
+INFO - 01/08/26 16:42:00 - 0:00:01 - Schedule of sgd,lr=0.01: None
+INFO - 01/08/26 16:42:00 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -0.028714999556541443, "loss_ft": -0.11627800017595291, "loss_norm": 0.0, "loss_ft_l2": 0.08756300061941147}
+INFO - 01/08/26 16:42:00 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -0.13300898671150208, "loss_ft": -0.221706360578537, "loss_norm": 0.0, "loss_ft_l2": 0.08869738131761551}
+INFO - 01/08/26 16:42:00 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -0.06435246765613556, "loss_ft": -0.1509760022163391, "loss_norm": 0.0, "loss_ft_l2": 0.08662353456020355}
+INFO - 01/08/26 16:42:00 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -0.4841194748878479, "loss_ft": -0.57145756483078, "loss_norm": 0.0, "loss_ft_l2": 0.08733807504177094}
+INFO - 01/08/26 16:42:00 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -0.2880191206932068, "loss_ft": -0.37883830070495605, "loss_norm": 0.0, "loss_ft_l2": 0.09081916511058807}
+INFO - 01/08/26 16:42:00 - 0:00:01 - __log__:{"keyword": "iteration", "loss": 0.04580333083868027, "loss_ft": -0.042849332094192505, "loss_norm": 0.0, "loss_ft_l2": 0.08865266293287277}
+INFO - 01/08/26 16:42:00 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -0.0012707635760307312, "loss_ft": -0.09255070984363556, "loss_norm": 0.0, "loss_ft_l2": 0.09127994626760483}
+INFO - 01/08/26 16:42:00 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -0.1420198380947113, "loss_ft": -0.23391060531139374, "loss_norm": 0.0, "loss_ft_l2": 0.09189077466726303}
+INFO - 01/08/26 16:42:00 - 0:00:01 - __log__:{"keyword": "iteration", "loss": -0.00411214679479599, "loss_ft": -0.09239839017391205, "loss_norm": 0.0, "loss_ft_l2": 0.08828624337911606}
+INFO - 01/08/26 16:42:00 - 0:00:01 - __log__:{"keyword": "iteration", "loss": 0.10090756416320801, "loss_ft": 0.01238347589969635, "loss_norm": 0.0, "loss_ft_l2": 0.08852408826351166}
+INFO - 01/08/26 16:47:53 - 0:00:00 - ============ Initialized logger ============
+INFO - 01/08/26 16:47:53 - 0:00:00 - carrier_path: ./mark_save/carriers.pth
+                                     command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=0.01' --embedding_file './data/blogcatalog_data.pt' --exp_id "mark_save"
+                                     dropout: 0.5
+                                     dump_path: ./mark_save
+                                     embedding_file: ./data/blogcatalog_data.pt
+                                     epochs: 10
+                                     exp_id: mark_save
+                                     exp_name: bypass
+                                     hidden_dim: 512
+                                     lambda_ft_l2: 0.01
+                                     lambda_graph_l2: 0.0005
+                                     marking_network: ./model_save/gcn_benign_model_dim512_layer2_seed42.pth
+                                     node_list: 1,5,39,60
+                                     num_layers: 2
+                                     optimizer: sgd,lr=0.01
+                                     perturb_amplitude: 1
+INFO - 01/08/26 16:47:53 - 0:00:00 - The experiment will be stored in ./mark_save
+                                     
+INFO - 01/08/26 16:47:53 - 0:00:00 - Running command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=0.01' --embedding_file './data/blogcatalog_data.pt'
+
+INFO - 01/08/26 16:47:54 - 0:00:00 - Schedule of sgd,lr=0.01: None
+INFO - 01/08/26 16:47:54 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.22940856218338013, "loss_ft": 0.14062708616256714, "loss_norm": 0.0, "loss_ft_l2": 0.08878146857023239}
+INFO - 01/08/26 16:47:54 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.006561562418937683, "loss_ft": -0.08453485369682312, "loss_norm": 0.0, "loss_ft_l2": 0.0910964161157608}
+INFO - 01/08/26 16:47:54 - 0:00:00 - __log__:{"keyword": "iteration", "loss": -0.01157638430595398, "loss_ft": -0.10158468037843704, "loss_norm": 0.0, "loss_ft_l2": 0.09000829607248306}
+INFO - 01/08/26 16:47:54 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.25980281829833984, "loss_ft": 0.17161600291728973, "loss_norm": 0.0, "loss_ft_l2": 0.08818681538105011}
+INFO - 01/08/26 16:47:54 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.4541141390800476, "loss_ft": 0.3612140417098999, "loss_norm": 0.0, "loss_ft_l2": 0.09290008246898651}
+INFO - 01/08/26 16:47:54 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.3183034062385559, "loss_ft": 0.2250978648662567, "loss_norm": 0.0, "loss_ft_l2": 0.093205526471138}
+INFO - 01/08/26 16:47:54 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.23896610736846924, "loss_ft": 0.15221090614795685, "loss_norm": 0.0, "loss_ft_l2": 0.0867551937699318}
+INFO - 01/08/26 16:47:54 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.23561114072799683, "loss_ft": 0.1468794196844101, "loss_norm": 0.0, "loss_ft_l2": 0.08873171359300613}
+INFO - 01/08/26 16:47:54 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.09809368848800659, "loss_ft": 0.0035636872053146362, "loss_norm": 0.0, "loss_ft_l2": 0.09453000128269196}
+INFO - 01/08/26 16:47:54 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.08883536607027054, "loss_ft": -0.00022095441818237305, "loss_norm": 0.0, "loss_ft_l2": 0.08905632048845291}
+INFO - 01/08/26 16:49:04 - 0:00:00 - ============ Initialized logger ============
+INFO - 01/08/26 16:49:04 - 0:00:00 - carrier_path: ./mark_save/carriers.pth
+                                     command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=0.01' --embedding_file './data/blogcatalog_data.pt' --exp_id "mark_save"
+                                     dropout: 0.5
+                                     dump_path: ./mark_save
+                                     embedding_file: ./data/blogcatalog_data.pt
+                                     epochs: 10
+                                     exp_id: mark_save
+                                     exp_name: bypass
+                                     hidden_dim: 512
+                                     lambda_ft_l2: 0.01
+                                     lambda_graph_l2: 0.0005
+                                     marking_network: ./model_save/gcn_benign_model_dim512_layer2_seed42.pth
+                                     node_list: 1,5,39,60
+                                     num_layers: 2
+                                     optimizer: sgd,lr=0.01
+                                     perturb_amplitude: 1
+INFO - 01/08/26 16:49:04 - 0:00:00 - The experiment will be stored in ./mark_save
+                                     
+INFO - 01/08/26 16:49:04 - 0:00:00 - Running command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=0.01' --embedding_file './data/blogcatalog_data.pt'
+
+INFO - 01/08/26 16:49:05 - 0:00:00 - Schedule of sgd,lr=0.01: None
+INFO - 01/08/26 16:49:47 - 0:00:00 - ============ Initialized logger ============
+INFO - 01/08/26 16:49:47 - 0:00:00 - carrier_path: ./mark_save/carriers.pth
+                                     command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=0.01' --embedding_file './data/blogcatalog_data.pt' --exp_id "mark_save"
+                                     dropout: 0.5
+                                     dump_path: ./mark_save
+                                     embedding_file: ./data/blogcatalog_data.pt
+                                     epochs: 10
+                                     exp_id: mark_save
+                                     exp_name: bypass
+                                     hidden_dim: 512
+                                     lambda_ft_l2: 0.01
+                                     lambda_graph_l2: 0.0005
+                                     marking_network: ./model_save/gcn_benign_model_dim512_layer2_seed42.pth
+                                     node_list: 1,5,39,60
+                                     num_layers: 2
+                                     optimizer: sgd,lr=0.01
+                                     perturb_amplitude: 1
+INFO - 01/08/26 16:49:47 - 0:00:00 - The experiment will be stored in ./mark_save
+                                     
+INFO - 01/08/26 16:49:47 - 0:00:00 - Running command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=0.01' --embedding_file './data/blogcatalog_data.pt'
+
+INFO - 01/08/26 16:49:47 - 0:00:00 - Schedule of sgd,lr=0.01: None
+INFO - 01/08/26 16:49:47 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.2772443890571594, "loss_ft": 0.18772131204605103, "loss_norm": 0.0, "loss_ft_l2": 0.08952309191226959}
+INFO - 01/08/26 16:49:47 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.015208594501018524, "loss_ft": -0.07453124225139618, "loss_norm": 0.0, "loss_ft_l2": 0.0897398367524147}
+INFO - 01/08/26 16:49:47 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.12736743688583374, "loss_ft": 0.04067446291446686, "loss_norm": 0.0, "loss_ft_l2": 0.08669296652078629}
+INFO - 01/08/26 16:49:47 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.22654220461845398, "loss_ft": 0.13871482014656067, "loss_norm": 0.0, "loss_ft_l2": 0.08782737702131271}
+INFO - 01/08/26 16:49:47 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.0959644466638565, "loss_ft": 0.0076101236045360565, "loss_norm": 0.0, "loss_ft_l2": 0.08835431933403015}
+INFO - 01/08/26 16:49:47 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.11095274984836578, "loss_ft": 0.02209348976612091, "loss_norm": 0.0, "loss_ft_l2": 0.08885926008224487}
+INFO - 01/08/26 16:49:47 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.1574113667011261, "loss_ft": 0.0661730170249939, "loss_norm": 0.0, "loss_ft_l2": 0.0912383422255516}
+INFO - 01/08/26 16:49:47 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.00490763783454895, "loss_ft": -0.08147778362035751, "loss_norm": 0.0, "loss_ft_l2": 0.08638542145490646}
+INFO - 01/08/26 16:49:47 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.20727622509002686, "loss_ft": 0.12142755091190338, "loss_norm": 0.0, "loss_ft_l2": 0.08584867417812347}
+INFO - 01/08/26 16:49:47 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.0695410966873169, "loss_ft": -0.014606602489948273, "loss_norm": 0.0, "loss_ft_l2": 0.08414769917726517}
+INFO - 01/08/26 16:59:43 - 0:00:00 - ============ Initialized logger ============
+INFO - 01/08/26 16:59:43 - 0:00:00 - carrier_path: ./mark_save/carriers.pth
+                                     command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=0.01' --embedding_file './data/blogcatalog_data.pt' --exp_id "mark_save"
+                                     dropout: 0.5
+                                     dump_path: ./mark_save
+                                     embedding_file: ./data/blogcatalog_data.pt
+                                     epochs: 10
+                                     exp_id: mark_save
+                                     exp_name: bypass
+                                     hidden_dim: 512
+                                     lambda_ft_l2: 0.01
+                                     lambda_graph_l2: 0.0005
+                                     marking_network: ./model_save/gcn_benign_model_dim512_layer2_seed42.pth
+                                     node_list: 1,5,39,60
+                                     num_layers: 2
+                                     optimizer: sgd,lr=0.01
+                                     perturb_amplitude: 1
+INFO - 01/08/26 16:59:43 - 0:00:00 - The experiment will be stored in ./mark_save
+                                     
+INFO - 01/08/26 16:59:43 - 0:00:00 - Running command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=0.01' --embedding_file './data/blogcatalog_data.pt'
+
+INFO - 01/08/26 16:59:43 - 0:00:00 - Schedule of sgd,lr=0.01: None
+INFO - 01/08/26 16:59:43 - 0:00:00 - __log__:{"keyword": "iteration", "loss": -0.10751426964998245, "loss_ft": -0.19548951089382172, "loss_norm": 0.0, "loss_ft_l2": 0.08797524124383926}
+INFO - 01/08/26 16:59:43 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.11800076067447662, "loss_ft": 0.028591357171535492, "loss_norm": 8.634881254465654e-08, "loss_ft_l2": 0.08940931409597397}
+INFO - 01/08/26 16:59:43 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.11457270383834839, "loss_ft": 0.021952856332063675, "loss_norm": 1.8569519966149528e-07, "loss_ft_l2": 0.09261966496706009}
+INFO - 01/08/26 16:59:43 - 0:00:00 - __log__:{"keyword": "iteration", "loss": -0.029998458921909332, "loss_ft": -0.11547389626502991, "loss_norm": 3.3882096772686054e-07, "loss_ft_l2": 0.08547510206699371}
+INFO - 01/08/26 16:59:43 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.34261906147003174, "loss_ft": 0.254408061504364, "loss_norm": 4.977932803740259e-07, "loss_ft_l2": 0.08821050077676773}
+INFO - 01/08/26 16:59:43 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.21748307347297668, "loss_ft": 0.13060417771339417, "loss_norm": 7.370477419499366e-07, "loss_ft_l2": 0.08687815815210342}
+INFO - 01/08/26 16:59:43 - 0:00:00 - __log__:{"keyword": "iteration", "loss": -0.027343660593032837, "loss_ft": -0.11807667464017868, "loss_norm": 9.796723361432669e-07, "loss_ft_l2": 0.09073203802108765}
+INFO - 01/08/26 16:59:43 - 0:00:00 - __log__:{"keyword": "iteration", "loss": -0.2714197635650635, "loss_ft": -0.35956037044525146, "loss_norm": 1.2928030628245324e-06, "loss_ft_l2": 0.08813933283090591}
+INFO - 01/08/26 16:59:43 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.22999469935894012, "loss_ft": 0.14581114053726196, "loss_norm": 1.7042555100488244e-06, "loss_ft_l2": 0.08418186008930206}
+INFO - 01/08/26 16:59:43 - 0:00:00 - __log__:{"keyword": "iteration", "loss": -0.013390310108661652, "loss_ft": -0.10634447634220123, "loss_norm": 2.098377535730833e-06, "loss_ft_l2": 0.09295206516981125}
+INFO - 01/08/26 17:01:46 - 0:00:00 - ============ Initialized logger ============
+INFO - 01/08/26 17:01:46 - 0:00:00 - carrier_path: ./mark_save/carriers.pth
+                                     command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=0.01' --embedding_file './data/blogcatalog_data.pt' --exp_id "mark_save"
+                                     dropout: 0.5
+                                     dump_path: ./mark_save
+                                     embedding_file: ./data/blogcatalog_data.pt
+                                     epochs: 10
+                                     exp_id: mark_save
+                                     exp_name: bypass
+                                     hidden_dim: 512
+                                     lambda_ft_l2: 0.01
+                                     lambda_graph_l2: 0.0005
+                                     marking_network: ./model_save/gcn_benign_model_dim512_layer2_seed42.pth
+                                     node_list: 1,5,39,60
+                                     num_layers: 2
+                                     optimizer: sgd,lr=0.01
+                                     perturb_amplitude: 1
+INFO - 01/08/26 17:01:46 - 0:00:00 - The experiment will be stored in ./mark_save
+                                     
+INFO - 01/08/26 17:01:46 - 0:00:00 - Running command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=0.01' --embedding_file './data/blogcatalog_data.pt'
+
+INFO - 01/08/26 17:01:47 - 0:00:00 - Schedule of sgd,lr=0.01: None
+INFO - 01/08/26 17:01:47 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.32319214940071106, "loss_ft": 0.2358912080526352, "loss_norm": 0.0, "loss_ft_l2": 0.08730094879865646}
+INFO - 01/08/26 17:01:47 - 0:00:00 - __log__:{"keyword": "iteration", "loss": -0.2699070870876312, "loss_ft": -0.362632691860199, "loss_norm": 7.70521708659544e-08, "loss_ft_l2": 0.09272551536560059}
+INFO - 01/08/26 17:01:47 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.0257507786154747, "loss_ft": -0.05874887481331825, "loss_norm": 1.7467712609686714e-07, "loss_ft_l2": 0.08449947834014893}
+INFO - 01/08/26 17:01:47 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.28001660108566284, "loss_ft": 0.19031724333763123, "loss_norm": 3.426592911637272e-07, "loss_ft_l2": 0.08969902992248535}
+INFO - 01/08/26 17:01:47 - 0:00:00 - __log__:{"keyword": "iteration", "loss": -0.050837479531764984, "loss_ft": -0.14285553991794586, "loss_norm": 4.938670485898911e-07, "loss_ft_l2": 0.09201756864786148}
+INFO - 01/08/26 17:01:47 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.1432267129421234, "loss_ft": 0.054305482655763626, "loss_norm": 7.223144393719849e-07, "loss_ft_l2": 0.08892051130533218}
+INFO - 01/08/26 17:01:47 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.0524006187915802, "loss_ft": -0.03739173710346222, "loss_norm": 9.603699027138646e-07, "loss_ft_l2": 0.08979139477014542}
+INFO - 01/08/26 17:01:47 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.24445024132728577, "loss_ft": 0.1535670906305313, "loss_norm": 1.2342030686340877e-06, "loss_ft_l2": 0.09088192135095596}
+INFO - 01/08/26 17:01:47 - 0:00:00 - __log__:{"keyword": "iteration", "loss": -0.12111853063106537, "loss_ft": -0.20679908990859985, "loss_norm": 1.4906161140970653e-06, "loss_ft_l2": 0.0856790691614151}
+INFO - 01/08/26 17:01:47 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.02397703379392624, "loss_ft": -0.06195446848869324, "loss_norm": 1.870789901659009e-06, "loss_ft_l2": 0.08592963218688965}
+INFO - 01/08/26 17:01:47 - 0:00:00 - __log__:{"keyword": "final", "ft_direction": -0.05988087132573128, "ft_norm": 2.2512097358703613, "max_feat_change": 0.010128531605005264}
+INFO - 01/08/26 17:08:54 - 0:00:00 - ============ Initialized logger ============
+INFO - 01/08/26 17:08:54 - 0:00:00 - carrier_path: ./mark_save/carriers.pth
+                                     command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=0.01' --embedding_file './data/blogcatalog_data.pt' --exp_id "mark_save"
+                                     dropout: 0.5
+                                     dump_path: ./mark_save
+                                     embedding_file: ./data/blogcatalog_data.pt
+                                     epochs: 10
+                                     exp_id: mark_save
+                                     exp_name: bypass
+                                     hidden_dim: 512
+                                     lambda_ft_l2: 0.01
+                                     lambda_graph_l2: 0.0005
+                                     marking_network: ./model_save/gcn_benign_model_dim512_layer2_seed42.pth
+                                     node_list: 1,5,39,60
+                                     num_layers: 2
+                                     optimizer: sgd,lr=0.01
+                                     perturb_amplitude: 1
+INFO - 01/08/26 17:08:54 - 0:00:00 - The experiment will be stored in ./mark_save
+                                     
+INFO - 01/08/26 17:08:54 - 0:00:00 - Running command: python mark_embed.py --carrier_path './mark_save/carriers.pth' --epochs 10 --node_list '1,5,39,60' --lambda_ft_l2 '0.01' --lambda_graph_l2 '0.0005' --marking_network './model_save/gcn_benign_model_dim512_layer2_seed42.pth' --dump_path './mark_save' --optimizer 'sgd,lr=0.01' --embedding_file './data/blogcatalog_data.pt'
+
+INFO - 01/08/26 17:08:54 - 0:00:00 - Schedule of sgd,lr=0.01: None
+INFO - 01/08/26 17:08:54 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.11376504600048065, "loss_ft": 0.022640526294708252, "loss_norm": 0.0, "loss_ft_l2": 0.0911245197057724}
+INFO - 01/08/26 17:08:54 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.4023933410644531, "loss_ft": 0.3092190623283386, "loss_norm": 7.289900594287246e-08, "loss_ft_l2": 0.09317422658205032}
+INFO - 01/08/26 17:08:54 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.3925255239009857, "loss_ft": 0.3060462474822998, "loss_norm": 1.5925564866847708e-07, "loss_ft_l2": 0.08647912740707397}
+INFO - 01/08/26 17:08:54 - 0:00:00 - __log__:{"keyword": "iteration", "loss": -0.16320247948169708, "loss_ft": -0.24548181891441345, "loss_norm": 2.6369511374468857e-07, "loss_ft_l2": 0.08227907121181488}
+INFO - 01/08/26 17:08:54 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.040915511548519135, "loss_ft": -0.04889623075723648, "loss_norm": 4.040395822357823e-07, "loss_ft_l2": 0.08981133997440338}
+INFO - 01/08/26 17:08:54 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.21501047909259796, "loss_ft": 0.12774202227592468, "loss_norm": 6.737150215485599e-07, "loss_ft_l2": 0.08726778626441956}
+INFO - 01/08/26 17:08:54 - 0:00:00 - __log__:{"keyword": "iteration", "loss": -0.04146615415811539, "loss_ft": -0.13100826740264893, "loss_norm": 8.746662274461414e-07, "loss_ft_l2": 0.0895412340760231}
+INFO - 01/08/26 17:08:54 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.2810652256011963, "loss_ft": 0.1916651725769043, "loss_norm": 1.1796947774200817e-06, "loss_ft_l2": 0.08939886093139648}
+INFO - 01/08/26 17:08:54 - 0:00:00 - __log__:{"keyword": "iteration", "loss": -0.12796053290367126, "loss_ft": -0.21649643778800964, "loss_norm": 1.5070576182552031e-06, "loss_ft_l2": 0.0885343924164772}
+INFO - 01/08/26 17:08:54 - 0:00:00 - __log__:{"keyword": "iteration", "loss": 0.2180318981409073, "loss_ft": 0.13359443843364716, "loss_norm": 1.8472085230314406e-06, "loss_ft_l2": 0.0844356119632721}
+INFO - 01/08/26 17:08:54 - 0:00:00 - __log__:{"keyword": "final", "ft_direction": 0.02223178558051586, "ft_norm": 2.387500762939453, "max_feat_change": 0.009029733017086983}
