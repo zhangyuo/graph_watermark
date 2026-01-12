@@ -11,6 +11,7 @@ from src.datasets.folder import default_loader
 from src.model import build_model
 from src.utils import initialize_exp, bool_flag, get_optimizer, repeat_to
 from torch_geometric.utils import k_hop_subgraph
+from torch_geometric.data import Data
 
 
 def project_linf_graph(x, x_orig, amplitude):
@@ -39,10 +40,12 @@ def get_parser():
     # main parameters
     parser.add_argument("--dump_path", type=str, default="", required=True)
     parser.add_argument("--carrier_path", type=str, default="", help="Direction in which to move features", required=True)
-    parser.add_argument("--node_list", type=str, default=None, help="File that contains list of all nodes", required=True)
     parser.add_argument("--marking_network", type=str, required=True)
     parser.add_argument("--dataset", type=str, default="", help="Graph dataset that contains the node embeddings", required=True)
+    parser.add_argument("--dataset_name", type=str, default="arxiv", help="Dataset name, e.g., arxiv, blogcatalog, etc.", required=True)
 
+    parser.add_argument("--node_list_path", type=str, default="")
+    parser.add_argument("--node_list", type=str, default=None, help="File that contains list of all nodes")
     parser.add_argument("--exp_name", type=str, default="bypass")
     parser.add_argument("--perturb_amplitude", type=int, default=1)
     parser.add_argument("--epochs", type=int, default=300)
@@ -59,12 +62,30 @@ def get_parser():
 def main(params):
     logger = initialize_exp(params)
 
-    params.node_list = [s.strip() for s in params.node_list.split(",")]
-    print("Node list", params.node_list)
+    if params.node_list:
+        params.node_list = [s.strip() for s in params.node_list.split(",")]
+        print("Node list", params.node_list)
+    else:
+        params.node_list = torch.load(params.node_list_path)
+        print("Loaded node list from:", params.node_list_path)
+        print("Node list num:", len(params.node_list))
 
     # load graph dataset
-    data = torch.load(params.dataset)
+    loaded = torch.load(params.dataset)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    if isinstance(loaded, Data):
+        # Already a PyG Data object
+        data = loaded
+    else:
+         # Assume it's a dict on arxiv subgraph and convert to Data
+         data = Data(
+            x=loaded["x"],
+            edge_index=loaded["edge_index"],
+            y=loaded["y"],
+            train_mask=loaded.get("train_mask"),
+            val_mask=loaded.get("val_mask"),
+            test_mask=loaded.get("test_mask")
+        )
     data = data.to(device)
     print("Using device:", device)
 
@@ -84,10 +105,11 @@ def main(params):
         device=labels.device
     )
     carrier_ids = labels[node_list]
-    carrier_id = carrier_ids[0].item()  # all target nodes have the same label
-    direction = torch.load(params.carrier_path).cuda()
-    assert direction.dim() == 2
-    direction = direction[carrier_id:carrier_id + 1]
+    # carrier_id = carrier_ids[0].item()  # all target nodes have the same label, becasue we adress only one class for each watermarking run
+    directions = torch.load(params.carrier_path).cuda()
+    assert directions.dim() == 2
+    # direction = directions[carrier_id:carrier_id + 1]
+    directions = directions[carrier_ids]  # (num_nodes, D)
 
     # get subgraph
     subset, edge_index_sub, mapping, edge_mask = k_hop_subgraph(
@@ -126,7 +148,7 @@ def main(params):
         ft = model.encode(x_sub_patched, edge_index_sub)[mapping]
 
         # Losses
-        loss_ft = - torch.sum((ft - ft_orig) * direction)
+        loss_ft = - torch.sum((ft - ft_orig) * directions)
         loss_ft_l2 = params.lambda_ft_l2 * torch.norm(ft - ft_orig, dim=1).sum()
         # loss_norm = 0
         # for i in range(len(x_nodes)):
@@ -150,6 +172,7 @@ def main(params):
         # Logging
         logs = {
             "keyword": "iteration",
+            "iteration": iteration,
             "loss": loss.item(),
             "loss_ft": loss_ft.item(),
             "loss_norm": loss_norm.item(),
@@ -166,39 +189,54 @@ def main(params):
     x_nodes_tensor = torch.stack(x_nodes, dim=0)
     logger.info("__log__:%s" % json.dumps({
         "keyword": "final",
-        "ft_direction": torch.mv(ft_new - ft_orig, direction[0]).mean().item(),
+        "ft_direction": torch.mv(ft_new - ft_orig, directions[0]).mean().item(),
         "ft_norm": torch.norm(ft_new - ft_orig, dim=1).mean().item(),
         "max_feat_change": (x_nodes_tensor - x_nodes_orig).abs().max().item()
     }))
 
-    # Save original features (x_nodes_orig) and watermarked features (x_nodes)
-    for i, node_id in enumerate(node_list):
-        # Save original node features
-        np.save(
-            join(params.dump_path, f"node_{node_id}_orig.npy"),
-            x_nodes_orig[i].detach().cpu().numpy().astype(np.float32)
-        )
+    # # Save original features (x_nodes_orig) and watermarked features (x_nodes)
+    # for i, node_id in enumerate(node_list):
+    #     # Save original node features
+    #     np.save(
+    #         join(params.dump_path, f"node_{node_id}_orig.npy"),
+    #         x_nodes_orig[i].detach().cpu().numpy().astype(np.float32)
+    #     )
 
-        # Save watermarked node features
-        np.save(
-            join(params.dump_path, f"node_{node_id}_wm.npy"),
-            x_nodes_tensor[i].detach().cpu().numpy().astype(np.float32)
-        )
+    #     # Save watermarked node features
+    #     np.save(
+    #         join(params.dump_path, f"node_{node_id}_wm.npy"),
+    #         x_nodes_tensor[i].detach().cpu().numpy().astype(np.float32)
+    #     )
     
     # save full watermarked x
     x_wm = data.x.clone()
     x_wm[node_list] = x_nodes_tensor.detach()
 
-    torch.save({
-        "x_orig": data.x.cpu(),
-        "x_wm": x_wm.cpu(),
-        "edge_index": data.edge_index.cpu(),
-        "y": data.y.cpu(),
-        "node_list": node_list.cpu(),
-    }, join(params.dump_path, "graph_watermarked.pt"))
+    if params.dataset_name == "bolgcatalog":
+        torch.save({
+            "x_orig": data.x.cpu(),
+            "x_wm": x_wm.cpu(),
+            "edge_index": data.edge_index.cpu(),
+            "y": data.y.cpu(),
+            "node_list": node_list.cpu(),
+        }, join(params.dump_path, "graph_watermarked.pt"))
+    elif params.dataset_name == "arxiv":
+        torch.save({
+            "x_orig": data.x.cpu(),
+            "x_wm": x_wm.cpu(),
+            "edge_index": data.edge_index.cpu(),
+            "y": data.y.cpu(),
+            "train_mask": data.train_mask.cpu(),
+            "val_mask": data.val_mask.cpu(),
+            "test_mask": data.test_mask.cpu(),
+            "node_list": node_list.cpu(),
+        }, join(params.dump_path, "graph_watermarked_arxiv.pt"))
 
 
 if __name__ == '__main__':
+    """
+    python -m debugpy --listen 0.0.0.0:5678 --wait-for-client mark_embed.py --carrier_path ./mark_save/carriers_class40_dim512.pth --epochs 300 --node_list_path ./mark_save/mark_node_list_r5_num5897_arxiv.pt --lambda_ft_l2 0.01 --lambda_graph_l2 0.0005 --marking_network ./model_save/gcn_benign_arxiv_dim512_layer2_seed42.pth --dump_path ./mark_save --optimizer sgd,lr=0.01 --dataset ./data/ogbn_arxiv_balanced_subgraph.pt  --dataset_name arxiv
+    """
 
     # generate parser / parse parameters
     parser = get_parser()

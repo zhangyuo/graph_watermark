@@ -58,6 +58,7 @@ def extract_node_embeddings(model, data, use_wm=True):
     embeddings = []
     l = model.num_layers
     for node_id in node_list:
+        node_id = node_id.item()
         subset, edge_index_sub, mapping, _ = k_hop_subgraph(
             node_idx=node_id,
             num_hops=l + 1,

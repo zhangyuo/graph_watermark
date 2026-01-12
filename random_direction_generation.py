@@ -5,7 +5,7 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 set_seed(42)
 
-n_classes, dim = 10, 512  # for class on cifar10 and hidden units on Resnet-18
+n_classes, dim = 40, 512  # for class on cifar10 and hidden units on Resnet-18
 carriers = torch.randn(n_classes, dim)
 carriers /= torch.norm(carriers, dim=1, keepdim=True)
-torch.save(carriers, os.path.join(PROJECT_ROOT, "mark_save/carriers.pth"))
+torch.save(carriers, os.path.join(PROJECT_ROOT, f"mark_save/carriers_class{n_classes}_dim{dim}.pth"))
