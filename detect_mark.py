@@ -3,12 +3,14 @@ import torch
 import argparse
 import time
 import copy
+import torch.nn.functional as F
 from scipy.stats import combine_pvalues
 from src.stats import cosine_pvalue
 from model.GCN import MultiLayerGCN, build_gnn_model
 from utility.utils import extract_node_embeddings
 from torch_geometric.data import Data
-
+import warnings
+warnings.filterwarnings("ignore")
 
 def load_classifier_weight(state_dict, key_candidates):
     """
@@ -125,9 +127,155 @@ if __name__ == "__main__":
     )
     print(f"Relative alignment error: {rel_err:.4f}")
 
+    node_list = sub_data["node_list"].squeeze().cpu().numpy()
+    labels = sub_data["y"].cpu().numpy()
+    marked_classes = np.unique(labels[node_list])
+    print(f"Marked classes: {marked_classes}")
+    print(f"Number of marked classes: {len(marked_classes)}")
+
+    # --------------------------------------------------
+    # Embedding difference in aligned space
+    # Δφ = φ_mark X - φ_benign
+    # --------------------------------------------------
+    delta_feat = feat_mark @ X - feat_benign   # shape: (N, D)
+    
+    # --------------------------------------------------
+    # Projection-based watermark scores (node-level)
+    # --------------------------------------------------
+    proj_scores = {}
+    proj_pvals  = {}
+
+    D = carrier.shape[1]
+    # 将 global id 映射为 delta_feat 的行索引
+    node_id_to_local = {nid: i for i, nid in enumerate(node_list)}
+
+    for c in marked_classes:
+        # 所有属于类别 c 的 watermark 节点
+        nodes_c_global = node_list[labels[node_list] == c]
+
+        # 转换为 delta_feat 的局部索引
+        nodes_c = [node_id_to_local[nid] for nid in nodes_c_global]
+
+        if nodes_c == 0:
+            continue
+
+        d_c = carrier[c]              # (D,)
+        d_c = d_c / np.linalg.norm(d_c)
+
+        # 每个节点的投影值
+        proj_vals = delta_feat[nodes_c] @ d_c   # shape: (num_nodes_c,)
+
+        # 统计量：均值
+        S_c = proj_vals.mean()
+        std_c = proj_vals.std() + 1e-8
+
+        # Z-score（近似正态）
+        z_c = S_c / std_c
+
+        proj_scores[c] = {
+            "mean_proj": S_c,
+            "std_proj": std_c,
+            "z": z_c,
+            "num_nodes": len(nodes_c)
+        }
+
+        # 单边 p-value（H0: mean <= 0）
+        p_c = 1 - 0.5 * (1 + np.math.erf(z_c / np.sqrt(2)))
+        proj_pvals[c] = p_c
+    
+    # --------------------------------------------------
+    # Combine projection-based p-values
+    # --------------------------------------------------
+    proj_pvals_list = [proj_pvals[c] for c in proj_pvals]
+    combined_proj_p = combine_pvalues(proj_pvals_list)[1]
+
+    print("====================================")
+    print(" Projection-based Watermark Detection")
+    print("====================================")
+
+    for c, info in proj_scores.items():
+        print(
+            f"Class {c:2d} | "
+            f"mean_proj={info['mean_proj']:.4f} | "
+            f"z={info['z']:.2f} | "
+            f"nodes={info['num_nodes']} | "
+            f"p={proj_pvals[c]:.2e}"
+        )
+
+    print("------------------------------------")
+    print(f"Combined projection p-value : {combined_proj_p:.2e}")
+    print(f"log10(p)                    : {np.log10(combined_proj_p):.2f}")
+
+
+    # --------------------------------------------------
+    # Model loss-based watermark detection
+    # --------------------------------------------------
+    loss_stats = {}
+    marked_nodes = node_list  # global node id
+
+    # 转换为 torch tensor
+    labels_marked = torch.from_numpy(labels[marked_nodes]).to(device)
+
+    with torch.no_grad():
+        logits_mark = marking_model(data.x_wm, data.edge_index)   # 标记模型 logits
+        logits_benign = benign_model(data.x_wm, data.edge_index)  # benign 模型 logits
+
+    # 取水印节点对应 logits
+    logits_mark_nodes = logits_mark[marked_nodes]
+    logits_benign_nodes = logits_benign[marked_nodes]
+
+    # 交叉熵 loss (per node)
+    loss_mark_nodes = F.cross_entropy(logits_mark_nodes, labels_marked, reduction='none')
+    loss_benign_nodes = F.cross_entropy(logits_benign_nodes, labels_marked, reduction='none')
+
+    # Δloss = benign - marked
+    delta_loss = (loss_benign_nodes - loss_mark_nodes).cpu().numpy()  # 正值 → 水印存在
+
+    # 按类统计
+    for c in marked_classes:
+        nodes_c_mask = labels[marked_nodes] == c
+        delta_c = delta_loss[nodes_c_mask]
+        num_nodes_c = len(delta_c)
+        if num_nodes_c == 0:
+            continue
+
+        mean_c = delta_c.mean()
+        std_c  = delta_c.std() + 1e-8
+        z_c    = mean_c / std_c
+        p_c    = 1 - 0.5 * (1 + np.math.erf(z_c / np.sqrt(2)))  # 单边 p-value
+
+        loss_stats[c] = {
+            "mean_delta_loss": mean_c,
+            "std_delta_loss": std_c,
+            "z": z_c,
+            "num_nodes": num_nodes_c,
+            "p": p_c
+        }
+
+    # Combine p-values across classes
+    pvals_loss_list = [loss_stats[c]["p"] for c in loss_stats]
+    combined_loss_p = combine_pvalues(pvals_loss_list)[1]
+
+    # 打印结果
+    print("====================================")
+    print(" Loss-based Watermark Detection")
+    print("====================================")
+    for c, info in loss_stats.items():
+        print(
+            f"Class {c:2d} | "
+            f"mean_delta_loss={info['mean_delta_loss']:.4f} | "
+            f"z={info['z']:.2f} | "
+            f"nodes={info['num_nodes']} | "
+            f"p={info['p']:.2e}"
+        )
+    print("------------------------------------")
+    print(f"Combined loss-based p-value : {combined_loss_p:.2e}")
+    print(f"log10(p)                    : {np.log10(combined_loss_p):.2f}")
+
+    # --------------------------------------------------
+    # Weight-alignment-based watermark detection
     # --------------------------------------------------
     # Load mark classifier weight
-    # --------------------------------------------------
     key = 'classifier.weight' # GCN classifier layer weight
     W_mark = mark_ckpt[key].cpu().numpy()  # shape: (C, D_mark)
 
@@ -149,29 +297,39 @@ if __name__ == "__main__":
     # --------------------------------------------------
     # Statistical watermark detection
     # --------------------------------------------------
-    p_vals = [
-        cosine_pvalue(score, d=carrier.shape[1])
-        for score in scores
-    ]
+    p_vals_all = [cosine_pvalue(score, d=carrier.shape[1]) for score in scores]
 
-    # choose p_vals according marked classes only
-    node_list = sub_data["node_list"].squeeze().cpu().numpy()
-    labels = sub_data["y"].cpu().numpy()
-    marked_classes = np.unique(labels[node_list])
-    p_vals_marked = [p_vals[c] for c in marked_classes]
-    
-    combined_p = combine_pvalues(p_vals_marked)[1]
+    # Choose only marked classes for reporting
+    weight_stats = {}
+    for c in marked_classes:
+        score = scores[c]
+        p_c   = p_vals_all[c]
+        z_c   = score / 1.0  # 单个向量 z-score 可以设为 score/std=1
+        weight_stats[c] = {
+            "score": score,
+            "z": z_c,
+            "num_vectors": 1,
+            "p": p_c
+        }
+    # Combine p-values across marked classes
+    pvals_weight_list = [weight_stats[c]["p"] for c in weight_stats]
+    combined_weight_p = combine_pvalues(pvals_weight_list)[1]
 
+    # Print per-class stats
     print("====================================")
-    print(" Graph Watermark Detection Result")
+    print(" Weight-alignment Watermark Detection")
     print("====================================")
-    print(f"Single class score          : {scores[16]:.4f}")  # example for class 16
-    print(f"Single class p-value        : {p_vals[16]:.4f}")
-    print(f"log10(single class p-value) : {np.log10(p_vals[16]):.4f}")
+    for c, info in weight_stats.items():
+        print(
+            f"Class {c:2d} | "
+            f"score={info['score']:.4f} | "
+            f"z={info['z']:.2f} | "
+            f"vectors={info['num_vectors']} | "
+            f"p={info['p']:.2e}"
+        )
     print("------------------------------------")
     print(f"Mean score                  : {scores.mean():.4f}")
-    print(f"combined p-value            : {combined_p:.4f}")
-    print(f"log10(combined p-value)     : {np.log10(combined_p):.4f}")
+    print(f"combined p-value            : {combined_weight_p:.2e}")
+    print(f"log10(combined p-value)     : {np.log10(combined_weight_p):.2f}")
     print("------------------------------------")
-    print(f"Epoch (benign)              : {benign_ckpt.get('epoch', -1)}")
     print(f"Total time                  : {time.time() - start_all:.2f}s")

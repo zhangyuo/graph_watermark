@@ -2,6 +2,8 @@ import torch
 import random
 from torch_geometric.data import Data
 from typing import Optional, Tuple, List, Dict
+import warnings
+warnings.filterwarnings("ignore")
 
 
 def select_mark_nodes_any_class(
@@ -138,7 +140,8 @@ if __name__ == "__main__":
         test_mask=sub_data["test_mask"]
     )
 
-    watermark_ratio = 0.20
+    watermar = 20
+    watermark_ratio = watermar / 100
 
     # mark_list, wm_class = select_mark_nodes(
     #     data,
@@ -162,6 +165,6 @@ if __name__ == "__main__":
     # -------------------------
     # Save watermark node list
     # -------------------------
-    save_path = f"mark_save/mark_node_list_r{5}_num{len(mark_list)}_arxiv.pt"
+    save_path = f"mark_save/mark_node_list_r{watermar}_num{len(mark_list)}_arxiv.pt"
     torch.save(mark_list, save_path)
     print(f"Watermark node list saved to: {save_path}")

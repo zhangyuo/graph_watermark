@@ -5,6 +5,8 @@ from collections import defaultdict
 
 from ogb.nodeproppred import PygNodePropPredDataset
 from torch_geometric.utils import k_hop_subgraph
+import warnings
+warnings.filterwarnings("ignore")
 
 
 def balanced_seed_sampling(y, train_mask, seeds_per_class, seed=42):

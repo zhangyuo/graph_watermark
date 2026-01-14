@@ -3,5 +3,9 @@ __pycache__
 *.json
 
 # Ignore large data files
-data/CS
-data/cifar10
+cifar10_classes
+cifar10_images
+cifar10_marked
+data
+mrak_save
+model_save

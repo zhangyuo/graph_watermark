@@ -8,6 +8,8 @@ import torch.nn.functional as F
 import torch
 import sys
 import os
+import warnings
+warnings.filterwarnings("ignore")
 
 # -------------------------------
 # 1. 可调超参数定义

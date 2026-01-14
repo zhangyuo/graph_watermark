@@ -198,6 +198,8 @@ def main(params):
             "loss_ft": loss_ft.item(),
             "loss_norm": loss_norm.item(),
             "loss_ft_l2": loss_ft_l2.item(),
+            "alpha_mean": torch.sum((ft - ft_orig) * direction).mean().item(),
+            "cosine_mean": torch.nn.functional.cosine_similarity(ft - ft_orig, direction, dim=1).mean().item()
         }
         if params.angle is not None:
             logs["R"] = - (loss_ft + loss_ft_l2).item()
@@ -222,6 +224,7 @@ def main(params):
         "psnr": np.mean([psnr(x_new - x_old) for x_new, x_old in zip(img_new, img_old)]),
         "ft_direction": torch.mv(ft_new - ft_orig, direction[0]).mean().item(),
         "ft_norm": torch.norm(ft_new - ft_orig, dim=1).mean().item(),
+        "cosine_mean": torch.nn.functional.cosine_similarity(ft_new - ft_orig, direction).mean().item(),
         "rho": rho,
         "R": (rho * torch.dot(ft_new[0] - ft_orig[0], direction[0])**2 - torch.norm(ft_new - ft_orig)**2).item(),
     }))

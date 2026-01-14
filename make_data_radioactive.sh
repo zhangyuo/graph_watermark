@@ -2,7 +2,7 @@ python make_data_radioactive.py \
 --carrier_id 0 \
 --carrier_path carriers.pth \
 --data_augmentation random \
---epochs 10 \
+--epochs 200 \
 --img_paths cifar10_images/0/29.png,cifar10_images/0/77.png \
 --lambda_ft_l2 0.01 \
 --lambda_l2_img 0.0005 \
