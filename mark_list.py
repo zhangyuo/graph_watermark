@@ -128,7 +128,8 @@ if __name__ == "__main__":
     """
     python mark_list.py
     """
-    data_path = "data/ogbn_arxiv_balanced_subgraph.pt"
+    watermark = 20 # watermark ratio in percentage
+    data_path = "data/ogbn_arxiv_balanced_subgraph.pt" # path to the graph data
     sub_data = torch.load(data_path)
 
     data = Data(
@@ -140,8 +141,7 @@ if __name__ == "__main__":
         test_mask=sub_data["test_mask"]
     )
 
-    watermar = 20
-    watermark_ratio = watermar / 100
+    watermark_ratio = watermark / 100
 
     # mark_list, wm_class = select_mark_nodes(
     #     data,
@@ -165,6 +165,6 @@ if __name__ == "__main__":
     # -------------------------
     # Save watermark node list
     # -------------------------
-    save_path = f"mark_save/mark_node_list_r{watermar}_num{len(mark_list)}_arxiv.pt"
+    save_path = f"mark_save/mark_node_list_r{watermark}_num{len(mark_list)}_arxiv.pt"
     torch.save(mark_list, save_path)
     print(f"Watermark node list saved to: {save_path}")

@@ -9,6 +9,9 @@ from src.stats import cosine_pvalue
 from model.GCN import MultiLayerGCN, build_gnn_model
 from utility.utils import extract_node_embeddings
 from torch_geometric.data import Data
+from src.utils import initialize_exp
+from mark_embed import analyze_delta_svd, compute_class_jacobian_svd_jvp
+from torch_geometric.utils import k_hop_subgraph
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -24,7 +27,7 @@ def load_classifier_weight(state_dict, key_candidates):
 
 if __name__ == "__main__":
     """
-    python -m debugpy --listen 0.0.0.0:5678 --wait-for-client detect_mark.py --dataset_path mark_save/graph_watermarked_arxiv.pt --carrier_path mark_save/carriers_class40_dim512.pth --marking_model model_save/gcn_mark_arxiv_dim512_layer2_seed42.pth --benign_model model_save/gcn_benign_arxiv_dim512_layer2_seed42.pth --hidden_dim 512 --num_layers 2 --dropout 0.5
+    python -m debugpy --listen 0.0.0.0:5678 --wait-for-client detect_mark.py --dataset_path mark_save/graph_watermarked_arxiv_dim128_layer2_seed42.pt --carrier_path mark_save/carriers_class40_dim128.pth --marking_model model_save/gcn_mark_arxiv_dim128_layer2_seed42.pth --benign_model model_save/gcn_benign_arxiv_dim128_layer2_seed42.pth --hidden_dim 128 --num_layers 2 --dropout 0.5
     """
     parser = argparse.ArgumentParser()
 
@@ -33,11 +36,17 @@ if __name__ == "__main__":
     parser.add_argument("--marking_model", type=str, required=True)
     parser.add_argument("--benign_model", type=str, required=True)
 
-    parser.add_argument("--hidden_dim", type=int, default=512)
+    parser.add_argument("--hidden_dim", type=int, default=128)
     parser.add_argument("--num_layers", type=int, default=2)
     parser.add_argument("--dropout", type=float, default=0.5)
 
+    parser.add_argument("--dump_path", type=str, default="logs")
+    parser.add_argument("--exp_name", type=str, default="detect_mark")
+    parser.add_argument("--exp_id", type=str, default=f"gcn_arxiv_dim{128}_layer{2}_seed{42}")
+
     params = parser.parse_args()
+
+    logger = initialize_exp(params)
 
     start_all = time.time()
 
@@ -62,7 +71,7 @@ if __name__ == "__main__":
         node_list=sub_data["node_list"]
     )
     data = data.to(device)
-    print("Using device:", device)
+    logger.info(f"Using device: {device}")
 
     # --------------------------------------------------
     # Load watermark carrier
@@ -71,14 +80,14 @@ if __name__ == "__main__":
     carrier = torch.load(params.carrier_path)
     assert carrier.dim() == 2
     carrier = carrier.numpy()  # (C, D)
-    print(f"Carrier shape: {carrier.shape}")
+    logger.info(f"Carrier shape: {carrier.shape}")
 
     # --------------------------------------------------
     # Load marking (watermarked) model
     # --------------------------------------------------
-    params_1 = copy.deepcopy(params)
-    params_1.hidden_dim = 512
-    marking_model = build_gnn_model(params_1, data)
+    # params_1 = copy.deepcopy(params)
+    # params_1.hidden_dim = 512
+    marking_model = build_gnn_model(params, data)
     mark_ckpt = torch.load(params.marking_model)
     marking_model.load_state_dict(mark_ckpt)
     marking_model = marking_model.to(device).eval()
@@ -90,6 +99,35 @@ if __name__ == "__main__":
     benign_ckpt = torch.load(params.benign_model)
     benign_model.load_state_dict(benign_ckpt)
     benign_model = benign_model.to(device).eval()
+
+    # # ===== 在这里：compute Jacobian SVD =====
+    # # get subgraph
+    # subset, edge_index_sub, mapping, edge_mask = k_hop_subgraph(
+    #     node_idx=node_list,
+    #     num_hops=params.num_layers + 1,
+    #     edge_index=data.edge_index,
+    #     relabel_nodes=True
+    # )
+
+    # x_sub = data.x_orig[subset]  # node features of the subgraph nodes
+
+    # # Target nodes in subgraph
+    # x_nodes_orig = x_sub[mapping]
+    # x_nodes = [x.clone().detach().requires_grad_(True) for x in x_nodes_orig]
+    # logger.info("Computing class Jacobian SVD for top-k directions...")
+    # V_k = compute_class_jacobian_svd_jvp(
+    #     model=benign_model,
+    #     x_sub=x_sub,
+    #     edge_index_sub=edge_index_sub,
+    #     mapping=mapping,
+    #     x_nodes=x_nodes,
+    #     k=carrier.shape[1],
+    #     sample_size=256
+    # )
+    # V_k = V_k.numpy()  # shape: (D, k)
+    # logger.info(f"Computed top-{V_k.shape[1]} SVD directions for this class.")
+    V_k = torch.load(f"mark_save/svd_directions_k20_nodes5897.pth")  # shape: (D, k)
+    V_k = V_k.numpy()  # shape: (D, k)
 
     # --------------------------------------------------
     # Extract node embeddings (encoder output only)
@@ -103,8 +141,8 @@ if __name__ == "__main__":
     feat_benign = feat_benign.cpu().numpy()  # (N, D2)
     # feat_mark = feat_benign.copy()  # For testing purpose, use identical features
 
-    print(f"Marking feature shape: {feat_mark.shape}")
-    print(f"Benign feature shape : {feat_benign.shape}")
+    logger.info(f"Marking feature shape: {feat_mark.shape}")
+    logger.info(f"Benign feature shape : {feat_benign.shape}")
 
     # --------------------------------------------------
     # Feature space alignment (least squares)
@@ -120,24 +158,25 @@ if __name__ == "__main__":
     # 0.3 – 0.6	结构差异明显
     # > 0.6	空间差异很大
     # --------------------------------------------------
-    print(f"Alignment residual norm: {alignment_error:.4e}")
+    logger.info(f"Alignment residual norm: {alignment_error:.4e}")
     rel_err = (
         np.linalg.norm(feat_mark @ X - feat_benign, 'fro') /
         np.linalg.norm(feat_benign, 'fro')
     )
-    print(f"Relative alignment error: {rel_err:.4f}")
+    logger.info(f"Relative alignment error: {rel_err:.4f}")
 
     node_list = sub_data["node_list"].squeeze().cpu().numpy()
     labels = sub_data["y"].cpu().numpy()
     marked_classes = np.unique(labels[node_list])
-    print(f"Marked classes: {marked_classes}")
-    print(f"Number of marked classes: {len(marked_classes)}")
+    logger.info(f"Marked classes: {marked_classes}")
+    logger.info(f"Number of marked classes: {len(marked_classes)}")
 
     # --------------------------------------------------
     # Embedding difference in aligned space
     # Δφ = φ_mark X - φ_benign
     # --------------------------------------------------
     delta_feat = feat_mark @ X - feat_benign   # shape: (N, D)
+    delta_feat = delta_feat @ V_k  # shape: (N, k)
     
     # --------------------------------------------------
     # Projection-based watermark scores (node-level)
@@ -189,12 +228,12 @@ if __name__ == "__main__":
     proj_pvals_list = [proj_pvals[c] for c in proj_pvals]
     combined_proj_p = combine_pvalues(proj_pvals_list)[1]
 
-    print("====================================")
-    print(" Projection-based Watermark Detection")
-    print("====================================")
+    logger.info("====================================")
+    logger.info(" Projection-based Watermark Detection")
+    logger.info("====================================")
 
     for c, info in proj_scores.items():
-        print(
+        logger.info(
             f"Class {c:2d} | "
             f"mean_proj={info['mean_proj']:.4f} | "
             f"z={info['z']:.2f} | "
@@ -202,9 +241,9 @@ if __name__ == "__main__":
             f"p={proj_pvals[c]:.2e}"
         )
 
-    print("------------------------------------")
-    print(f"Combined projection p-value : {combined_proj_p:.2e}")
-    print(f"log10(p)                    : {np.log10(combined_proj_p):.2f}")
+    logger.info("------------------------------------")
+    logger.info(f"Combined projection p-value : {combined_proj_p:.2e}")
+    logger.info(f"log10(p)                    : {np.log10(combined_proj_p):.2f}")
 
 
     # --------------------------------------------------
@@ -218,7 +257,8 @@ if __name__ == "__main__":
 
     with torch.no_grad():
         logits_mark = marking_model(data.x_wm, data.edge_index)   # 标记模型 logits
-        logits_benign = benign_model(data.x_wm, data.edge_index)  # benign 模型 logits
+        # logits_benign = benign_model(data.x_wm, data.edge_index)  # benign 模型 logits (效果更好)
+        logits_benign = marking_model(data.x_orig, data.edge_index)  # 使用原始特征
 
     # 取水印节点对应 logits
     logits_mark_nodes = logits_mark[marked_nodes]
@@ -257,20 +297,20 @@ if __name__ == "__main__":
     combined_loss_p = combine_pvalues(pvals_loss_list)[1]
 
     # 打印结果
-    print("====================================")
-    print(" Loss-based Watermark Detection")
-    print("====================================")
+    logger.info("====================================")
+    logger.info(" Loss-based Watermark Detection")
+    logger.info("====================================")
     for c, info in loss_stats.items():
-        print(
+        logger.info(
             f"Class {c:2d} | "
             f"mean_delta_loss={info['mean_delta_loss']:.4f} | "
             f"z={info['z']:.2f} | "
             f"nodes={info['num_nodes']} | "
             f"p={info['p']:.2e}"
         )
-    print("------------------------------------")
-    print(f"Combined loss-based p-value : {combined_loss_p:.2e}")
-    print(f"log10(p)                    : {np.log10(combined_loss_p):.2f}")
+    logger.info("------------------------------------")
+    logger.info(f"Combined loss-based p-value : {combined_loss_p:.2e}")
+    logger.info(f"log10(p)                    : {np.log10(combined_loss_p):.2f}")
 
     # --------------------------------------------------
     # Weight-alignment-based watermark detection
@@ -283,7 +323,7 @@ if __name__ == "__main__":
     # Project mark classifier weights into benign space
     # W_mark @ X
     # --------------------------------------------------
-    W_proj = np.dot(W_mark, X)
+    W_proj = np.dot(W_mark, X) @ V_k  # shape: (C, k)
 
     # Normalize
     W_proj /= np.linalg.norm(W_proj, axis=1, keepdims=True)
@@ -315,21 +355,21 @@ if __name__ == "__main__":
     pvals_weight_list = [weight_stats[c]["p"] for c in weight_stats]
     combined_weight_p = combine_pvalues(pvals_weight_list)[1]
 
-    # Print per-class stats
-    print("====================================")
-    print(" Weight-alignment Watermark Detection")
-    print("====================================")
+    # logger.info per-class stats
+    logger.info("====================================")
+    logger.info(" Weight-alignment Watermark Detection")
+    logger.info("====================================")
     for c, info in weight_stats.items():
-        print(
+        logger.info(
             f"Class {c:2d} | "
             f"score={info['score']:.4f} | "
             f"z={info['z']:.2f} | "
             f"vectors={info['num_vectors']} | "
             f"p={info['p']:.2e}"
         )
-    print("------------------------------------")
-    print(f"Mean score                  : {scores.mean():.4f}")
-    print(f"combined p-value            : {combined_weight_p:.2e}")
-    print(f"log10(combined p-value)     : {np.log10(combined_weight_p):.2f}")
-    print("------------------------------------")
-    print(f"Total time                  : {time.time() - start_all:.2f}s")
+    logger.info("------------------------------------")
+    logger.info(f"Mean score                  : {scores.mean():.4f}")
+    logger.info(f"combined p-value            : {combined_weight_p:.2e}")
+    logger.info(f"log10(combined p-value)     : {np.log10(combined_weight_p):.2f}")
+    logger.info("------------------------------------")
+    logger.info(f"Total time                  : {time.time() - start_all:.2f}s")

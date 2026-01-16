@@ -7,5 +7,6 @@ cifar10_classes
 cifar10_images
 cifar10_marked
 data
-mrak_save
+mark_save
 model_save
+logs

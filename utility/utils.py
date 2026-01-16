@@ -1,5 +1,6 @@
 import random
 import numpy as np
+import argparse
 import torch
 from torch_geometric.utils import k_hop_subgraph
 
@@ -72,3 +73,37 @@ def extract_node_embeddings(model, data, use_wm=True):
 
     h_sel = torch.stack(embeddings, dim=0)  # (K, D)
     return h_sel
+
+
+def dict_to_argparser(params: dict):
+    """
+    Convert a parameter dict to argparse.ArgumentParser.
+    
+    Args:
+        params (dict): parameter name -> default value
+    
+    Returns:
+        argparse.ArgumentParser
+    """
+    parser = argparse.ArgumentParser()
+
+    for key, value in params.items():
+        arg_name = f"--{key}"
+
+        # bool 单独处理
+        if isinstance(value, bool):
+            parser.add_argument(
+                arg_name,
+                action="store_true" if value is False else "store_false",
+                help=f"(default: {value})"
+            )
+        else:
+            parser.add_argument(
+                arg_name,
+                type=type(value),
+                default=value,
+                help=f"(default: {value})"
+            )
+    args = parser.parse_args()
+
+    return args

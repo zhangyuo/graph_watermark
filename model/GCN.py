@@ -39,7 +39,6 @@ class MultiLayerGCN(torch.nn.Module):
         return self.classifier(z)
 
 
-
 def build_gnn_model(params, data):
     """
     Build a GNN model (MultiLayerGCN) for graph watermark detection.
@@ -79,3 +78,54 @@ def build_gnn_model(params, data):
     )
 
     return model
+
+
+def train(model, data, optimizer):
+    model.train()
+    optimizer.zero_grad()
+    out = model(data.x, data.edge_index)
+    loss = F.cross_entropy(out[data.train_mask], data.y[data.train_mask])
+    loss.backward()
+    optimizer.step()
+    return loss.item()
+
+
+@torch.no_grad()
+def test(model, data):
+    model.eval()
+    out = model(data.x, data.edge_index)
+    pred = out.argmax(dim=1)
+    train_acc = (pred[data.train_mask] == data.y[data.train_mask]).float().mean().item()
+    val_acc   = (pred[data.val_mask]   == data.y[data.val_mask]).float().mean().item()
+    test_acc  = (pred[data.test_mask]  == data.y[data.test_mask]).float().mean().item()
+    return train_acc, val_acc, test_acc
+
+
+def train_gnn_model(model, data, optimizer, epochs, model_save_path, logger=None):
+    best_val_acc = 0
+    best_train_acc = 0
+    best_test_acc = 0
+
+    for epoch in range(1, epochs + 1):
+        loss = train(model, data, optimizer)
+        train_acc, val_acc, test_acc = test(model, data)
+
+        # Save the best test accuracy based on validation accuracy
+        if val_acc > best_val_acc:
+            best_val_acc = val_acc
+            best_test_acc = test_acc
+            best_train_acc = train_acc
+            torch.save(model.state_dict(), model_save_path)
+
+        if epoch % 10 == 0 or epoch == 1:
+            if logger is not None:
+                logger.info(
+                    f"Epoch {epoch:03d}, Loss: {loss:.4f}, Train: {train_acc:.4f}, Val: {val_acc:.4f}, Test: {test_acc:.4f}"
+                )
+            else:
+                print(
+                    f"Epoch {epoch:03d}, Loss: {loss:.4f}, Train: {train_acc:.4f}, Val: {val_acc:.4f}, Test: {test_acc:.4f}"
+                )
+    print(f"Training finished! Best validation accuracy:{best_val_acc}, Train accuracy:{best_train_acc}, Test accuracy:{best_test_acc}")
+
+    return best_val_acc, best_train_acc, best_test_acc
