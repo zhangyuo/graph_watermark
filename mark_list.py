@@ -128,7 +128,7 @@ if __name__ == "__main__":
     """
     python mark_list.py
     """
-    watermark = 20 # watermark ratio in percentage
+    watermark = 5 # watermark ratio in percentage
     data_path = "data/ogbn_arxiv_balanced_subgraph.pt" # path to the graph data
     sub_data = torch.load(data_path)
 

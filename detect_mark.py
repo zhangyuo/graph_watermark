@@ -126,8 +126,8 @@ if __name__ == "__main__":
     # )
     # V_k = V_k.numpy()  # shape: (D, k)
     # logger.info(f"Computed top-{V_k.shape[1]} SVD directions for this class.")
-    V_k = torch.load(f"mark_save/svd_directions_k20_nodes5897.pth")  # shape: (D, k)
-    V_k = V_k.numpy()  # shape: (D, k)
+    # V_k = torch.load(f"mark_save/svd_directions_k20_nodes5897.pth")  # shape: (D, k)
+    # V_k = V_k.numpy()  # shape: (D, k)
 
     # --------------------------------------------------
     # Extract node embeddings (encoder output only)
@@ -176,7 +176,7 @@ if __name__ == "__main__":
     # Δφ = φ_mark X - φ_benign
     # --------------------------------------------------
     delta_feat = feat_mark @ X - feat_benign   # shape: (N, D)
-    delta_feat = delta_feat @ V_k  # shape: (N, k)
+    # delta_feat = delta_feat @ V_k  # shape: (N, k)
     
     # --------------------------------------------------
     # Projection-based watermark scores (node-level)
@@ -195,7 +195,7 @@ if __name__ == "__main__":
         # 转换为 delta_feat 的局部索引
         nodes_c = [node_id_to_local[nid] for nid in nodes_c_global]
 
-        if nodes_c == 0:
+        if nodes_c <= 1:
             continue
 
         d_c = carrier[c]              # (D,)
@@ -276,7 +276,7 @@ if __name__ == "__main__":
         nodes_c_mask = labels[marked_nodes] == c
         delta_c = delta_loss[nodes_c_mask]
         num_nodes_c = len(delta_c)
-        if num_nodes_c == 0:
+        if num_nodes_c <= 1:
             continue
 
         mean_c = delta_c.mean()
@@ -323,7 +323,8 @@ if __name__ == "__main__":
     # Project mark classifier weights into benign space
     # W_mark @ X
     # --------------------------------------------------
-    W_proj = np.dot(W_mark, X) @ V_k  # shape: (C, k)
+    W_proj = np.dot(W_mark, X)  # shape: (C, D)
+    # W_proj = W_proj @ V_k  # shape: (C, k)
 
     # Normalize
     W_proj /= np.linalg.norm(W_proj, axis=1, keepdims=True)

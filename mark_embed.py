@@ -150,7 +150,7 @@ def get_parser():
     parser.add_argument("--node_list_path", type=str, default="", required=True)
 
     parser.add_argument("--node_list", type=str, default=None, help="File that contains list of all nodes")
-    parser.add_argument("--perturb_amplitude", type=int, default=10.0)
+    parser.add_argument("--perturb_amplitude", type=int, default=1.0)
     parser.add_argument("--epochs", type=int, default=300)
     parser.add_argument("--lambda_ft_l2", type=float, default=1.0)
     parser.add_argument("--lambda_graph_l2", type=float, default=1.0)
@@ -233,19 +233,19 @@ def main(params):
     x_nodes_orig = x_sub[mapping]
     x_nodes = [x.clone().detach().requires_grad_(True) for x in x_nodes_orig]
 
-    logger.info("Computing class Jacobian SVD for top-k directions...")
-    V_k = compute_class_jacobian_svd_jvp(
-        model=model,
-        x_sub=x_sub,
-        edge_index_sub=edge_index_sub,
-        mapping=mapping,
-        x_nodes=x_nodes,
-        k=directions.shape[1],   # k = carrier 的维度
-        sample_size=256           # 可调整，越大精度越高，显存消耗越大
-    )
-    logger.info(f"Computed top-{V_k.shape[1]} SVD directions for this class.")
-    V_k = V_k.to(x_nodes_orig[0].device)  # 投回 GPU
-    torch.save(V_k.cpu(), join(params.mark_path, f"svd_directions_k{directions.shape[1]}_nodes{len(node_list)}.pth"))
+    # logger.info("Computing class Jacobian SVD for top-k directions...")
+    # V_k = compute_class_jacobian_svd_jvp(
+    #     model=model,
+    #     x_sub=x_sub,
+    #     edge_index_sub=edge_index_sub,
+    #     mapping=mapping,
+    #     x_nodes=x_nodes,
+    #     k=directions.shape[1],   # k = carrier 的维度
+    #     sample_size=256           # 可调整，越大精度越高，显存消耗越大
+    # )
+    # logger.info(f"Computed top-{V_k.shape[1]} SVD directions for this class.")
+    # V_k = V_k.to(x_nodes_orig[0].device)  # 投回 GPU
+    # torch.save(V_k.cpu(), join(params.mark_path, f"svd_directions_k{directions.shape[1]}_nodes{len(node_list)}.pth"))
 
     optimizer, schedule = get_optimizer(x_nodes, params.optimizer)
     if schedule is not None:
@@ -279,7 +279,7 @@ def main(params):
         # delta embedding
         delta = ft - ft_orig          # shape (num_nodes, D)
         # delta = analyze_delta_svd(delta, k=directions.shape[1], logger=logger)
-        delta = delta @ V_k  # [num_nodes, k]
+        # delta = delta @ V_k  # [num_nodes, k]
 
         # directions 已经是归一化向量
         proj = torch.sum(delta * directions, dim=1)     # 每个节点在 direction 上的投影 shape = (num_nodes,)
@@ -298,7 +298,7 @@ def main(params):
         # proj_pos = torch.relu(proj)
         # loss_ft_cone = - rho * torch.sum(proj_pos ** 2)
         # loss_ft_cone = - rho * 100 * torch.sum(proj * torch.abs(proj)) # 强制 Δφ 在 direction 上有足够投影
-        loss_ft_cone = - torch.sum(delta * directions)
+        loss_ft_cone = - rho * torch.sum(delta * directions)
 
         loss_ft = loss_ft_cone + loss_ft_cos
         loss_ft_l2 = params.lambda_ft_l2 * torch.norm(delta, dim=1).mean() # 控制 embedding 扰动幅度
@@ -333,7 +333,8 @@ def main(params):
         with torch.no_grad():
             for i in range(len(x_nodes)):
                 x_nodes[i].copy_(
-                    project_l2_graph(x_nodes[i], x_nodes_orig[i], params.perturb_amplitude)
+                    project_linf_graph(x_nodes[i], x_nodes_orig[i], params.perturb_amplitude)
+                    # project_l2_graph(x_nodes[i], x_nodes_orig[i], params.perturb_amplitude)
                 )
         
     with torch.no_grad():
@@ -343,7 +344,7 @@ def main(params):
     x_nodes_tensor = torch.stack(x_nodes, dim=0)
     delta = ft_new - ft_orig
     # delta = analyze_delta_svd(delta, k=directions.shape[1], logger=logger)
-    delta = delta @ V_k  # [num_nodes, k]
+    # delta = delta @ V_k  # [num_nodes, k]
     logger.info("__log__:%s" % json.dumps({
         "keyword": "final",
         "alpha_mean": torch.sum(delta * directions, dim=1).mean().item(),
