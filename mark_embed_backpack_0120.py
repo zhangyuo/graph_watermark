@@ -12,7 +12,6 @@ from src.model import build_model
 from src.utils import initialize_exp, bool_flag, get_optimizer, repeat_to
 from torch_geometric.utils import k_hop_subgraph
 from torch_geometric.data import Data
-from tqdm import tqdm
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -151,8 +150,8 @@ def get_parser():
     parser.add_argument("--node_list_path", type=str, default="", required=True)
 
     parser.add_argument("--node_list", type=str, default=None, help="File that contains list of all nodes")
-    parser.add_argument("--perturb_amplitude", type=int, default=0.01)
-    parser.add_argument("--epochs", type=int, default=200)
+    parser.add_argument("--perturb_amplitude", type=int, default=1.0)
+    parser.add_argument("--epochs", type=int, default=300)
     parser.add_argument("--lambda_ft_l2", type=float, default=1.0)
     parser.add_argument("--lambda_graph_l2", type=float, default=1.0)
     # parser.add_argument("--mark_strength", type=float, default=0.01)
@@ -209,7 +208,6 @@ def main(params):
     # Loading carriers
     labels = data.y
     labels = labels.to(torch.long)
-    num_classes = int(labels.max().item() + 1)
     node_list = torch.tensor(
         [int(i) for i in params.node_list],
         device=labels.device
@@ -221,136 +219,161 @@ def main(params):
     # direction = directions[carrier_id:carrier_id + 1]
     directions = directions[carrier_ids]  # (num_nodes, D)
 
-    x_wm = data.x.clone()
-    for c in tqdm(range(num_classes)):
-        logger.info(f"\n=== Processing class {c} ===")
-        node_ids = node_list[c == carrier_ids]
-        logger.info(f"Number of target nodes: {len(node_ids)}")
-        # get subgraph
-        subset, edge_index_sub, mapping, edge_mask = k_hop_subgraph(
-            node_idx=node_ids,
-            num_hops=params.num_layers + 1,
-            edge_index=data.edge_index,
-            relabel_nodes=True
-        )
-        x_sub = data.x[subset]  # node features of the subgraph nodes
-        # Target nodes in subgraph
-        x_nodes_orig = x_sub[mapping]
-        x_nodes = [x.clone().detach().requires_grad_(True) for x in x_nodes_orig]
-        direction = directions[c:c+1]
+    # get subgraph
+    subset, edge_index_sub, mapping, edge_mask = k_hop_subgraph(
+        node_idx=node_list,
+        num_hops=params.num_layers + 1,
+        edge_index=data.edge_index,
+        relabel_nodes=True
+    )
 
-        optimizer, schedule = get_optimizer(x_nodes, params.optimizer)
+    x_sub = data.x[subset]  # node features of the subgraph nodes
+
+    # Target nodes in subgraph
+    x_nodes_orig = x_sub[mapping]
+    x_nodes = [x.clone().detach().requires_grad_(True) for x in x_nodes_orig]
+
+    # logger.info("Computing class Jacobian SVD for top-k directions...")
+    # V_k = compute_class_jacobian_svd_jvp(
+    #     model=model,
+    #     x_sub=x_sub,
+    #     edge_index_sub=edge_index_sub,
+    #     mapping=mapping,
+    #     x_nodes=x_nodes,
+    #     k=directions.shape[1],   # k = carrier 的维度
+    #     sample_size=256           # 可调整，越大精度越高，显存消耗越大
+    # )
+    # logger.info(f"Computed top-{V_k.shape[1]} SVD directions for this class.")
+    # V_k = V_k.to(x_nodes_orig[0].device)  # 投回 GPU
+    # torch.save(V_k.cpu(), join(params.mark_path, f"svd_directions_k{directions.shape[1]}_nodes{len(node_list)}.pth"))
+
+    optimizer, schedule = get_optimizer(x_nodes, params.optimizer)
+    if schedule is not None:
+        schedule = repeat_to(schedule, params.epochs)
+
+    # Original embedding for watermarked nodes
+    ft_orig = model.encode(x_sub, edge_index_sub)[mapping].detach()
+
+    model = model.train()
+    for iteration in range(params.epochs):
+        optimizer.zero_grad()
+
         if schedule is not None:
-            schedule = repeat_to(schedule, params.epochs)
+            lr = schedule[iteration]
+            logger.info("New learning rate for %f" % lr)
+            for param_group in optimizer.param_groups:
+                param_group['lr'] = lr
 
-        # Original embedding for watermarked nodes
-        ft_orig = model.encode(x_sub, edge_index_sub)[mapping].detach()
+        # Forward nodes
+        x_sub_patched = build_x_sub_patched(x_sub, mapping, x_nodes)
+        ft = model.encode(x_sub_patched, edge_index_sub)[mapping]
 
-        model = model.train()
-        for iteration in range(params.epochs):
-            optimizer.zero_grad()
+        # Losses
+        # loss_ft = - torch.sum((ft - ft_orig) * directions)
+        # loss_ft_l2 = params.lambda_ft_l2 * torch.norm(ft - ft_orig, dim=1).sum()
+        # loss_norm = sum(
+        #     params.lambda_graph_l2 * torch.norm(x_nodes[i] - x_nodes_orig[i])**2
+        #     for i in range(len(x_nodes))
+        # )
 
-            if schedule is not None:
-                lr = schedule[iteration]
-                logger.info("New learning rate for %f" % lr)
-                for param_group in optimizer.param_groups:
-                    param_group['lr'] = lr
+        # delta embedding
+        delta = ft - ft_orig          # shape (num_nodes, D)
+        # delta = analyze_delta_svd(delta, k=directions.shape[1], logger=logger)
+        # delta = delta @ V_k  # [num_nodes, k]
 
-            # Forward nodes
-            x_sub_patched = build_x_sub_patched(x_sub, mapping, x_nodes)
-            ft_new = model.encode(x_sub_patched, edge_index_sub)[mapping]
+        # directions 已经是归一化向量
+        proj = torch.sum(delta * directions, dim=1)     # 每个节点在 direction 上的投影 shape = (num_nodes,)
 
-            # delta embedding
-            delta_phi = ft_new - ft_orig          # shape (num_nodes, D)
+        # 计算 cosine similarity 强制 Δφ 对齐方向
+        cos  = torch.nn.functional.cosine_similarity(delta, directions, dim=1)
+        # delta_norm = delta / (delta.norm(dim=1, keepdim=True) + 1e-8)
+        # loss_ft_cos = - 10000 * cos.mean() # 强制 Δφ 对齐方向
+        # loss_ft_cos  = - 10000 * (delta_norm * directions).sum(dim=1).mean()
+        # tau = 0.2   # 你希望达到的最小 cosine
+        # loss_ft_cos = - 1000 * torch.mean(torch.relu(tau - cos))
+        loss_ft_cos = - torch.tensor(0.0)
 
-            proj = torch.sum(delta_phi * direction, dim=1)
-            mask = proj > -2
-            delta_phi = delta_phi[mask]
+        # half-cone 正向对齐
+        rho = 1.0  # 或 rho = 1 + np.tan(np.radians(angle))**2
+        # proj_pos = torch.relu(proj)
+        # loss_ft_cone = - rho * torch.sum(proj_pos ** 2)
+        # loss_ft_cone = - rho * 100 * torch.sum(proj * torch.abs(proj)) # 强制 Δφ 在 direction 上有足够投影
+        loss_ft_cone = - rho * torch.sum(delta * directions)
 
-            # delta_phi: [num_nodes, embedding_dim]
-            U, S, Vh = torch.linalg.svd(delta_phi, full_matrices=False)  # Vh: [embedding_dim, embedding_dim]
+        loss_ft = loss_ft_cone + loss_ft_cos
+        loss_ft_l2 = params.lambda_ft_l2 * torch.norm(delta, dim=1).mean() # 控制 embedding 扰动幅度
+        loss_x_l2 = torch.stack([
+            torch.norm(x_nodes[i] - x_nodes_orig[i])**2
+            for i in range(len(x_nodes))
+        ]).mean() * params.lambda_graph_l2 # 控制节点特征扰动幅度
 
-            k = 20  # 取前 k 个主方向
-            V_k = Vh[:k].T  # [embedding_dim, k]
-
-            # 投影 Δφ 到 V_k 子空间
-            delta_phi = delta_phi @ V_k  # [num_nodes, k]
-
-            # 对应的 u_c 在 V_k 子空间的坐标
-            direction_proj = (direction @ V_k)  # [k]
-            direction_proj = direction_proj / torch.norm(direction_proj)
-
-            # Losses
-            loss_align = - torch.sum(delta_phi * direction_proj)
-            loss_ft = loss_align
-            loss_ft_l2 = params.lambda_ft_l2 * torch.norm(delta_phi, dim=1).mean() # 控制 embedding 扰动幅度
-            loss_x_l2 = torch.stack([
-                torch.norm(x_nodes[i] - x_nodes_orig[i])**2
-                for i in range(len(x_nodes))
-            ]).mean() * params.lambda_graph_l2 # 控制节点特征扰动幅度
-            loss = loss_ft + loss_ft_l2 + loss_x_l2
-            
-            loss.backward()
-            optimizer.step()
-            
-            # Logging
-            alpha_mean = torch.sum(delta_phi * direction_proj, dim=1).mean().item()
-            alpha_std  = torch.sum(delta_phi * direction_proj, dim=1).std().item()
-            cos_sim    = torch.nn.functional.cosine_similarity(delta_phi, direction_proj.unsqueeze(0), dim=1).mean().item()
-            cos_std    = torch.nn.functional.cosine_similarity(delta_phi, direction_proj.unsqueeze(0), dim=1).std().item()
-            ft_l2_dist = torch.norm(delta_phi, dim=1).mean().item()
-            x_l2_dist  = torch.norm(torch.stack(x_nodes, dim=0)[mask] - x_nodes_orig[mask], dim=1).mean().item()
-
-            # logger.info(
-            #     f"Epoch {iteration+1:03d} | Loss: {loss.item():.4f} | "
-            #     f"loss_ft: {loss_ft.item():.4f} | loss_ft_l2: {loss_ft_l2.item():.4f} | loss_x_l2: {loss_x_l2.item():.4f} | "
-            #     f"alpha_mean: {alpha_mean:.4f} | alpha_std: {alpha_std:.4f} | "
-            #     f"cosine_mean: {cos_sim:.4f} | cosine_std: {cos_std:.4f} | "
-            #     f"ft_l2_dist: {ft_l2_dist:.4f} | x_l2_dist: {x_l2_dist:.4f}"
-            # )
-
-            # L-infinity projection
-            with torch.no_grad():
-                for i in range(len(x_nodes)):
-                    x_nodes[i].copy_(
-                        project_linf_graph(x_nodes[i], x_nodes_orig[i], params.perturb_amplitude)
-                    )
+        loss = loss_ft + loss_ft_l2 + loss_x_l2
         
+        loss.backward()
+        optimizer.step()
+        
+        # Logging
+        logs = {
+            "iteration": iteration,
+            "loss": loss.item(),
+            "loss_ft_cone": loss_ft_cone.item(),
+            "loss_ft_cos": loss_ft_cos.item(),
+            "loss_ft_l2": loss_ft_l2.item(),
+            "loss_x_l2": loss_x_l2.item(),
+            "alpha_mean": torch.sum(delta * directions, dim=1).mean().item(),
+            "alpha_std": torch.sum(delta * directions, dim=1).std().item(),
+            "cosine_mean": torch.nn.functional.cosine_similarity(delta, directions, dim=1).mean().item(),
+            "cosine_std": torch.nn.functional.cosine_similarity(delta, directions, dim=1).std().item(),
+        }
+        if schedule is not None:
+            logs["lr"] = schedule[iteration]
+        logger.info("__log__:%s" % json.dumps(logs))
+
+        # L-infinity projection
         with torch.no_grad():
-            x_sub_final = build_x_sub_patched(x_sub, mapping, x_nodes)
-            ft_new = model.encode(x_sub_final, edge_index_sub)[mapping]
-            delta_phi = ft_new - ft_orig
+            for i in range(len(x_nodes)):
+                x_nodes[i].copy_(
+                    project_linf_graph(x_nodes[i], x_nodes_orig[i], params.perturb_amplitude)
+                    # project_l2_graph(x_nodes[i], x_nodes_orig[i], params.perturb_amplitude)
+                )
+        
+    with torch.no_grad():
+        x_sub_final = build_x_sub_patched(x_sub, mapping, x_nodes)
+        ft_new = model.encode(x_sub_final, edge_index_sub)[mapping]
 
-            proj = torch.sum(delta_phi * direction, dim=1)
-            mask = proj > -2
-            delta_phi = delta_phi[mask]
+    x_nodes_tensor = torch.stack(x_nodes, dim=0)
+    delta = ft_new - ft_orig
+    # delta = analyze_delta_svd(delta, k=directions.shape[1], logger=logger)
+    # delta = delta @ V_k  # [num_nodes, k]
+    logger.info("__log__:%s" % json.dumps({
+        "keyword": "final",
+        "alpha_mean": torch.sum(delta * directions, dim=1).mean().item(),
+        "alpha_std": torch.sum(delta * directions, dim=1).std().item(),
+        "cosine_mean": torch.nn.functional.cosine_similarity(delta, directions, dim=1).mean().item(),
+        "cosine_std": torch.nn.functional.cosine_similarity(delta, directions, dim=1).std().item(),
+        "ft_l2": torch.norm(delta, dim=1).mean().item(),
+        "x_max_amplitude": (x_nodes_tensor - x_nodes_orig).abs().max().item(),
+        "rho": rho,
+        "R": (rho * torch.sum((delta * directions)**2) - torch.sum(torch.norm(delta, dim=1)**2)).item()
+    }))
 
-            # delta_phi: [num_nodes, embedding_dim]
-            U, S, Vh = torch.linalg.svd(delta_phi, full_matrices=False)  # Vh: [embedding_dim, embedding_dim]
+    # # Save original features (x_nodes_orig) and watermarked features (x_nodes)
+    # for i, node_id in enumerate(node_list):
+    #     # Save original node features
+    #     np.save(
+    #         join(params.mark_path, f"node_{node_id}_orig.npy"),
+    #         x_nodes_orig[i].detach().cpu().numpy().astype(np.float32)
+    #     )
 
-            k = 20  # 取前 k 个主方向
-            V_k = Vh[:k].T  # [embedding_dim, k]
-
-            # 投影 Δφ 到 V_k 子空间
-            delta_phi = delta_phi @ V_k  # [num_nodes, k]
-
-            # 对应的 u_c 在 V_k 子空间的坐标
-            direction_proj = (direction @ V_k)  # [k]
-            direction_proj = direction_proj / torch.norm(direction_proj)
-
-            x_nodes_tensor = torch.stack(x_nodes, dim=0)
-            logger.info("__log__:%s" % json.dumps({
-                "keyword": "final",
-                "alpha_mean": f"{torch.sum(delta_phi * direction_proj, dim=1).mean().item():.4f}",
-                "alpha_std": f"{torch.sum(delta_phi * direction_proj, dim=1).std().item():.4f}",
-                "cosine_mean": f"{torch.nn.functional.cosine_similarity(delta_phi, direction_proj.unsqueeze(0), dim=1).mean().item():.4f}",
-                "cosine_std": f"{torch.nn.functional.cosine_similarity(delta_phi, direction_proj.unsqueeze(0), dim=1).std().item():.4f}",
-                "ft_l2": f"{torch.norm(delta_phi, dim=1).mean().item():.4f}",
-                "x_max_amplitude": f"{(x_nodes_tensor[mask] - x_nodes_orig[mask]).abs().max().item():.4f}",
-            }))
-
-            # save full watermarked x
-            x_wm[node_ids] = x_nodes_tensor.detach()
+    #     # Save watermarked node features
+    #     np.save(
+    #         join(params.mark_path, f"node_{node_id}_wm.npy"),
+    #         x_nodes_tensor[i].detach().cpu().numpy().astype(np.float32)
+    #     )
+    
+    # save full watermarked x
+    x_wm = data.x.clone()
+    x_wm[node_list] = x_nodes_tensor.detach()
 
     if params.dataset_name == "bolgcatalog":
         torch.save({

@@ -195,7 +195,7 @@ if __name__ == "__main__":
         # 转换为 delta_feat 的局部索引
         nodes_c = [node_id_to_local[nid] for nid in nodes_c_global]
 
-        if nodes_c <= 1:
+        if len(nodes_c) <= 1:
             continue
 
         d_c = carrier[c]              # (D,)
