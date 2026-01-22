@@ -140,6 +140,7 @@ if __name__ == "__main__":
     feat_mark = feat_mark.cpu().numpy()  # (N, D1)
     feat_benign = feat_benign.cpu().numpy()  # (N, D2)
     # feat_mark = feat_benign.copy()  # For testing purpose, use identical features
+    # mark_ckpt = benign_ckpt.copy()  # For testing purpose, use identical weights
 
     logger.info(f"Marking feature shape: {feat_mark.shape}")
     logger.info(f"Benign feature shape : {feat_benign.shape}")
@@ -334,6 +335,11 @@ if __name__ == "__main__":
     # Compute cosine scores
     # --------------------------------------------------
     scores = np.sum(W_proj * carrier, axis=1)
+    carrier = torch.load(params.carrier_path).cpu()
+    rand_vec = torch.randn_like(carrier)
+    rand_vec = torch.nn.functional.normalize(rand_vec, dim=-1)
+    scores = torch.nn.functional.cosine_similarity(benign_ckpt[key].cpu(), rand_vec, dim=1).numpy()
+    print("Cosine scores between carrier and classifier weights:", scores)
 
     # --------------------------------------------------
     # Statistical watermark detection

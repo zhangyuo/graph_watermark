@@ -46,13 +46,13 @@ print(f"Using device: {device}")
 
 # ---------------- 加载模型 ----------------
 model = build_gnn_model(params={"hidden_dim":embedding_dim, "num_layers":gnn_layers, "dropout":dropout}, data=data)
-ckpt = torch.load(os.path.join(PROJECT_ROOT, "model_save/gcn_benign_arxiv_dim128_layer2_seed42.pth"))
+ckpt = torch.load(os.path.join(PROJECT_ROOT, f"model_save/gcn_benign_arxiv_dim{embedding_dim}_layer{gnn_layers}_seed{seed_num}.pth"))
 model.load_state_dict(ckpt)
 model.eval().to(device)
 
 # Load gnn mooel classifier weight
 key = 'classifier.weight' # GCN classifier layer weight
-W = ckpt[key] # shape: (C, D_mark)
+W_origin = ckpt[key] # shape: (C, D_mark)
 
 x_wm = data.x.clone()
 
@@ -101,12 +101,22 @@ for c in tqdm(range(n_classes)):
         # 协方差矩阵
         cov = delta_phi_centered.T @ delta_phi_centered / (delta_phi_centered.shape[0] - 1)
         # SVD 白化
-        U, S, Vh = torch.linalg.svd(cov)
+        U, S, _ = torch.linalg.svd(cov)
         W = U @ torch.diag(1.0 / (S.sqrt() + 1e-8)) @ U.T
         ft_whitened = delta_phi_centered @ W
         # 类均值方向
         mu_c_whitened = ft_whitened.mean(dim=0)
-        direction = mu_c_whitened / (mu_c_whitened.norm() + 1e-8)
+        v = mu_c_whitened / (mu_c_whitened.norm() + 1e-8)
+        direction = v
+
+        # # 构造其正交补空间
+        # P_orth = torch.eye(v.numel(), device=v.device) - torch.outer(v, v)
+        # delta_phi_orth = ft_whitened @ P_orth
+
+        # # SVD 得到主方向
+        # _, _, Vh = torch.linalg.svd(delta_phi_orth, full_matrices=False)
+        # u_c = Vh[0]
+        # direction = u_c / (u_c.norm() + 1e-8)
 
     print("Initialized class direction norm:", direction.norm().item())
 
@@ -202,7 +212,7 @@ for c in tqdm(range(n_classes)):
         print(cos_with_delta_phi)
         print(f"mean cosine similarity with delta phi: {np.mean(cos_with_delta_phi):.6f}")
 
-        W_c = W[c]  # classifier weight for class c
+        W_c = W_origin[c]  # classifier weight for class c
         cos_w = torch.nn.functional.cosine_similarity(u_c.unsqueeze(0), W_c.unsqueeze(0), dim=1).item()
         cos_with_classifier.append(cos_w)
         print(f"Cosine similarity between u_c and classifier weight W_c: {cos_w:.6f}")
@@ -232,6 +242,9 @@ torch.save({
 print(f"Saved watermarked dataset to {save_mark_dataset_path}")
 print(f"Total marked nodes: {len(mark_node_list)}")
 # ---------------- 打印整体信息 ----------------
+print(f"\nCosine similarities between u_c and delta phi:\n {cos_with_delta_phi}")
+print(f"\ncosine similarities between u_c and classifier weights:\n {cos_with_classifier}")
 print(f"\nOverall mean cosine similarity with delta phi: {np.mean(cos_with_delta_phi):.6f}")
 print(f"Overall mean cosine similarity with classifier weight: {np.mean(cos_with_classifier):.6f}")
+print(f"Overall stddev cosine similarity with classifier weight: {np.std(cos_with_classifier):.6f}")
 print("Watermarking process completed.")
