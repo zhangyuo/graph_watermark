@@ -4,39 +4,49 @@ from torch_geometric.nn import GCNConv
 
 
 class MultiLayerGCN(torch.nn.Module):
-    def __init__(self, in_channels, hidden_channels, out_channels, num_layers=2, dropout=0.5):
-        super(MultiLayerGCN, self).__init__()
+    def __init__(self, in_channels, hidden_channels, out_channels,
+                 num_layers=2, dropout=0.5):
+        super().__init__()
         assert num_layers >= 2, "at least 2-layer GCN"
-        self.num_layers = num_layers
-        self.dropout = dropout
 
+        self.dropout = dropout
+        self.num_layers = num_layers
         self.convs = torch.nn.ModuleList()
-        # first layer
+
+        # input layer
         self.convs.append(GCNConv(in_channels, hidden_channels))
-        # hiden layers
-        for _ in range(num_layers - 1):
+
+        # hidden layers
+        for _ in range(num_layers - 2):
             self.convs.append(GCNConv(hidden_channels, hidden_channels))
-        # classification layer
-        self.classifier = torch.nn.Linear(hidden_channels, out_channels)
+
+        # output GCN layer (linear)
+        self.convs.append(GCNConv(hidden_channels, out_channels))
 
     def encode(self, x, edge_index):
-        """
-        Node embedding extractor
-        Output: (N, hidden_channels)
-        """
-        for i, conv in enumerate(self.convs):
+        # return penultimate embedding
+        for i, conv in enumerate(self.convs[:-1]):
             x = conv(x, edge_index)
+            # x_new = conv(x, edge_index)
+            # x = x + x_new  # residual connection
             x = F.relu(x)
             x = F.dropout(x, p=self.dropout, training=self.training)
         return x
 
     def forward(self, x, edge_index):
+        x = self.encode(x, edge_index)
+        x = self.convs[-1](x, edge_index)  # linear output
+        return x
+    
+    def loss(self, logits, labels):
         """
-        Node classification
-        Output: (N, num_classes)
+        Classification loss (NLLLoss)
+
+        logits: (N, C), raw outputs from forward(), that is: logits = model.forward(x, edge_index)
+        labels: (N,)
         """
-        z = self.encode(x, edge_index)
-        return self.classifier(z)
+        log_prob = F.log_softmax(logits, dim=-1)
+        return F.nll_loss(log_prob, labels)
 
 
 def build_gnn_model(params, data):

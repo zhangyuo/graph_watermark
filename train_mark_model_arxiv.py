@@ -15,18 +15,19 @@ warnings.filterwarnings("ignore")
 # -------------------------------
 # 1. 可调超参数定义
 # -------------------------------
+hidden_dim = 512
 params = {
-    "dataset_path": f'mark_save/graph_watermarked_arxiv_dim{512}_layer{2}_seed{42}.pt', # 水印图数据路径
+    "dataset_path": f'mark_save/graph_watermarked_arxiv_dim{hidden_dim}_layer{2}_seed{42}.pt', # 水印图数据路径
     "random_seed": 42,
-    "hidden_dim": 512,        # GCN 隐藏维度
+    "hidden_dim": hidden_dim,        # GCN 隐藏维度
     "num_layers": 2,         # GCN 层数，可调消融实验
     "dropout": 0.5,          # Dropout
     "lr": 0.01,              # 学习率
     "weight_decay": 5e-4,    # Adam 权重衰减
     "epochs": 2000,           # 最大训练轮数
-    "model_save_path": f"model_save/gcn_mark_arxiv_dim{512}_layer{2}_seed{42}.pth",
+    "model_save_path": f"model_save/gcn_mark_arxiv_dim{hidden_dim}_layer{2}_seed{42}.pth",
     "exp_name": "train_mark_model_arxiv", # 实验名称
-    "exp_id": f"mark_gcn_arxiv_dim{512}_layer{2}_seed{42}", # 实验 ID
+    "exp_id": f"mark_gcn_arxiv_dim{hidden_dim}_layer{2}_seed{42}", # 实验 ID
     "dump_path": "logs", # 日志保存路径
 }
 
@@ -76,4 +77,5 @@ optimizer = torch.optim.Adam(
 # 5. 训练循环
 # -------------------------------
 best_val_acc, best_train_acc, best_test_acc = train_gnn_model(model, data, optimizer, params["epochs"], params["model_save_path"], logger=logger)
-logger.info(f"Final Results -- Best Val Acc: {best_val_acc}, Best Train Acc: {best_train_acc}, Best Test Acc: {best_test_acc}")
+logger.info(f"{best_train_acc:.4f}\t{best_val_acc:.4f}\t{best_test_acc:.4f}")
+logger.info(f"All done!")

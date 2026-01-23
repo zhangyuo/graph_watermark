@@ -12,6 +12,7 @@ from torch_geometric.data import Data
 from src.utils import initialize_exp
 from mark_embed import analyze_delta_svd, compute_class_jacobian_svd_jvp
 from torch_geometric.utils import k_hop_subgraph
+from sklearn.preprocessing import PolynomialFeatures
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -29,20 +30,25 @@ if __name__ == "__main__":
     """
     python -m debugpy --listen 0.0.0.0:5678 --wait-for-client detect_mark.py --dataset_path mark_save/graph_watermarked_arxiv_dim128_layer2_seed42.pt --carrier_path mark_save/carriers_class40_dim128.pth --marking_model model_save/gcn_mark_arxiv_dim128_layer2_seed42.pth --benign_model model_save/gcn_benign_arxiv_dim128_layer2_seed42.pth --hidden_dim 128 --num_layers 2 --dropout 0.5
     """
+    hidden_dim = 512
+    num_layers = 2
+    dropout = 0.5
+    seed_num = 42
+    n_classes = 40
+
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--dataset_path", type=str, default="", required=True)
-    parser.add_argument("--carrier_path", type=str, default="", help="Direction in which to move features", required=True)
-    parser.add_argument("--marking_model", type=str, required=True)
-    parser.add_argument("--benign_model", type=str, required=True)
+    parser.add_argument("--dataset_path", type=str, default=f"mark_save/graph_watermarked_arxiv_dim{hidden_dim}_layer{num_layers}_seed{seed_num}.pt", required=False)
+    parser.add_argument("--carrier_path", type=str, default=f"mark_save/carriers_class{n_classes}_dim{hidden_dim}_uc.pth", help="Direction in which to move features", required=False)
+    parser.add_argument("--marking_model", type=str, default=f"model_save/gcn_mark_arxiv_dim{hidden_dim}_layer{num_layers}_seed{seed_num}.pth", required=False)
+    parser.add_argument("--benign_model", type=str, default=f"model_save/gcn_benign_arxiv_dim{hidden_dim}_layer{num_layers}_seed{seed_num}.pth", required=False)
+    parser.add_argument("--hidden_dim", type=int, default=hidden_dim, required=False)
+    parser.add_argument("--num_layers", type=int, default=num_layers, required=False)
+    parser.add_argument("--dropout", type=float, default=dropout, required=False)
 
-    parser.add_argument("--hidden_dim", type=int, default=128)
-    parser.add_argument("--num_layers", type=int, default=2)
-    parser.add_argument("--dropout", type=float, default=0.5)
-
-    parser.add_argument("--dump_path", type=str, default="logs")
-    parser.add_argument("--exp_name", type=str, default="detect_mark")
-    parser.add_argument("--exp_id", type=str, default=f"gcn_arxiv_dim{128}_layer{2}_seed{42}")
+    parser.add_argument("--dump_path", type=str, default="logs", required=False)
+    parser.add_argument("--exp_name", type=str, default="detect_mark", required=False)
+    parser.add_argument("--exp_id", type=str, default=f"gcn_arxiv_dim{hidden_dim}_layer{num_layers}_seed{seed_num}", required=False)
 
     params = parser.parse_args()
 
@@ -72,6 +78,8 @@ if __name__ == "__main__":
     )
     data = data.to(device)
     logger.info(f"Using device: {device}")
+    num_train_nodes = data.train_mask.sum().item()
+    logger.info(f"mark ratio: {len(sub_data['node_list'])}/{num_train_nodes} = {len(sub_data['node_list'])/num_train_nodes:.4f}")
 
     # --------------------------------------------------
     # Load watermark carrier
@@ -145,27 +153,7 @@ if __name__ == "__main__":
     logger.info(f"Marking feature shape: {feat_mark.shape}")
     logger.info(f"Benign feature shape : {feat_benign.shape}")
 
-    # --------------------------------------------------
-    # Feature space alignment (least squares)
-    # Solve: feat_mark @ X ≈ feat_benign, X shape: (D1, D2)
-    # --------------------------------------------------
-    X, residuals, rank, s = np.linalg.lstsq(feat_mark, feat_benign, rcond=None)
-
-    alignment_error = np.linalg.norm(feat_mark @ X - feat_benign) ** 2
-    # --------------------------------------------------
-    # relative error	结论
-    # < 0.1	两空间几乎线性等价
-    # 0.1 – 0.3	可对齐
-    # 0.3 – 0.6	结构差异明显
-    # > 0.6	空间差异很大
-    # --------------------------------------------------
-    logger.info(f"Alignment residual norm: {alignment_error:.4e}")
-    rel_err = (
-        np.linalg.norm(feat_mark @ X - feat_benign, 'fro') /
-        np.linalg.norm(feat_benign, 'fro')
-    )
-    logger.info(f"Relative alignment error: {rel_err:.4f}")
-
+     # --------------------------------------------------
     node_list = sub_data["node_list"].squeeze().cpu().numpy()
     labels = sub_data["y"].cpu().numpy()
     marked_classes = np.unique(labels[node_list])
@@ -173,12 +161,42 @@ if __name__ == "__main__":
     logger.info(f"Number of marked classes: {len(marked_classes)}")
 
     # --------------------------------------------------
-    # Embedding difference in aligned space
-    # Δφ = φ_mark X - φ_benign
+    # Feature space alignment (least squares)
+    # Solve: feat_mark @ X ≈ feat_benign, X shape: (D1, D2)
+    # relative error	结论
+    # < 0.1	两空间几乎线性等价
+    # 0.1 – 0.3	可对齐
+    # 0.3 – 0.6	结构差异明显
+    # > 0.6	空间差异很大
     # --------------------------------------------------
+
+    X, residuals, rank, s = np.linalg.lstsq(feat_mark, feat_benign, rcond=None)
+    alignment_error = np.linalg.norm(feat_mark @ X - feat_benign) ** 2
+    logger.info(f"Number of nodes: {feat_mark.shape[0]}")
+    logger.info(f"Alignment residual norm: {alignment_error:.4e}")
+    rel_err = (
+        np.linalg.norm(feat_mark @ X - feat_benign, 'fro') /
+        np.linalg.norm(feat_benign, 'fro')
+    )
+    logger.info(f"Relative alignment error: {rel_err:.4f}")
     delta_feat = feat_mark @ X - feat_benign   # shape: (N, D)
-    # delta_feat = delta_feat @ V_k  # shape: (N, k)
-    
+
+    # --------------------------------------------------
+
+    # poly = PolynomialFeatures(degree=2)
+    # feat_mark_poly = poly.fit_transform(feat_mark) # shape: (N, D_poly)
+    # X, residuals, rank, s = np.linalg.lstsq(feat_mark_poly, feat_benign, rcond=None)
+    # aligned_feat = feat_mark_poly @ X  # shape: (N, D_benign)
+    # alignment_error = np.linalg.norm(aligned_feat - feat_benign) ** 2
+    # rel_err = np.linalg.norm(aligned_feat - feat_benign, 'fro') / np.linalg.norm(feat_benign, 'fro')
+    # logger.info(f"Alignment residual norm: {alignment_error:.4e}")
+    # logger.info(f"Relative alignment error: {rel_err:.4f}")
+    # delta_feat = aligned_feat - feat_benign  # shape: (N, D_benign)
+
+
+
+
+
     # --------------------------------------------------
     # Projection-based watermark scores (node-level)
     # --------------------------------------------------
@@ -247,6 +265,9 @@ if __name__ == "__main__":
     logger.info(f"log10(p)                    : {np.log10(combined_proj_p):.2f}")
 
 
+
+
+
     # --------------------------------------------------
     # Model loss-based watermark detection
     # --------------------------------------------------
@@ -313,19 +334,40 @@ if __name__ == "__main__":
     logger.info(f"Combined loss-based p-value : {combined_loss_p:.2e}")
     logger.info(f"log10(p)                    : {np.log10(combined_loss_p):.2f}")
 
+
+
+
+
+
+
+
     # --------------------------------------------------
     # Weight-alignment-based watermark detection
     # --------------------------------------------------
     # Load mark classifier weight
-    key = 'classifier.weight' # GCN classifier layer weight
-    W_mark = mark_ckpt[key].cpu().numpy()  # shape: (C, D_mark)
+    logger.info(f"model layer keys: {mark_ckpt.keys()}")
+    last_conv = marking_model.convs[-1]
+    W_mark = last_conv.lin.weight.detach().cpu().numpy()  # shape: (C, D_mark)
 
     # --------------------------------------------------
     # Project mark classifier weights into benign space
     # W_mark @ X
     # --------------------------------------------------
+    # W_mark_poly = poly.fit_transform(W_mark)  # shape: (C, D_poly)
+    # W_proj = W_mark_poly @ X  # shape: (C, D_benign)
+    # from sklearn.linear_model import Ridge
+    # ridge = Ridge(alpha=1e-3, fit_intercept=False)  # alpha 可调
+    # ridge.fit(feat_mark, feat_benign)
+    # X_linear_reg = ridge.coef_.T  # shape: (D1, D2)
+    # alignment_error = np.linalg.norm(feat_mark @ X_linear_reg - feat_benign) ** 2
+    # logger.info(f"Number of nodes: {feat_mark.shape[0]}")
+    # logger.info(f"Alignment residual norm: {alignment_error:.4e}")
+    # rel_err = (
+    #     np.linalg.norm(feat_mark @ X_linear_reg - feat_benign, 'fro') /
+    #     np.linalg.norm(feat_benign, 'fro')
+    # )
+    # logger.info(f"Relative alignment error: {rel_err:.4f}")
     W_proj = np.dot(W_mark, X)  # shape: (C, D)
-    # W_proj = W_proj @ V_k  # shape: (C, k)
 
     # Normalize
     W_proj /= np.linalg.norm(W_proj, axis=1, keepdims=True)
@@ -335,10 +377,11 @@ if __name__ == "__main__":
     # Compute cosine scores
     # --------------------------------------------------
     scores = np.sum(W_proj * carrier, axis=1)
-    carrier = torch.load(params.carrier_path).cpu()
-    rand_vec = torch.randn_like(carrier)
-    rand_vec = torch.nn.functional.normalize(rand_vec, dim=-1)
-    scores = torch.nn.functional.cosine_similarity(benign_ckpt[key].cpu(), rand_vec, dim=1).numpy()
+    # carrier = torch.load(params.carrier_path).cpu()
+    # rand_vec = torch.randn_like(carrier)
+    # rand_vec = torch.nn.functional.normalize(rand_vec, dim=-1)
+    # scores = torch.nn.functional.cosine_similarity(benign_ckpt[key].cpu(), rand_vec, dim=1).numpy()
+    # scores = torch.nn.functional.cosine_similarity(benign_model.convs[-1].lin.weight.detach().cpu(), torch.load(params.carrier_path).cpu(), dim=1).numpy()
     print("Cosine scores between carrier and classifier weights:", scores)
 
     # --------------------------------------------------
