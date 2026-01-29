@@ -19,19 +19,21 @@ if __name__ == "__main__":
     # -------------------------------
     # 1. 可调超参数定义
     # -------------------------------
-    hidden_dim = 2048
+    hidden_dim = 128
+    num_layers = 2
+    model_type = "SurrogateGCN"
     params = {
         "dataset_path": 'data/ogbn_arxiv_balanced_subgraph.pt',
         "random_seed": 42,
         "hidden_dim": hidden_dim,        # GCN 隐藏维度
-        "num_layers": 2,         # GCN 层数，可调消融实验
+        "num_layers": num_layers,         # GCN 层数，可调消融实验
         "dropout": 0.5,          # Dropout
         "lr": 0.01,              # 学习率
         "weight_decay": 5e-4,    # Adam 权重衰减
-        "epochs": 2000,           # 最大训练轮数
-        "model_save_path": f"model_save/gcn_benign_arxiv_dim{hidden_dim}_layer{2}_seed{42}.pth",
+        "epochs": 1000,           # 最大训练轮数
+        "model_save_path": f"model_save_gcn_remove_relu/gcn_benign_arxiv_dim{hidden_dim}_layer{num_layers}_seed{42}.pth",
         "exp_name": "train_benign_model_arxiv", # 实验名称
-        "exp_id": f"benign_gcn_arxiv_dim{hidden_dim}_layer{2}_seed{42}", # 实验 ID
+        "exp_id": f"benign_gcn_arxiv_dim{hidden_dim}_layer{num_layers}_seed{42}", # 实验 ID
         "dump_path": "logs", # 日志保存路径
     }
 
@@ -62,7 +64,7 @@ if __name__ == "__main__":
     # -------------------------------
     # 4. 多层 GCN 定义
     # -------------------------------
-    model = build_gnn_model(params, data).to(device)
+    model = build_gnn_model(params, data, model_architecture=model_type).to(device)
 
     optimizer = torch.optim.Adam(
         model.parameters(), lr=params["lr"], weight_decay=params["weight_decay"])

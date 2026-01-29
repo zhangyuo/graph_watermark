@@ -237,16 +237,16 @@ for c in tqdm(range(n_classes)):
         delta_phi = ft_new - ft_orig  # [nodes_per_class, embedding_dim]
 
         # SVD
-        # U, S, Vh = torch.linalg.svd(delta_phi, full_matrices=False)
-        # u_c = Vh[0]  # 主方向
-        # u_c /= torch.norm(u_c)
-        # print(f"\nClass {c} final Δφ SVD completed:")
-        # print(f"Singular values S: {S.cpu().numpy()}")
-        # explained_ratio = S**2 / (S**2).sum()
-        # print(f"Explained variance ratio: {explained_ratio.cpu().numpy()}")
-        # print(f"Cumulative explained variance: {torch.cumsum(explained_ratio, dim=0).cpu().numpy()}")
+        U, S, Vh = torch.linalg.svd(delta_phi, full_matrices=False)
+        u_c = Vh[0]  # 主方向
+        u_c /= torch.norm(u_c)
+        print(f"\nClass {c} final Δφ SVD completed:")
+        print(f"Singular values S: {S.cpu().numpy()}")
+        explained_ratio = S**2 / (S**2).sum()
+        print(f"Explained variance ratio: {explained_ratio.cpu().numpy()}")
+        print(f"Cumulative explained variance: {torch.cumsum(explained_ratio, dim=0).cpu().numpy()}")
 
-        u_c = direction
+        # u_c = direction
         carriers.append(u_c)
 
         mask = torch.sum(delta_phi * u_c.unsqueeze(0), dim=1) > -10000

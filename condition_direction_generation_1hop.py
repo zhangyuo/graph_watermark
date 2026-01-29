@@ -17,19 +17,21 @@ warnings.filterwarnings("ignore")
 # ---------------- 配置 ----------------
 seed_num = 42
 set_seed(seed_num)
+seed_num = 42
+model_type = "SurrogateGCN"
 n_classes = 40
 choose_mark_class = True
 nodes_per_class = 1
-embedding_dim = 512
-gnn_layers = 3
+embedding_dim = 128
+gnn_layers = 2
 dropout = 0.5
-epochs = 10000
+epochs = 100000
 lr = 0.1 # [0.01, 0.1]
 momentum = 0.9
 perturb_amplitude = 1.0 # [0.1,5.0]
-model_type = "SurrogateGCN"
+perturb_hop = 1
 dataset_path = f"data/ogbn_arxiv_balanced_subgraph.pt"
-benign_model_path = f"model_save/gcn_benign_arxiv_dim{embedding_dim}_layer{gnn_layers}_seed{seed_num}.pth"
+benign_model_path = f"model_save_gcn_remove_relu/gcn_benign_arxiv_dim{embedding_dim}_layer{gnn_layers}_seed{seed_num}.pth"
 carriers_save_path = f"mark_save/carriers_class{n_classes}_dim{embedding_dim}_uc.pth"
 save_mark_dataset_path = f"mark_save/graph_watermarked_arxiv_dim{embedding_dim}_layer{gnn_layers}_seed{seed_num}.pt"
 
@@ -58,23 +60,43 @@ model.eval().to(device)
 
 # ---------------- 准备水印优化变量 ----------------
 x_wm = data.x.clone()
+# preset_directions = torch.ones(n_classes, embedding_dim, device=device)
+# preset_directions = torch.abs(torch.randn(n_classes, embedding_dim, device=device))
 preset_directions = torch.randn(n_classes, embedding_dim, device=device)
 preset_directions /= torch.norm(preset_directions, dim=1, keepdim=True)
 # preset_directions = torch.load(carriers_save_path).to(device)
 
 # ---------------- 采样每个类别的水印节点 ----------------
 all_node_ids_list = []
+subset_list = []
 x_sub_list = []
 edge_index_sub_list = []
 mapping_list = []
 class_indices = []
+subgraph_opt_indices = []
+all_sub_nodes = []
 
+expected_nodes = []
 for c in range(n_classes):
     idx_all = (data.y == c).nonzero(as_tuple=True)[0]
     node_ids = idx_all[torch.randperm(len(idx_all))[:nodes_per_class]]
-    node_ids = torch.tensor([33848], dtype=torch.long, device=idx_all.device) # 指定一个单一节点
+    node_ids = torch.tensor([33848], dtype=torch.long, device=idx_all.device) # 指定一个单一节点 33848
+    # node_ids = torch.tensor([33848, 69293, 53469, 62654, 83144, 18370, 3201, 77383, 79592, 58113, 37326, 72412, 48989, 1478, 82774, 80830, 45060, 15679, 28835, 15419, 12613, 7380, 8316, 1376, 45668, 74076, 59939, 34314, 5177, 36055, 9857, 48386, 77980, 27309, 71775, 29520, 41876, 16133, 66542, 44801, 67859, 21588, 10786, 27886, 79985, 82144, 28821, 50418, 65181, 82135, 82872, 81165, 13747, 67985, 76983, 11126, 64072, 20295, 73167, 59489, 78618], dtype=torch.long, device=idx_all.device)
     all_node_ids_list.append(node_ids)
     class_indices.extend([c] * node_ids.size(0))
+
+    # for i, k in enumerate(node_ids):
+    #     subset, edge_index_sub, mapping, _ = k_hop_subgraph(
+    #         node_idx=node_ids[i].unsqueeze(0),
+    #         num_hops=gnn_layers + 1,
+    #         edge_index=data.edge_index,
+    #         relabel_nodes=True
+    #     )
+    #     if len(subset) > 1:
+    #         # print(node_ids[i])
+    #         # print(subset)
+    #         expected_nodes.append(node_ids[i].item())
+    # print(expected_nodes)
 
     subset, edge_index_sub, mapping, _ = k_hop_subgraph(
         node_idx=node_ids,
@@ -82,14 +104,34 @@ for c in range(n_classes):
         edge_index=data.edge_index,
         relabel_nodes=True
     )
+    subset_list.append(subset)
     x_sub_list.append(data.x[subset])
     edge_index_sub_list.append(edge_index_sub)
     mapping_list.append(mapping)
+
+    # ---------- 计算子图内优化节点索引 ----------
+    # 这里子图内的节点属于优化节点(all_opt_nodes)的索引
+    # watermark 节点 + 1-hop 邻居
+    neighbor_subset, _, _, _ = k_hop_subgraph(
+        node_idx=node_ids,
+        num_hops=perturb_hop,
+        edge_index=data.edge_index,
+        relabel_nodes=False
+    )
+    opt_nodes_global = torch.unique(torch.cat([node_ids, neighbor_subset]))
+    all_sub_nodes.append(opt_nodes_global)
+    # 映射到子图 index
+    opt_indices_sub = torch.isin(subset, opt_nodes_global).nonzero(as_tuple=True)[0]
+    subgraph_opt_indices.append(opt_indices_sub)
+
     if choose_mark_class:
         break
 
 # ---------------- 生成全局优化变量 ----------------
-x_nodes_all = torch.cat([data.x[ids] for ids in all_node_ids_list], dim=0).clone().detach().to(device).requires_grad_(True)
+all_opt_nodes = list(set([i.item() for sub in all_node_ids_list for i in sub] + [i.item() for sub in all_sub_nodes for i in sub]))
+all_opt_nodes_tensor = torch.tensor(all_opt_nodes, device=device)
+x_opt_all = data.x[all_opt_nodes_tensor]
+x_opt_all = x_opt_all.clone().detach().to(device).requires_grad_(True)
 class_indices = torch.tensor(class_indices, device=device)
 
 # ---------------- 初始化 carriers ----------------
@@ -123,16 +165,18 @@ for c in range(n_classes):
 print("\n=== Iteration 0 statistics (before any optimization) ===")
 start_idx = 0
 for c in range(n_classes):
-    end_idx = start_idx + len(all_node_ids_list[c])
     delta_phi = torch.zeros_like(ft_orig_list[c])
     direction = carriers[c]
 
     cos_phi = torch.nn.functional.cosine_similarity(delta_phi, direction.unsqueeze(0), dim=1)
     alpha_mean = torch.sum(delta_phi * direction, dim=1).mean().item()
     alpha_std = torch.sum(delta_phi * direction, dim=1).std().item()
+
+    end_idx = start_idx + len(all_node_ids_list[c])
+
     ft_l2_dist = torch.norm(delta_phi, dim=1).mean().item()
-    x_l2_dist = torch.norm(x_nodes_all[start_idx:end_idx] - data.x[all_node_ids_list[c]], dim=1).mean().item()
-    x_max_amplitude = (x_nodes_all[start_idx:end_idx] - data.x[all_node_ids_list[c]]).abs().max().item()
+    # x_l2_dist = torch.norm(x_opt_all[start_idx:end_idx] - data.x[all_node_ids_list[c]], dim=1).mean().item()
+    # x_max_amplitude = (x_nodes_all[start_idx:end_idx] - data.x[all_node_ids_list[c]]).abs().max().item()
 
     # print(f"Class {c} | alpha_mean: {alpha_mean:.6f} | alpha_std: {alpha_std:.6f} | "
     #       f"cosine_mean: {cos_phi.mean().item():.6f} | cosine_std: {cos_phi.std().item():.6f} | "
@@ -142,135 +186,49 @@ for c in range(n_classes):
     if choose_mark_class:
         break
 
-x_nodes_orig = x_nodes_all.detach().clone()
+x_nodes_orig = x_opt_all.detach().clone()
 
-
-# ---------------- 迭代前：按类估计 pc1 ----------------
-# pc1_list = []
-# noise_scale = 1e-3   # 小扰动，别太大
-# for c in range(n_classes):
-#     node_ids = all_node_ids_list[c]
-#     x_sub = x_sub_list[c]
-#     edge_index_sub = edge_index_sub_list[c]
-#     mapping = mapping_list[c]
-
-#     # 原始 embedding
-#     with torch.no_grad():
-#         ft_orig = ft_orig_list[c]   # [Nc, D]
-
-#     # --------- 构造随机扰动 ----------
-#     x_nodes_orig_c = data.x[node_ids]
-#     delta_x_init = torch.randn_like(x_nodes_orig_c) * noise_scale
-#     x_nodes_perturbed = x_nodes_orig_c + delta_x_init
-
-#     # patch 子图
-#     x_sub_patched = x_sub.clone()
-#     x_sub_patched[mapping] = x_nodes_perturbed
-
-#     # 前向
-#     with torch.no_grad():
-#         ft_perturbed = model.encode(x_sub_patched, edge_index_sub)[mapping]
-
-#     # Δφ
-#     delta_phi = ft_perturbed - ft_orig     # [Nc, D]
-
-#     # --------- PCA ----------
-#     Delta = delta_phi - delta_phi.mean(dim=0, keepdim=True)
-
-#     # 协方差（D x D）
-#     Cov = (Delta.T @ Delta) / (Delta.size(0) - 1)
-
-#     # 数值稳定项（非常重要）
-#     eps = 1e-4
-#     Cov = Cov + eps * torch.eye(Cov.size(0), device=Cov.device)
-
-#     # 对称特征分解（稳定）
-#     eigvals, eigvecs = torch.linalg.eigh(Cov)
-
-#     pc1 = eigvecs[:, -1]        # 最大特征值方向
-#     pc1 = pc1 / (pc1.norm() + 1e-8)
-
-#     pc1_list.append(pc1)
-
-#     # 可选：看看和 carrier 的初始关系
-#     cos_pc1_carrier = torch.dot(pc1, carriers[c]).item()
-#     print(f"[Init PCA] Class {c} | cos(pc1, carrier) = {cos_pc1_carrier:.4f}")
 
 # ---------------- SGD 优化 ----------------
 base_lr = lr
-optimizer = optim.SGD([x_nodes_all], lr=lr, momentum=momentum)
-g_ref = None
-last_cos = 0.0
+optimizer = optim.SGD([x_opt_all], lr=lr, momentum=momentum)
 node_start_idx_list = np.cumsum([0] + [len(ids) for ids in all_node_ids_list])
 
 for epoch in range(epochs):
     if epoch == 700:
-        # optimizer = optim.SGD([x_nodes_all], lr=0.01, momentum=momentum)
-        optimizer = optim.Adam([x_nodes_all], lr=0.01)
-    # if epoch == 1200:
-    #     optimizer = optim.Adam([x_nodes_all], lr=0.001)
+        optimizer = optim.Adam([x_opt_all], lr=0.01)
+
     optimizer.zero_grad()
     loss_total = 0.0
 
-    # 构造全图 patched 特征，只修改水印节点
+    # 构造全图 patched 特征，修改目标节点和hop内节点
     x_patched_full = data.x.clone()
-    x_patched_full[torch.cat(all_node_ids_list)] = x_nodes_all
+    x_patched_full[all_opt_nodes_tensor] = x_opt_all
 
     # 每个类别计算 loss
     delta_phi_list_all = []
     start_idx = 0
-    phase2_alpha_list = []
     for c in range(n_classes):
         end_idx = node_start_idx_list[c+1]
-        x_nodes_c = x_nodes_all[start_idx:end_idx]
 
-        x_sub = x_sub_list[c]
+        x_sub = x_sub_list[c].clone()
         edge_index_sub = edge_index_sub_list[c]
         mapping = mapping_list[c]
 
-        x_sub_patched = x_sub.clone()
-        # 只更新水印节点
-        x_sub_patched[mapping] = x_patched_full[all_node_ids_list[c]]
+        # ---------- 替换子图内所有优化节点特征 ----------
+        subset = subset_list[c]
+        opt_indices = subgraph_opt_indices[c]
+        x_sub[opt_indices] = x_patched_full[subset[opt_indices]]  # 直接使用 precomputed 索引
 
-        ft_new = model.encode(x_sub_patched, edge_index_sub)[mapping]
+        ft_new = model.encode(x_sub, edge_index_sub)[mapping]
         delta_phi = ft_new - ft_orig_list[c]
         delta_phi_list_all.append(delta_phi)
 
-        # pc1 = pc1_list[c]
-
         direction = carriers[c]
-        # loss_align = -torch.sum(delta_phi * direction)
         cos_vals = torch.nn.functional.cosine_similarity(delta_phi, direction.unsqueeze(0), dim=1)
-        # cos_vals = torch.clamp(cos_vals, min=0.0)
-        loss_align = - cos_vals.mean()
-        # alpha_mean = torch.sum(delta_phi * direction, dim=1).mean()
-        # loss_alpha = 0.05 * (alpha_mean - 10.0)**2
-
-        # proj = torch.sum(delta_phi * direction, dim=1, keepdim=True)
-        # delta_phi_orth = delta_phi - proj * direction
-        # loss_align = delta_phi_orth.norm(dim=1).mean()
-
-        # loss_align = - torch.log(1e-0 + (cos_vals + 1) / 2).mean()
-
-        # if epoch < 800:
-            # cos_vals = torch.nn.functional.cosine_similarity(delta_phi, direction.unsqueeze(0), dim=1)
-            # loss_align = - cos_vals.mean()
-        
-        # ---------------- Phase 2 准备 ----------------
-        # if epoch == 800:
-        #     Nc = delta_phi.shape[0]
-        #     alpha_c = torch.nn.Parameter(torch.zeros(Nc, 1, device=device))
-        #     phase2_alpha_list.append(alpha_c)
-
-        #     # 把 alpha 加入 optimizer
-        #     optimizer = optim.Adam(phase2_alpha_list, lr=0.01)
-        
-        # if epoch >= 800:
-        #     alpha_c = phase2_alpha_list[c]
-        #     delta_phi_phase2 = alpha_c * direction.unsqueeze(0)
-        #     loss_align = - delta_phi_phase2.mean()
-
-        loss_total += (loss_align)
+        # cos_vals = torch.sum(delta_phi * direction)
+        loss_align = - cos_vals
+        loss_total += loss_align
 
         start_idx = end_idx
 
@@ -280,24 +238,11 @@ for epoch in range(epochs):
     loss_total.backward()
     # 梯度归一化，防止节点梯度差异过大
     with torch.no_grad():
-        grad = x_nodes_all.grad
+        grad = x_opt_all.grad
         grad = grad / (grad.norm(dim=1, keepdim=True) + 1e-8)
-        x_nodes_all.grad.copy_(grad)
+        x_opt_all.grad.copy_(grad)
 
-    # g = x_nodes_all.grad.norm().detach()
-    # if g_ref is None:
-    #     g_ref = g.clone()
 
-    # ratio = (g / g_ref).clamp(0.05, 1.0)
-
-    # for pg in optimizer.param_groups:
-    #     pg["lr"] = base_lr * ratio.item()
-
-    # if ratio < 0.3 and isinstance(optimizer, optim.SGD):
-    #     # 根据 ratio 动态设置 Adam lr，保持更新幅度合理
-    #     adam_lr = max(max_adam_lr, base_lr * ratio)  # 保证不会太小
-    #     optimizer = optim.Adam([x_nodes_all], lr=adam_lr)
-    #     print(f"Switch to Adam with lr={adam_lr:.4f} at epoch {epoch}")
     optimizer.step()
     
     # ---------- L∞ 投影 ----------
@@ -313,19 +258,6 @@ for epoch in range(epochs):
     #     delta_norm = delta.norm(dim=1, keepdim=True)
     #     scale = torch.clamp(delta_norm, max=perturb_amplitude) / (delta_norm + 1e-8)
     #     x_nodes_all.copy_(x_nodes_orig + delta * scale)
-    
-    # boundary-aware expansion
-    # step_size_ratio = (x_nodes_all - x_nodes_orig).abs().max() / init_clamp_max_perturb
-    # if step_size_ratio > 0.8:
-    #     init_clamp_max_perturb *= 1.2
-    #     init_clamp_max_perturb = min(init_clamp_max_perturb, perturb_amplitude)
-
-    # cos-based annealing
-    # current_cos = torch.nn.functional.cosine_similarity(delta_phi, direction.unsqueeze(0), dim=1).mean()
-    # if epoch % 20 == 0:
-    #     if current_cos - last_cos < 1e-4:
-    #         base_lr *= 0.7
-    #     last_cos = current_cos
 
     # ---------------- 打印迭代信息 ----------------
 
@@ -341,9 +273,10 @@ for epoch in range(epochs):
             cos_phi = torch.nn.functional.cosine_similarity(delta_phi, direction.unsqueeze(0), dim=1)
             alpha_mean = torch.sum(delta_phi * direction, dim=1).mean().item()
             alpha_std = torch.sum(delta_phi * direction, dim=1).std().item()
+
             ft_l2_dist = torch.norm(delta_phi, dim=1).mean().item()
-            x_l2_dist = torch.norm(x_nodes_all[start_idx:end_idx] - data.x[all_node_ids_list[c]], dim=1).mean().item()
-            x_max_amplitude = (x_nodes_all[start_idx:end_idx] - data.x[all_node_ids_list[c]]).abs().max().item()
+            # x_l2_dist = torch.norm(x_nodes_all[start_idx:end_idx] - data.x[all_node_ids_list[c]], dim=1).mean().item()
+            # x_max_amplitude = (x_nodes_all[start_idx:end_idx] - data.x[all_node_ids_list[c]]).abs().max().item()
             cos_w = torch.nn.functional.cosine_similarity(direction.unsqueeze(0), W_origin[c].unsqueeze(0), dim=1).item()
             
             cos_means.append(cos_phi.mean().item())
@@ -371,8 +304,7 @@ print("\n=== Final statistics after optimization ===")
 for c in range(n_classes):
     n_nodes = all_node_ids_list[c].size(0)
     end_idx = start_idx + n_nodes
-    x_nodes_c = x_nodes_all[start_idx:end_idx].detach()
-    x_wm[all_node_ids_list[c]] = x_nodes_c
+    x_nodes_c = x_opt_all[start_idx:end_idx].detach()
     mark_node_list.extend(all_node_ids_list[c].cpu().tolist())
 
     # ---------- 使用 x_nodes_orig 计算最大扰动 ----------
@@ -381,22 +313,26 @@ for c in range(n_classes):
     cos_phi = torch.nn.functional.cosine_similarity(delta_phi_final, direction.unsqueeze(0), dim=1)
     alpha_mean = torch.sum(delta_phi_final * direction, dim=1).mean().item()
     alpha_std = torch.sum(delta_phi_final * direction, dim=1).std().item()
+
     ft_l2_dist = torch.norm(delta_phi_final, dim=1).mean().item()
-    x_l2_dist = torch.norm(x_nodes_c - x_nodes_orig[start_idx:end_idx], dim=1).mean().item()
-    x_max_amplitude = (x_nodes_c - x_nodes_orig[start_idx:end_idx]).abs().max().item()
+    # x_l2_dist = torch.norm(x_nodes_c - x_nodes_orig[start_idx:end_idx], dim=1).mean().item()
+    # x_max_amplitude = (x_nodes_c - x_nodes_orig[start_idx:end_idx]).abs().max().item()
     cos_w = torch.nn.functional.cosine_similarity(direction.unsqueeze(0), W_origin[c].unsqueeze(0), dim=1).item()
     
     print(f"Final Class {c} | alpha_mean: {alpha_mean:.6f} | alpha_std: {alpha_std:.6f} | "
           f"cosine_mean: {cos_phi.mean().item():.6f} | cosine_std: {cos_phi.std().item():.6f} | "
-          f"ft_l2_dist: {ft_l2_dist:.6f} | x_l2_dist: {x_l2_dist:.6f} | x_max_amplitude: {x_max_amplitude:.6f} | "
+          f"ft_l2_dist: {ft_l2_dist:.6f} | "
           f"cos_w: {cos_w:.6f}")
     
     mark_strenth += alpha_mean
     cosine_mean += cos_phi.mean().item()
 
     start_idx = end_idx
+
     if choose_mark_class:
         break
+
+x_wm[all_opt_nodes] = x_opt_all
 print(f"Overall mark strength: {(mark_strenth / n_classes):.6f}")
 print(f"Overall cosine mean: {(cosine_mean / n_classes):.6f}")
 

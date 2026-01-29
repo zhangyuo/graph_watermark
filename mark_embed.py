@@ -4,7 +4,7 @@ import argparse
 import json
 import numpy as np
 from os.path import basename, join
-from model.GCN import MultiLayerGCN, build_gnn_model
+from model.GCN import StandardGCN, build_gnn_model
 from src.data_augmentations import RandomResizedCropFlip, CenterCrop
 from src.dataset import getImagenetTransform, NORMALIZE_IMAGENET
 from src.datasets.folder import default_loader

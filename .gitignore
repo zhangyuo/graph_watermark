@@ -8,5 +8,5 @@ cifar10_images
 cifar10_marked
 data
 mark_save
-model_save
+model_save*
 logs

@@ -6,7 +6,7 @@ import copy
 import torch.nn.functional as F
 from scipy.stats import combine_pvalues
 from src.stats import cosine_pvalue
-from model.GCN import build_gnn_model
+from model.GCN import MultiLayerGCN, build_gnn_model
 from utility.utils import extract_node_embeddings
 from torch_geometric.data import Data
 from src.utils import initialize_exp
@@ -31,11 +31,10 @@ if __name__ == "__main__":
     python -m debugpy --listen 0.0.0.0:5678 --wait-for-client detect_mark.py --dataset_path mark_save/graph_watermarked_arxiv_dim128_layer2_seed42.pt --carrier_path mark_save/carriers_class40_dim128.pth --marking_model model_save/gcn_mark_arxiv_dim128_layer2_seed42.pth --benign_model model_save/gcn_benign_arxiv_dim128_layer2_seed42.pth --hidden_dim 128 --num_layers 2 --dropout 0.5
     """
     hidden_dim = 512
-    num_layers = 3
+    num_layers = 2
     dropout = 0.5
     seed_num = 42
     n_classes = 40
-    model_type = "SurrogateGCN"
 
     parser = argparse.ArgumentParser()
 
@@ -62,14 +61,14 @@ if __name__ == "__main__":
     # --------------------------------------------------
     data = torch.load(params.dataset_path)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    # x = data["x_orig"].clone().to(device)  # 原始特征
-    # if "node_list" in data and "x_wm" in data:
-    #     node_list = data["node_list"].squeeze()
-    #     x_wm_nodes = data["x_wm"][node_list].to(device)
-    #     x[node_list] = x_wm_nodes  # 仅替换被标记节点的特征
+    x = data["x_orig"].clone().to(device)  # 原始特征
+    if "node_list" in data and "x_wm" in data:
+        node_list = data["node_list"].squeeze()
+        x_wm_nodes = data["x_wm"][node_list].to(device)
+        x[node_list] = x_wm_nodes  # 仅替换被标记节点的特征
     data = Data(
         x_orig=data["x_orig"],
-        x_wm=data["x_wm"],
+        x_wm=x,
         edge_index=data["edge_index"],
         y=data["y"],
         train_mask=data["train_mask"],
@@ -96,7 +95,7 @@ if __name__ == "__main__":
     # --------------------------------------------------
     # params_1 = copy.deepcopy(params)
     # params_1.hidden_dim = 512
-    marking_model = build_gnn_model(params, data, model_architecture=model_type)
+    marking_model = build_gnn_model(params, data)
     mark_ckpt = torch.load(params.marking_model)
     marking_model.load_state_dict(mark_ckpt)
     marking_model = marking_model.to(device).eval()
@@ -104,14 +103,10 @@ if __name__ == "__main__":
     # --------------------------------------------------
     # Load benign model
     # --------------------------------------------------
-    benign_model = build_gnn_model(params, data, model_architecture=model_type)
+    benign_model = build_gnn_model(params, data)
     benign_ckpt = torch.load(params.benign_model)
     benign_model.load_state_dict(benign_ckpt)
     benign_model = benign_model.to(device).eval()
-
-
-    # marking_model = benign_model
-    # mark_ckpt = benign_ckpt
 
     # # ===== 在这里：compute Jacobian SVD =====
     # # get subgraph
@@ -152,6 +147,8 @@ if __name__ == "__main__":
 
     feat_mark = feat_mark.cpu().numpy()  # (N, D1)
     feat_benign = feat_benign.cpu().numpy()  # (N, D2)
+    # feat_mark = feat_benign.copy()  # For testing purpose, use identical features
+    # mark_ckpt = benign_ckpt.copy()  # For testing purpose, use identical weights
 
     logger.info(f"Marking feature shape: {feat_mark.shape}")
     logger.info(f"Benign feature shape : {feat_benign.shape}")
@@ -172,19 +169,18 @@ if __name__ == "__main__":
     # 0.3 – 0.6	结构差异明显
     # > 0.6	空间差异很大
     # --------------------------------------------------
-    # X, residuals, rank, s = np.linalg.lstsq(feat_mark, feat_benign, rcond=None)
-    # alignment_error = np.linalg.norm(feat_mark @ X - feat_benign) ** 2
+    # X, residuals, rank, s = np.linalg.lstsq(feat_benign, feat_mark, rcond=None)
+    # alignment_error = np.linalg.norm(feat_benign @ X - feat_mark) ** 2
     # logger.info(f"Number of nodes: {feat_mark.shape[0]}")
     # logger.info(f"Alignment residual norm: {alignment_error:.4e}")
     # rel_err = (
-    #     np.linalg.norm(feat_mark @ X - feat_benign, 'fro') /
-    #     np.linalg.norm(feat_benign, 'fro')
+    #     np.linalg.norm(feat_benign @ X - feat_mark, 'fro') /
+    #     np.linalg.norm(feat_mark, 'fro')
     # )
     # logger.info(f"Relative alignment error: {rel_err:.4f}")
-    # delta_feat = feat_mark @ X - feat_benign   # shape: (N, D)
 
     # class-wise least squares
-    delta_feat = np.zeros_like(feat_benign)
+    delta_feat = np.zeros_like(feat_mark)
     node_id_to_local = {nid: i for i, nid in enumerate(data["node_list"].squeeze().cpu().numpy())}
     X_c_dict = {}
     for c in marked_classes:
@@ -197,177 +193,18 @@ if __name__ == "__main__":
 
         # 局部最小二乘
         X_c, *_ = np.linalg.lstsq(
-            feat_mark[nodes_c],
             feat_benign[nodes_c],
+            feat_mark[nodes_c],
             rcond=None
         )
         X_c_dict[c] = X_c
 
         # 局部对齐 embedding
-        delta_feat[nodes_c] = feat_mark[nodes_c] @ X_c - feat_benign[nodes_c]
+        delta_feat[nodes_c] = feat_benign[nodes_c] @ X_c - feat_mark[nodes_c]
 
         # 可选 log：每类误差
-        rel_err_c = np.linalg.norm(delta_feat[nodes_c], 'fro') / np.linalg.norm(feat_benign[nodes_c], 'fro')
+        rel_err_c = np.linalg.norm(delta_feat[nodes_c], 'fro') / np.linalg.norm(feat_mark[nodes_c], 'fro')
         logger.info(f"Class {c}: relative alignment error = {rel_err_c:.4f}")
-
-    # --------------------------------------------------
-
-    # poly = PolynomialFeatures(degree=2)
-    # feat_mark_poly = poly.fit_transform(feat_mark) # shape: (N, D_poly)
-    # X, residuals, rank, s = np.linalg.lstsq(feat_mark_poly, feat_benign, rcond=None)
-    # aligned_feat = feat_mark_poly @ X  # shape: (N, D_benign)
-    # alignment_error = np.linalg.norm(aligned_feat - feat_benign) ** 2
-    # rel_err = np.linalg.norm(aligned_feat - feat_benign, 'fro') / np.linalg.norm(feat_benign, 'fro')
-    # logger.info(f"Alignment residual norm: {alignment_error:.4e}")
-    # logger.info(f"Relative alignment error: {rel_err:.4f}")
-    # delta_feat = aligned_feat - feat_benign  # shape: (N, D_benign)
-
-
-
-
-
-    # --------------------------------------------------
-    # Projection-based watermark scores (node-level)
-    # --------------------------------------------------
-    proj_scores = {}
-    proj_pvals  = {}
-
-    D = carrier.shape[1]
-    # 将 global id 映射为 delta_feat 的行索引
-    node_id_to_local = {nid: i for i, nid in enumerate(node_list)}
-
-    for c in marked_classes:
-        # 所有属于类别 c 的 watermark 节点
-        nodes_c_global = node_list[labels[node_list] == c]
-
-        # 转换为 delta_feat 的局部索引
-        nodes_c = [node_id_to_local[nid] for nid in nodes_c_global]
-
-        if len(nodes_c) <= 1:
-            continue
-
-        d_c = carrier[c]              # (D,)
-        d_c = d_c / np.linalg.norm(d_c)
-
-        # 每个节点的投影值
-        proj_vals = delta_feat[nodes_c] @ d_c   # shape: (num_nodes_c,)
-
-        # 统计量：均值
-        S_c = proj_vals.mean()
-        std_c = proj_vals.std() + 1e-8
-
-        # Z-score（近似正态）
-        z_c = S_c / std_c
-
-        proj_scores[c] = {
-            "mean_proj": S_c,
-            "std_proj": std_c,
-            "z": z_c,
-            "num_nodes": len(nodes_c)
-        }
-
-        # 单边 p-value（H0: mean <= 0）
-        p_c = 1 - 0.5 * (1 + np.math.erf(z_c / np.sqrt(2)))
-        proj_pvals[c] = p_c
-    
-    # --------------------------------------------------
-    # Combine projection-based p-values
-    # --------------------------------------------------
-    proj_pvals_list = [proj_pvals[c] for c in proj_pvals]
-    combined_proj_p = combine_pvalues(proj_pvals_list)[1]
-
-    logger.info("====================================")
-    logger.info(" Projection-based Watermark Detection")
-    logger.info("====================================")
-
-    for c, info in proj_scores.items():
-        logger.info(
-            f"Class {c:2d} | "
-            f"mean_proj={info['mean_proj']:.4f} | "
-            f"z={info['z']:.2f} | "
-            f"nodes={info['num_nodes']} | "
-            f"p={proj_pvals[c]:.2e}"
-        )
-
-    logger.info("------------------------------------")
-    logger.info(f"Combined projection p-value : {combined_proj_p:.2e}")
-    logger.info(f"log10(p)                    : {np.log10(combined_proj_p):.2f}")
-
-
-
-
-
-    # --------------------------------------------------
-    # Model loss-based watermark detection
-    # --------------------------------------------------
-    loss_stats = {}
-    marked_nodes = node_list  # global node id
-
-    # 转换为 torch tensor
-    labels_marked = torch.from_numpy(labels[marked_nodes]).to(device)
-
-    with torch.no_grad():
-        logits_mark = marking_model.forward(data.x_wm, data.edge_index)   # 标记模型 logits
-        # logits_benign = benign_model.forward(data.x_wm, data.edge_index)  # benign 模型 logits (效果更好)
-        logits_benign = marking_model.forward(data.x_orig, data.edge_index)  # 使用原始特征
-
-    # 取水印节点对应 logits
-    logits_mark_nodes = logits_mark[marked_nodes]
-    logits_benign_nodes = logits_benign[marked_nodes]
-
-    # 交叉熵 loss (per node)
-    loss_mark_nodes = F.nll_loss(logits_mark_nodes, labels_marked, reduction="none")
-    loss_benign_nodes = F.nll_loss(logits_benign_nodes, labels_marked, reduction="none")
-
-    # Δloss = benign - marked
-    delta_loss = (loss_benign_nodes - loss_mark_nodes).cpu().numpy()  # 正值 → 水印存在
-
-    # 按类统计
-    for c in marked_classes:
-        nodes_c_mask = labels[marked_nodes] == c
-        delta_c = delta_loss[nodes_c_mask]
-        num_nodes_c = len(delta_c)
-        if num_nodes_c <= 1:
-            continue
-
-        mean_c = delta_c.mean()
-        std_c  = delta_c.std() + 1e-8
-        z_c    = mean_c / std_c
-        p_c    = 1 - 0.5 * (1 + np.math.erf(z_c / np.sqrt(2)))  # 单边 p-value
-
-        loss_stats[c] = {
-            "mean_delta_loss": mean_c,
-            "std_delta_loss": std_c,
-            "z": z_c,
-            "num_nodes": num_nodes_c,
-            "p": p_c
-        }
-
-    # Combine p-values across classes
-    mean_loss_list = [loss_stats[c]["mean_delta_loss"] for c in loss_stats]
-    pvals_loss_list = [loss_stats[c]["p"] for c in loss_stats]
-    combined_loss_p = combine_pvalues(pvals_loss_list)[1]
-
-    # 打印结果
-    logger.info("====================================")
-    logger.info(" Loss-based Watermark Detection")
-    logger.info("====================================")
-    for c, info in loss_stats.items():
-        logger.info(
-            f"Class {c:2d} | "
-            f"mean_delta_loss={info['mean_delta_loss']:.4f} | "
-            f"z={info['z']:.2f} | "
-            f"nodes={info['num_nodes']} | "
-            f"p={info['p']:.2e}"
-        )
-    logger.info("------------------------------------")
-    logger.info(f"Mean score                  : {np.mean(mean_loss_list):.4f}")
-    logger.info(f"Combined loss-based p-value : {combined_loss_p:.2e}")
-    logger.info(f"log10(p)                    : {np.log10(combined_loss_p):.2f}")
-
-
-
-
 
 
 
@@ -377,54 +214,33 @@ if __name__ == "__main__":
     # --------------------------------------------------
     # Load mark classifier weight
     logger.info(f"model layer keys: {mark_ckpt.keys()}")
-    last_conv = marking_model
+    last_conv = marking_model.convs[-1]
     W_mark = last_conv.lin.weight.detach().cpu().numpy()  # shape: (C, D_mark)
 
     # --------------------------------------------------
     # Project mark classifier weights into benign space
     # W_mark @ X
     # --------------------------------------------------
-    # W_mark_poly = poly.fit_transform(W_mark)  # shape: (C, D_poly)
-    # W_proj = W_mark_poly @ X  # shape: (C, D_benign)
-    # from sklearn.linear_model import Ridge
-    # ridge = Ridge(alpha=1e-3, fit_intercept=False)  # alpha 可调
-    # ridge.fit(feat_mark, feat_benign)
-    # X_linear_reg = ridge.coef_.T  # shape: (D1, D2)
-    # alignment_error = np.linalg.norm(feat_mark @ X_linear_reg - feat_benign) ** 2
-    # logger.info(f"Number of nodes: {feat_mark.shape[0]}")
-    # logger.info(f"Alignment residual norm: {alignment_error:.4e}")
-    # rel_err = (
-    #     np.linalg.norm(feat_mark @ X_linear_reg - feat_benign, 'fro') /
-    #     np.linalg.norm(feat_benign, 'fro')
-    # )
-    # logger.info(f"Relative alignment error: {rel_err:.4f}")
-    C, D_mark = W_mark.shape
-    D_benign = feat_benign.shape[1]
-    W_proj = np.zeros((C, D_benign), dtype=W_mark.dtype)
+    # W_proj = np.dot(W_mark, X.T)
+
+    W_proj = np.zeros_like(W_mark)
     for c in marked_classes:
         X_c = X_c_dict[c]
-        W_proj[c] = np.dot(W_mark[c], X_c)  # shape: (D_benign,)
+        W_proj[c] = np.dot(W_mark[c], X_c.T)  # shape: (D_benign,)
 
     # Normalize
     W_proj /= np.linalg.norm(W_proj, axis=1, keepdims=True)
-    carrier /= np.linalg.norm(carrier, axis=1, keepdims=True)
 
     # --------------------------------------------------
     # Compute cosine scores
     # --------------------------------------------------
     scores = np.sum(W_proj * carrier, axis=1)
-    # carrier = torch.load(params.carrier_path).cpu()
-    # rand_vec = torch.randn_like(carrier)
-    # rand_vec = torch.nn.functional.normalize(rand_vec, dim=-1)
-    # scores = torch.nn.functional.cosine_similarity(benign_ckpt[key].cpu(), rand_vec, dim=1).numpy()
-    # scores = torch.nn.functional.cosine_similarity(benign_model.lin.weight.detach().cpu(), torch.load(params.carrier_path).cpu(), dim=1).numpy()
-    scores = [score for score in scores if np.isfinite(score)]
-    print("Cosine scores between carrier and classifier weights:", scores)
+    scores = torch.nn.functional.cosine_similarity(benign_model.convs[-1].lin.weight.detach().cpu(), torch.load(params.carrier_path).cpu(), dim=1).numpy()
+    # print("Cosine scores between carrier and classifier weights:", scores)
 
     # --------------------------------------------------
     # Statistical watermark detection
     # --------------------------------------------------
-    
     p_vals_all = [cosine_pvalue(score, d=carrier.shape[1]) for score in scores]
 
     # Choose only marked classes for reporting
@@ -456,7 +272,7 @@ if __name__ == "__main__":
             f"p={info['p']:.2e}"
         )
     logger.info("------------------------------------")
-    logger.info(f"Mean score                  : {np.mean(scores):.4f}")
+    logger.info(f"Mean score                  : {scores.mean():.4f}")
     logger.info(f"combined p-value            : {combined_weight_p:.2e}")
     logger.info(f"log10(combined p-value)     : {np.log10(combined_weight_p):.2f}")
     logger.info("------------------------------------")
